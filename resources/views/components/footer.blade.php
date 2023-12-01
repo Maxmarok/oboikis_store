@@ -2,7 +2,7 @@
     <div class="foot m-auto d-flex flex-row justify-content-between align-items-center position-relative">
         <div class="footer_block1 d-flex justify-content-between flex-column">
             <a href="#"><img src="svg/logo.svg"></a>
-            <span class="white_color text-center align-items-end">© 2018 – 2023 «Обойкис»</span>
+            <span class="white_color text-center align-items-end">© 2021 – 2023 «Обойкис»</span>
         </div>
         <div class="footer_divider_block">
             <div class="footer_divider1 footer_divider_white"></div>
@@ -53,7 +53,7 @@
                 <div class="footer_divider3 footer_divider_white"></div>
             </div>
             <div class="footer_block2_elem2 d-flex justify-content-center align-items-center">
-                <span class="white_color">© 2018 – 2023 «Обойкис»</span>
+                <span class="white_color">© 2021 – 2023 «Обойкис»</span>
             </div>
         </div>
     </div>
