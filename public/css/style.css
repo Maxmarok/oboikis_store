@@ -2,21 +2,21 @@
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
-    src: url("font/Lato-Regular.ttf") format('truetype');
+    src: url("../font/Lato-Regular.ttf") format('truetype');
 }
 
 @font-face {
     font-family: 'LatoB';
     font-style: bold;
     font-weight: 800;
-    src: url('font/Lato-Bold.ttf') format('truetype');
+    src: url('../font/Lato-Bold.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'LatoI';
     font-style: italic;
     font-weight: 400;
-    src: url('font/Lato-Italic.ttf') format('truetype');
+    src: url('../font/Lato-Italic.ttf') format('truetype');
 }
 
 @keyframes growDown {
@@ -221,7 +221,7 @@ nav {
 
 .block2 {
     border-top: 5px solid #FF449F;
-    background: url(img/background.png),linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),linear-gradient(to right, rgba(0, 173, 181, 0.4), rgba(0, 173, 181, 0.4)) center no-repeat;
+    background: url(../img/background.png),linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),linear-gradient(to right, rgba(0, 173, 181, 0.4), rgba(0, 173, 181, 0.4)) center no-repeat;
     background-size: cover;
 }
 
@@ -307,7 +307,7 @@ nav {
     height: 590px;
     top: 190px;
     right: 10px;
-    background-image: url(svg/star.svg);
+    background-image: url(../../svg/star.svg);
     background-repeat: no-repeat;
     background-position: center center;
 }
@@ -1528,7 +1528,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 .goods_input:checked+label::before, .goods_input1:checked+label::before, .goods_input2:checked+label::before, .goods_input3:checked+label::before, .check input:checked+label::before {
     background-color: #00ADB5;
-    background-image: url(svg/checkmark.svg);
+    background-image: url(../svg/checkmark.svg);
 }
 
 .check span {
@@ -1627,7 +1627,7 @@ input[type=number]::-webkit-inner-spin-button {
     width: 390px;
     height: 226px;
     border-radius: 14px;
-    background-image: url(img/image\ 9.png);
+    background-image: url(../img/image\ 9.png);
 }
 
 .background-tint_black {
@@ -2151,7 +2151,7 @@ select {
     width: 25px;
     height: 25px;
     top: calc(50% - 8px);
-    background-image: url(svg/list_down.svg);
+    background-image: url(../svg/list_down.svg);
     
 }
 
@@ -2177,7 +2177,7 @@ select {
 }
 
 .sort .nice-select.open:after {
-    background-image: url(svg/list_down2.svg);
+    background-image: url(../svg/list_down2.svg);
     transform: rotate(0);
 }
 
