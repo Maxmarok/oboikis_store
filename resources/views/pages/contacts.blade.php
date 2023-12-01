@@ -33,8 +33,8 @@
                 <div class="c_i_e_borderless d-flex flex-column align-items-center">
                     <div class="d-flex flex-column align-items-center mb-5 margin_block">
                         <span class="c_i_elem_span1 blue_color text-center">Контакты:</span>
-                        <a href="tel:+7(992)222-42-44" class="text-decoration-none pink_color"><span class="c_i_elem_span2 pink_color text-center border_bottom_pink c_i_elem_span2_width">+7 (992) 222-42-44</span></a>
-                        <a href="mailto:sales@oboikis.ru" class="text-decoration-none pink_color"><span class="c_i_elem_span3 pink_color text-center border_bottom_pink c_i_elem_span3_width">sales@oboikis.ru</span></a>
+                        <a href="tel:+79922224244" class="text-decoration-none pink_color"><span class="c_i_elem_span2 pink_color text-center border_bottom_pink c_i_elem_span2_width">+7 (992) 222-42-44</span></a>
+                        <a href="mailto:oboikis@yandex.ru" class="text-decoration-none pink_color"><span class="c_i_elem_span3 pink_color text-center border_bottom_pink c_i_elem_span3_width">oboikis@yandex.ru</span></a>
                     </div>
                     <div class="contacts_icons d-flex align-items-center justify-content-between">
                         <a href="#"><img class="contacts_icon" src="svg/vk_icon.svg"></a>

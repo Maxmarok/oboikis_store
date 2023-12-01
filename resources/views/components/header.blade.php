@@ -39,7 +39,7 @@
             </div>
             <div class="menu_contacts d-flex flex-row align-items-center">
                 <div class="contacts d-flex flex-column align-items-center me-4">
-                    <div class="number d-flex pb-1"><a href="tel:+7(909)110-50-82" class="text-decoration-none white_color">+7 (909) 110-50-82</a></div>
+                    <div class="number d-flex pb-1"><a href="tel:+79922224244" class="text-decoration-none white_color">+7 (992) 222-42-44</a></div>
                     <div class="d-flex align-items-center"><a href="mailto:oboikis@yandex.ru" class="text-decoration-none white_color">oboikis<img src="svg/at.svg">yandex.ru</a></div>
                 </div>
                 <div class="city d-flex align-items-center justify-content-between"><img src="svg/house.svg" class="me-1">г. Пермь</div>
@@ -89,7 +89,7 @@
                         </form>
                     </div>
                     <div class="contacts d-flex flex-column align-items-center me-4">
-                        <div class="number d-flex pb-1"><a href="tel:+7(909)110-50-82" class="text-decoration-none white_color">+7 (909) 110-50-82</a></div>
+                        <div class="number d-flex pb-1"><a href="tel:+79922224244" class="text-decoration-none white_color">+7 (992) 222-42-44</a></div>
                         <div class="d-flex align-items-center"><a href="mailto:oboikis@yandex.ru" class="text-decoration-none white_color">oboikis<img src="svg/at.svg">yandex.ru</a></div>
                     </div>
                     <div class="menu2_block2_element d-flex justify-content-between">
