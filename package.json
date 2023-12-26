@@ -2,12 +2,26 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build"
+        "dev": "vite dev --host",
+        "build": "vite build",
+        "watch": "vite build --watch"
     },
     "devDependencies": {
-        "axios": "^1.6.1",
+        "@popperjs/core": "^2.11.8",
+        "@vitejs/plugin-vue": "^4.0.0",
+        "axios": "^1.1.2",
+        "bootstrap": "^5.3.2",
         "laravel-vite-plugin": "^0.8.0",
-        "vite": "^4.0.0"
+        "sass": "^1.56.1",
+        "vite": "^4.0.0",
+        "vue": "^3.2.37"
+    },
+    "dependencies": {
+        "@vue/server-renderer": "^3.3.13",
+        "bootstrap-vue": "^2.23.1",
+        "photoswipe": "^5.4.3",
+        "vue-router": "^4.2.5",
+        "vue-slider-component": "^4.1.0-beta.7",
+        "vue3-carousel": "^0.3.1"
     }
 }

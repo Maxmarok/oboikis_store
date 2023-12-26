@@ -14,19 +14,44 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.index');
+    $title = 'Главная';
+    $short_description  = 'Главная страница магазина "Обойкис"';
+
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
 });
 
 Route::get('/about', function () {
-    return view('pages.about');
+    $title = 'О компании "Обойкис"';
+    $short_description  = 'О компании "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
 });
 
+
 Route::get('/contacts', function () {
-    return view('pages.contacts');
+    $title = 'Контакты "Обойкис"';
+    $short_description  = 'Контакты магазина "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
 });
 
 Route::get('/catalog', function () {
-    return view('pages.catalog');
+    $title = 'Каталог "Обойкис"';
+    $short_description  = 'Каталог магазина "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
 });
 
 Route::get('/filter', function () {

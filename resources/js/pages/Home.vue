@@ -1,5 +1,128 @@
+<script setup>
+import Header from '@js/components/Header.vue'
+import Footer from '@js/components/Footer.vue'
+import Carousel from '@js/components/Carousel.vue'
 
-@include('components.header')
+const itemsPopular = [
+    {
+        id: 1, 
+        title: 'Обои Euro Decor 7127-00', 
+        type: 'wallpapper',
+        promo: 'sale',
+        description: 'Россия, 10.05 x 1.06 м Флизелин, Винил', 
+        old_price: 17200, 
+        price: 7200, 
+        discount: 80,
+        stock: 11,
+        src: 'img/image_4.png',
+    },
+
+    {
+        id: 2, 
+        title: 'Обои Euro Decor 7127-00', 
+        type: 'wallpapper',
+        promo: 'sale',
+        description: 'Россия, 10.05 x 1.06 м Флизелин, Винил', 
+        old_price: 17200, 
+        price: 7200, 
+        discount: 80,
+        stock: 11,
+        src: 'img/image_4.png',
+    },
+
+    {
+        id: 3, 
+        title: 'Обои Euro Decor 7127-00', 
+        type: 'wallpapper',
+        promo: 'sale',
+        description: 'Россия, 10.05 x 1.06 м Флизелин, Винил', 
+        old_price: 17200, 
+        price: 7200, 
+        discount: 80,
+        stock: 11,
+        src: 'img/image_4.png',
+    },
+
+    {
+        id: 4, 
+        title: 'Обои Euro Decor 7127-00', 
+        type: 'wallpapper',
+        promo: 'sale',
+        description: 'Россия, 10.05 x 1.06 м Флизелин, Винил', 
+        old_price: 17200, 
+        price: 7200, 
+        discount: 80,
+        stock: 11,
+        src: 'img/image_4.png',
+    },
+
+    {
+        id: 5, 
+        title: 'Обои Euro Decor 7127-00', 
+        type: 'wallpapper',
+        promo: 'sale',
+        description: 'Россия, 10.05 x 1.06 м Флизелин, Винил', 
+        old_price: 17200, 
+        price: 7200, 
+        discount: 80,
+        stock: 11,
+        src: 'img/image_4.png',
+    },
+
+    {
+        id: 6, 
+        title: 'Обои Euro Decor 7127-00', 
+        type: 'wallpapper',
+        promo: 'sale',
+        description: 'Россия, 10.05 x 1.06 м Флизелин, Винил', 
+        old_price: 17200, 
+        price: 7200, 
+        discount: 80,
+        stock: 11,
+        src: 'img/image_4.png',
+    },
+];
+
+const breakpoints = {
+    1000: {
+        itemsToShow: 1,
+    },
+
+    1400: {
+        itemsToShow: 4,
+        snapAlign: 'left',
+    },
+}
+
+const feedbacks = [
+    {
+        id: 1,
+        date: '24 мая 2023',
+        author: 'Екатерина Югова',
+        src: 'img/image 8-2.png',
+        description: 'Широкий ассортимент и отличное обслуживание!',
+    },
+
+    {
+        id: 2,
+        date: '14 августа 2023',
+        author: 'Елизавета Черткова',
+        src: 'img/image 8-2.png',
+        description: 'Тот момент, когда хочется оставить отзыв... Выбор обоев - сложный, муторный и долгий процесс...',
+    },
+
+    {
+        id: 3,
+        date: '26 июля 2023',
+        author: 'Виктор Клименков',
+        src: 'img/image 8-2.png',
+        description: 'Магазин шикарен, полностью клиентоориентированный персонал, знают свое дело и являются лучшими...',
+    },
+]
+</script>
+<template>
+<Header/>
+
 <div class="block2 w-auto position-relative">
     <div class="block2_bg position-absolute top-0 left-0"></div>
     <div class="screen2 d-flex m-auto flex-column justify-content-evenly align-items-center position-relative">
@@ -13,171 +136,53 @@
             <div class="screen2_text d-flex flex-row justify-content-evenly text-uppercase white_color"><b>уюта вашего <span class="yellow_color">дома</span></b></div>
             <button class="d-flex justify-content-center align-items-center white_color">Каталог товаров</button>
         </div> 
+
         <div class="screen2_blocks d-flex flex-row justify-content-between">
-            <a href="#"><div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
-                <div><img src="svg/wallpaper1.svg" class="me-2"><span class="blue_color">Обои</span></div>
-                <div class="blue_color">Перейти в каталог</div>
-            </div></a>
-            <a href="#"><div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
-                <div><img src="svg/wallpaper2.svg" class="me-2"><span class="blue_color">Фотообои</span></div>
-                <div class="blue_color">Перейти в каталог</div>
-            </div></a>
-            <a href=""><div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
-                <div><img src="svg/wallpaper3.svg" class="me-2"><span class="blue_color">Фрески</span></div>
-                <div class="blue_color">Перейти в каталог</div>
-            </div></a>
-            <a href="#"><div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
-                <div class="d-flex flex-row align-items-center justify-content-center"><img src="svg/wallpaper4.svg" class="me-2"><span class="blue_color d-flex flex-column justify-content-center">Лепной<br>декор</span></div>
-                <div class="blue_color">Перейти в каталог</div>
-            </div></a>
-            <a href="#"><div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
-                <div><img src="svg/bucket.svg" class="me-2"><span class="blue_color">Клей</span></div>
-                <div class="blue_color">Перейти в каталог</div>
-            </div></a>
+            <router-link to="/catalog/wallpapers">
+                <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
+                    <div><img src="svg/wallpaper1.svg" class="me-2"><span class="blue_color">Обои</span></div>
+                    <div class="blue_color">Перейти в каталог</div>
+                </div>
+            </router-link>
+            <router-link to="/catalog/photo">
+                <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
+                    <div><img src="svg/wallpaper2.svg" class="me-2"><span class="blue_color">Фотообои</span></div>
+                    <div class="blue_color">Перейти в каталог</div>
+                </div>
+            </router-link>
+            <router-link to="/catalog/fresk">
+                <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
+                    <div><img src="svg/wallpaper3.svg" class="me-2"><span class="blue_color">Фрески</span></div>
+                    <div class="blue_color">Перейти в каталог</div>
+                </div>
+            </router-link>
+            <router-link to="/catalog/dekor">
+                <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
+                    <div class="d-flex flex-row align-items-center justify-content-center"><img src="svg/wallpaper4.svg" class="me-2"><span class="blue_color d-flex flex-column justify-content-center">Лепной<br>декор</span></div>
+                    <div class="blue_color">Перейти в каталог</div>
+                </div>
+            </router-link>
+            <router-link to="/catalog/glue">
+                <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
+                    <div><img src="svg/bucket.svg" class="me-2"><span class="blue_color">Клей</span></div>
+                    <div class="blue_color">Перейти в каталог</div>
+                </div>
+            </router-link>
         </div>
     </div>
 </div>
+        
 <div class="block3 w-auto mg_s3 border_top">
     <div class="screen3 d-flex m-auto flex-column align-items-center">
-        <div class="screen3_text screen3_text_bg_blue"><span class="blue_color">Популярные товары</span></div>
+        <div class="screen3_text screen3_text_bg_blue">
+            <span class="blue_color">Популярные товары</span>
+        </div>
+        
         <div class="screen3_blocks d-flex align-items-center justify-content-between flex-row position-relative">
-            <div class="star position-absolute"></div>
-            <div class="prevButton1_m d-none">
-                <svg width="21" height="89" viewBox="0 0 21 89" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="21" height="89" rx="5" fill="#00ADB5" fill-opacity="0.1"/>
-                    <path d="M5.99999 7L14.9653 45.1484L5.99999 83.1485" stroke="white" stroke-width="5" stroke-linecap="round"/>
-                </svg>
-            </div>
-            <div class="prevButton1">
-                <svg class="nextButton_img" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle class="nextButton_color" cx="20" cy="20" r="20" fill="#bfbfbf" fill-opacity="1"/>
-                    <mask id="path-2-inside-1_135_8378" fill="white">
-                        <path d="M13 19.8994L22.8995 9.99992L32.799 19.8994L22.8995 29.7989L13 19.8994Z"/>
-                    </mask>
-                    <path d="M13 19.8994L11.5858 18.4852L10.1716 19.8994L11.5858 21.3136L13 19.8994ZM14.4142 21.3136L24.3137 11.4141L21.4853 8.58571L11.5858 18.4852L14.4142 21.3136ZM24.3137 28.3847L14.4142 18.4852L11.5858 21.3136L21.4853 31.2131L24.3137 28.3847Z" fill="white" mask="url(#path-2-inside-1_135_8378)"/>
-                </svg>
-            </div>
-            <div class="owl-carousel owl-theme slider1 screen3_cards d-flex align-items-center justify-content-between">
-                <div class="screen3_block d-flex flex-column p-auto position-relative s3_b_pink">
-                    <div class="discount d-flex justify-content-center align-items-center bg_pink"><span>-80%</span></div>
-                    <div class="s3_b_img"><img src="img/image 4.png"></div>
-                    <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 pink_color bg_pink2">
-                        <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
-                    </div>
-                    <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center pink_color"><span class="text-center w-100">Обои Euro Decor <br>7127-00</span></div>
-                    <div class="s3_b_footer_pink d-flex flex-row justify-content-around align-items-center">
-                        <div>
-                            <div class="d-flex flex-column">
-                                <span class="s3_b_f_text1">17 200 ₽</span>
-                                <span class="s3_b_f_text2">7 200 ₽</span>
-                            </div>
-                        </div>
-                        <button class="d-flex pink_color flex-row align-items-center justify-content-evenly">
-                            <span class="s3_b_footer_btn_text1">Купить</span>
-                            <span class="s3_b_footer_btn_text2">В корзину</span>
-                            <img src="svg/pinkcart.svg">
-                        </button>
-                    </div>
-                </div>
-                <div class="screen3_block d-flex flex-column p-auto s3_b_blue">
-                    <div class="s3_b_img"><img src="img/image 4.png"></div>
-                    <div class="s3_b_text d-flex flex-row justify-content-around align-items-center w-100 blue_color">
-                        <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
-                    </div>
-                    <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center blue_color"><span class="text-center w-100">Обои Milassa Ok6 001</span></div>
-                    <div class="s3_b_footer_blue d-flex flex-row justify-content-around align-items-center">
-                        <div>
-                            <div class="d-flex flex-column">
-                                <span class="s3_b_f_text2">70 200 ₽</span>
-                            </div>
-                        </div>
-                        <button class="cart d-flex blue_color flex-row align-items-center justify-content-evenly">
-                            <span class="s3_b_footer_btn_text1">Купить</span>
-                            <span class="s3_b_footer_btn_text2">В корзину</span>
-                            <img src="svg/bluecart.svg">
-                        </button>
-                    </div>
-                </div>
-                <div class="screen3_block d-flex flex-column p-auto s3_b_blue">
-                    <div class="s3_b_img"><img src="img/image 4.png"></div>
-                    <div class="s3_b_text d-flex flex-row justify-content-around align-items-center w-100">
-                        <div class="s3_b_text0 d-flex align-items-center justify-content-center gray_color"><span>На заказ</span></div>
-                        <div class="blue_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
-                    </div>
-                    <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center blue_color"><span class="text-center w-100">Обои Bernardo <br>Bartalucci 84123-1</span></div>
-                    <div class="s3_b_footer_blue d-flex flex-row justify-content-around align-items-center">
-                        <div>
-                            <div class="d-flex flex-column">
-                                <span class="s3_b_f_text2">70 200 ₽</span>
-                            </div>
-                        </div>
-                        <button class="d-flex blue_color flex-row align-items-center justify-content-evenly">
-                            <span class="s3_b_footer_btn_text1">Купить</span>
-                            <span class="s3_b_footer_btn_text2">В корзину</span>
-                            <img src="svg/bluecart.svg">
-                        </button>
-                    </div>
-                </div>
-                <div class="screen3_block d-flex flex-column p-auto s3_b_blue">
-                    <div class="s3_b_img"><img src="img/image 4.png"></div>
-                    <div class="s3_b_text d-flex flex-row justify-content-around align-items-center w-100 blue_color">
-                        <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
-                    </div>
-                    <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center blue_color"><span class="text-center w-100">Обои Milassa Ok6 001</span></div>
-                    <div class="s3_b_footer_blue d-flex flex-row justify-content-around align-items-center">
-                        <div>
-                            <div class="d-flex flex-column">
-                                <span class="s3_b_f_text2">70 200 ₽</span>
-                            </div>
-                        </div>
-                        <button class="cart d-flex blue_color flex-row align-items-center justify-content-evenly">
-                            <span class="s3_b_footer_btn_text1">Купить</span>
-                            <span class="s3_b_footer_btn_text2">В корзину</span>
-                            <img src="svg/bluecart.svg">
-                        </button>
-                    </div>
-                </div>
-                <div class="screen3_block d-flex flex-column p-auto position-relative s3_b_orange">
-                    <div class="discount d-flex justify-content-center align-items-center bg_orange"><span>-80%</span></div>
-                    <div class="s3_b_img"><img src="img/image 5.png"></div>
-                    <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 orange_color bg_orange2">
-                        <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
-                    </div>
-                    <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center orange_color"><span class="text-center w-100">Обои Palitra Simple <br>SP72068-17</span></div>
-                    <div class="s3_b_footer_orange d-flex flex-row justify-content-around align-items-center">
-                        <div>
-                            <div class="d-flex flex-column">
-                                <span class="s3_b_f_text1">17 200 ₽</span>
-                                <span class="s3_b_f_text2">7 200 ₽</span>
-                            </div>
-                        </div>
-                        <button class="d-flex orange_color flex-row align-items-center justify-content-evenly">
-                            <span class="s3_b_footer_btn_text1">Купить</span>
-                            <span class="s3_b_footer_btn_text2">В корзину</span>
-                            <img src="svg/orangecart.svg">
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="nextButton1">
-                <svg class="nextButton_img" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle class="nextButton_color" cx="20" cy="20" r="20" fill="#bfbfbf" fill-opacity="1"/>
-                    <mask id="path-2-inside-1_135_8378" fill="white">
-                        <path d="M13 19.8994L22.8995 9.99992L32.799 19.8994L22.8995 29.7989L13 19.8994Z"/>
-                    </mask>
-                    <path d="M13 19.8994L11.5858 18.4852L10.1716 19.8994L11.5858 21.3136L13 19.8994ZM14.4142 21.3136L24.3137 11.4141L21.4853 8.58571L11.5858 18.4852L14.4142 21.3136ZM24.3137 28.3847L14.4142 18.4852L11.5858 21.3136L21.4853 31.2131L24.3137 28.3847Z" fill="white" mask="url(#path-2-inside-1_135_8378)"/>
-                </svg>
-            </div>
-            <div class="nextButton1_m d-none">
-                <svg width="21" height="89" viewBox="0 0 21 89" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="21" height="89" rx="5" fill="#00ADB5" fill-opacity="0.1"/>
-                    <path d="M5.99999 7L14.9653 45.1484L5.99999 83.1485" stroke="white" stroke-width="5" stroke-linecap="round"/>
-                </svg>
-            </div>
+            <Carousel 
+                :items="itemsPopular"
+                :breakpoints="breakpoints"
+            />
         </div>
     </div>
 </div>
@@ -210,7 +215,7 @@
                     <div class="s3_b_img"><img src="img/image 4.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 pink_color bg_pink2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center pink_color"><span class="text-center w-100">Обои Euro Decor <br>7127-00</span></div>
                     <div class="s3_b_footer_pink d-flex flex-row justify-content-around align-items-center">
@@ -232,7 +237,7 @@
                     <div class="s3_b_img"><img src="img/image 4.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 pink_color bg_pink2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center pink_color"><span class="text-center w-100">Обои Milassa Ok6 001</span></div>
                     <div class="s3_b_footer_pink d-flex flex-row justify-content-around align-items-center">
@@ -254,7 +259,7 @@
                     <div class="s3_b_img"><img src="img/image 4.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 pink_color bg_pink2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center pink_color"><span class="text-center w-100">Обои Milassa Ok6 001</span></div>
                     <div class="s3_b_footer_pink d-flex flex-row justify-content-around align-items-center">
@@ -276,7 +281,7 @@
                     <div class="s3_b_img"><img src="img/image 4.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 pink_color bg_pink2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center pink_color"><span class="text-center w-100">Обои Bernardo <br>Bartalucci 84123-1</span></div>
                     <div class="s3_b_footer_pink d-flex flex-row justify-content-around align-items-center">
@@ -298,7 +303,7 @@
                     <div class="s3_b_img"><img src="img/image 4.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 pink_color bg_pink2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center pink_color"><span class="text-center w-100">Обои Palitra Simple <br>SP72068-17</span></div>
                     <div class="s3_b_footer_pink d-flex flex-row justify-content-around align-items-center">
@@ -363,7 +368,7 @@
                     <div class="s3_b_img"><img src="img/image 5.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 orange_color bg_orange2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center orange_color"><span class="text-center w-100">Обои Euro Decor <br>7127-00</span></div>
                     <div class="s3_b_footer_orange d-flex flex-row justify-content-around align-items-center">
@@ -385,7 +390,7 @@
                     <div class="s3_b_img"><img src="img/image 5.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 orange_color bg_orange2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center orange_color"><span class="text-center w-100">Обои Milassa Ok6 001</span></div>
                     <div class="s3_b_footer_orange d-flex flex-row justify-content-around align-items-center">
@@ -407,7 +412,7 @@
                     <div class="s3_b_img"><img src="img/image 5.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 orange_color bg_orange2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center orange_color"><span class="text-center w-100">Обои Milassa Ok6 001</span></div>
                     <div class="s3_b_footer_orange d-flex flex-row justify-content-around align-items-center">
@@ -429,7 +434,7 @@
                     <div class="s3_b_img"><img src="img/image 5.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 orange_color bg_orange2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center orange_color"><span class="text-center w-100">Обои Bernardo <br>Bartalucci 84123-1</span></div>
                     <div class="s3_b_footer_orange d-flex flex-row justify-content-around align-items-center">
@@ -451,7 +456,7 @@
                     <div class="s3_b_img"><img src="img/image 5.png"></div>
                     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100 orange_color bg_orange2">
                         <div class="s3_b_text0 d-flex align-items-center justify-content-center"><span>11 рулонов</span></div>
-                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</span></div>
+                        <div class="orange_color d-flex"><span class="s3_b_text1">Россия, 10.05 x 1.06 м <p class="text-end">Флизелин, Винил</p></span></div>
                     </div>
                     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center orange_color"><span class="text-center w-100">Обои Palitra Simple <br>SP72068-17</span></div>
                     <div class="s3_b_footer_orange d-flex flex-row justify-content-around align-items-center">
@@ -489,127 +494,37 @@
 </div>
 <div class="block4 w-auto bg_blue">
     <div class="screen4 m-auto d-flex flex-column align-items-center justify-content-evenly bg_blue">
-        <div class="screen4_text d-flex justify-content-center align-items-center"><span>Отзывы о нас</span></div>
-        <div class="screen4_blocks d-flex flex-column justify-content-between w-100">
-            <div class="d-flex flex-row justify-content-between row1">
-                <div class="screen4_element d-flex flex-column s3_b_pink">
+        <div class="screen4_text d-flex justify-content-center align-items-center">
+            <span>Отзывы о нас</span>
+        </div>
+
+        <div class="screen4_blocks d-flex flex-column w-100">
+            <div class="d-flex flex-column m-auto flex-lg-row flex-wrap justify-content-center">
+ 
+                <div class="screen4_element s3_b_pink" v-for="item in feedbacks">
                     <div class="s4_e_header d-flex flex-row justify-content-between">
-                        <div class="s4_e_img"><img src="img/image 8-2.png"></div>
-                        <div class="s4_e_h_element d-flex flex-row justify-content-between">
-                            <div class="d-flex flex-column justify-content-evenly">
-                                <span class="s4_e_h_date d-flex align-items-end gray_color">24 мая 2023</span>
-                                <span class="s4_e_h_text d-flex align-items-start pink_color">Екатерина Югова</span>
-                            </div>
-                            <div class="d-flex justify-content-end align-items-start">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                            </div>
+                        <div class="s4_e_img">
+                            <img :src="item.src">
                         </div>
-                    </div>
-                    <span class="blue_color">Широкий ассортимент и отличное обслуживание!</span>
-                </div>
-                <div class="screen4_element s3_b_pink">
-                    <div class="s4_e_header d-flex flex-row justify-content-between">
-                        <div class="s4_e_img"><img src="img/image 8-2.png"></div>
-                        <div class="s4_e_h_element d-flex flex-row justify-content-between">
-                            <div class="d-flex flex-column justify-content-evenly">
-                                <span class="s4_e_h_date d-flex align-items-end gray_color">24 мая 2023</span>
-                                <span class="s4_e_h_text d-flex align-items-start pink_color">Екатерина Югова</span>
-                            </div>
-                            <div class="d-flex justify-content-end align-items-start">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                            </div>
-                        </div>
-                    </div>
-                    <span class="blue_color">Широкий ассортимент и отличное обслуживание!</span>
-                </div>
-                <div class="screen4_element s3_b_pink">
-                    <div class="s4_e_header d-flex flex-row justify-content-between">
-                        <div class="s4_e_img"><img src="img/image 8-2.png"></div>
-                        <div class="s4_e_h_element d-flex flex-row justify-content-between">
-                            <div class="d-flex flex-column justify-content-evenly">
-                                <span class="s4_e_h_date d-flex align-items-end gray_color">24 мая 2023</span>
-                                <span class="s4_e_h_text d-flex align-items-start pink_color">Екатерина Югова</span>
-                            </div>
-                            <div class="d-flex justify-content-end align-items-start">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                                <img src="svg/rev_star.svg">
-                            </div>
-                        </div>
-                    </div>
-                    <span class="blue_color">Широкий ассортимент и отличное обслуживание!</span>
-                </div>
-            </div>
-            <div class="d-flex flex-row justify-content-between row2">
-                <div class="screen4_element s3_b_pink">
-                    <div class="s4_e_header d-flex flex-row justify-content-between">
-                        <div class="s4_e_img"><img src="img/image 8-2.png"></div>
+
                         <div class="s4_e_h_element d-flex flex-row justify-content-between">
                             <div class="d-flex flex-column justify-content-evenly s4_header_text">
-                                <span class="s4_e_h_date d-flex align-items-end gray_color">24 мая 2023</span>
-                                <span class="s4_e_h_text d-flex align-items-start pink_color">Екатерина Югова</span>
+                                <span class="s4_e_h_date d-flex align-items-end gray_color" v-html="item.date" />
+                                <span class="s4_e_h_text d-flex align-items-start pink_color" v-html="item.author" />
                             </div>
+
                             <div class="d-flex justify-content-end align-items-start rate">
                                 <span class="rate_number">5</span>
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg">
+                                <img src="svg/star-svgrepo-com.svg" class="rate_star">
+                                <img src="svg/star-svgrepo-com.svg" class="rate_star">
+                                <img src="svg/star-svgrepo-com.svg" class="rate_star">
+                                <img src="svg/star-svgrepo-com.svg" class="rate_star">
+                                <img src="svg/star-svgrepo-com.svg">
                             </div>
                         </div>
                     </div>
-                    <span class="blue_color s4_text">Широкий ассортимент и отличное обслуживание!</span>
-                </div>
-                <div class="screen4_element s3_b_pink">
-                    <div class="s4_e_header d-flex flex-row justify-content-between">
-                        <div class="s4_e_img"><img src="img/image 8-2.png"></div>
-                        <div class="s4_e_h_element d-flex flex-row justify-content-between">
-                            <div class="d-flex flex-column justify-content-evenly s4_header_text">
-                                <span class="s4_e_h_date d-flex align-items-end gray_color">24 мая 2023</span>
-                                <span class="s4_e_h_text d-flex align-items-start pink_color">Екатерина Югова</span>
-                            </div>
-                            <div class="d-flex justify-content-end align-items-start rate">
-                                <span class="rate_number">5</span>
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg">
-                            </div>
-                        </div>
-                    </div>
-                    <span class="blue_color s4_text">Широкий ассортимент и отличное обслуживание!</span>
-                </div>
-                <div class="screen4_element s3_b_pink">
-                    <div class="s4_e_header d-flex flex-row justify-content-between">
-                        <div class="s4_e_img"><img src="img/image 8-2.png"></div>
-                        <div class="s4_e_h_element d-flex flex-row justify-content-between">
-                            <div class="d-flex flex-column justify-content-evenly s4_header_text">
-                                <span class="s4_e_h_date d-flex align-items-end gray_color">24 мая 2023</span>
-                                <span class="s4_e_h_text d-flex align-items-start pink_color">Екатерина Югова</span>
-                            </div>
-                            <div class="d-flex justify-content-end align-items-center rate">
-                                <span class="rate_number">5</span>
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg" class="rate_star">
-                                <img src="svg/rev_star.svg">
-                            </div>
-                        </div>
-                    </div>
-                    <span class="blue_color s4_text">Широкий ассортимент и отличное обслуживание!</span>
+
+                    <p class="blue_color ms-1 s4_text" v-html="item.description" />
                 </div>
             </div>
         </div>
@@ -621,4 +536,5 @@
         <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Afa9cda4220b075d88c43dd32dad1c4126c729c7d7f94ed1217de3e0e3afbf847&amp;source=constructor" frameborder="0"></iframe>
     </div>
 </div>
-@include('components.main_footer')
+<Footer/>
+</template>
