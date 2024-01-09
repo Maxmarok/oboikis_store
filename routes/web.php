@@ -54,6 +54,16 @@ Route::get('/catalog', function () {
     ]);
 });
 
+Route::get('/dashboard', function () {
+    $title = 'Админка "Обойкис"';
+    $short_description  = 'Админка "Обойкис"';
+    
+    return view('dashboard', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
+});
+
 Route::get('/filter', function () {
     return view('pages.filter');
 });
