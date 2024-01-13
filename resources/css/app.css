@@ -430,7 +430,7 @@ nav {
 }
 
 .s3_b_f_text2 {
-    font-family: 'LatoB';
+    font-family: 'LatoB', 'PT Sans';
     font-size: 20px;
     font-weight: 700;
     line-height: 20px;
@@ -905,7 +905,7 @@ footer {
 
 .filter {
     height: 966px;
-    width: 288px;
+    width: 30%;
     border-radius: 14px;
 }
 
@@ -2314,6 +2314,16 @@ select {
     width: 32px;
 }
 
+.catalog_filter_cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.catalog_filter_cards > * {
+    margin: 10px;
+}
+
 .display-none {
     display: none;
 }
@@ -2418,6 +2428,30 @@ select {
 }
 
 
+.multiselect {
+    border-radius: 14px;
+    border-color: #00ADB5;
+}
+
+.multiselect.is-active {
+    border-radius: 14px 14px 0 0 ;
+    border-color: #00ADB5;
+    background: #00ADB5;
+}
+
+
+.multiselect.is-active .multiselect-placeholder,
+.multiselect.is-active .multiselect-single-label-text {
+    color: #fff;
+}
+
+.multiselect.is-active .multiselect-single-label-text {
+    border-radius: 14px;
+}
+
+.multiselect-placeholder {
+    padding-right: 0;
+}
 
 @media (max-width: 900px) {
 

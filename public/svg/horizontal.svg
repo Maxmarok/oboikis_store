@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1590px" height="530px" viewBox="0 0 1590 530" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>horizontal</title>
+    <defs>
+        <linearGradient x1="95.322713%" y1="50%" x2="5.10153369%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#EBB313" offset="0%"></stop>
+            <stop stop-color="#FF449F" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="95.5189062%" y1="50%" x2="5.10153369%" y2="50%" id="linearGradient-2">
+            <stop stop-color="#EBB313" offset="0%"></stop>
+            <stop stop-color="#F57F55" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="horizontal">
+            <rect id="Rectangle" stroke="#979797" fill="#00ADB5" x="0.5" y="0.5" width="1589" height="529"></rect>
+            <g id="Text" transform="translate(627.500000, 122.000000)">
+                <text id="ОБОЙКИС" font-family="Lato-Black, Lato" font-size="148" font-weight="800" letter-spacing="4" fill="#FFFFFF">
+                    <tspan x="0.068" y="146">ОБОЙКИС</tspan>
+                </text>
+                <line x1="242" y1="193" x2="552" y2="193" id="Line" stroke="#FFFFFF" stroke-width="3" stroke-linecap="square"></line>
+                <text id="Магазин-обоев" font-family="Lato-Light, Lato" font-size="62" font-weight="300" fill="#FFFFFF">
+                    <tspan x="192.9155" y="275">магазин обоев</tspan>
+                </text>
+            </g>
+            <g id="304326" transform="translate(330.500000, 265.000000) scale(-1, 1) translate(-330.500000, -265.000000) translate(126.000000, 82.000000)">
+                <g id="Group" transform="translate(204.500000, 183.000000) scale(-1, 1) rotate(-180.000000) translate(-204.500000, -183.000000) ">
+                    <polygon id="Path" fill="#FFFFFF" fill-rule="nonzero" points="121.701818 285.449386 121.701818 333.722675 133.977976 333.722675 133.977976 345.66704 63.7710274 345.66704 63.7710274 333.722675 75.141788 333.722675 75.141788 259.025277 32.014689 228.11995 32.014689 195.64448 63.8316311 214.333012 63.7710274 97.7616692 63.8316311 0 220.189175 0 376.546719 0 376.546719 97.8222402 376.546719 214.333012 409 195.64448 409 228.11995 220.189175 366"></polygon>
+                    <polygon id="Rectangle" fill="#00ADB5" transform="translate(204.308978, 196.027905) rotate(36.000000) translate(-204.308978, -196.027905) " points="-8.0057163 140.810635 416.652004 140.701813 416.623672 251.245175 -8.03404857 251.353997"></polygon>
+                    <path d="M120.546805,177.475678 L364.897953,179.679708 L341.132042,253.41378 L131.97144,243.677806 C113.875641,227.183502 103.700237,213.178259 101.445226,201.662077 C99.1902154,190.145894 105.557408,182.083761 120.546805,177.475678 Z" id="Rectangle" fill="url(#linearGradient-1)" transform="translate(232.950428, 215.444729) rotate(36.000000) translate(-232.950428, -215.444729) "></path>
+                    <path d="M134.101273,104.961833 C129.740562,107.491077 126.98708,109.213672 125.840825,110.129619 C110.898327,122.069848 120.314819,133.023604 154.090302,142.990887 L147.187561,214.536388 C121.63021,213.00064 107.200441,207.152269 103.898254,196.991277 C98.4299964,180.165181 100.175608,117.909738 111.42629,111.50538 C113.698779,110.211784 121.257107,108.030602 134.101273,104.961833 Z" id="Rectangle" fill="url(#linearGradient-2)" transform="translate(127.497220, 159.749110) rotate(35.000000) translate(-127.497220, -159.749110) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

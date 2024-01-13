@@ -3,6 +3,10 @@ import Home from '@js/pages/Home.vue'
 import About from '@js/pages/About.vue'
 import Contacts from '@js/pages/Contacts.vue'
 import Catalog from '@js/pages/Catalog.vue'
+import Items from '@js/pages/Items.vue'
+import ItemPage from '@js/pages/ItemPage.vue'
+import Cart from '@js/pages/Cart.vue'
+import Delivery from '@js/pages/Delivery.vue'
 import Dashboard from '@js/pages/dashboard/index.vue'
 
 import auth from '@js/middleware/auth'
@@ -11,7 +15,23 @@ const routes = [
     { path: '/', component: Home },
     { path: '/about', component: About },
     { path: '/contacts', component: Contacts },
-    { path: '/catalog', component: Catalog },
+    { 
+        path: '/catalog', 
+        component: Catalog,
+    },
+
+    { 
+        path: '/catalog/:section', 
+        component: Items,
+    },
+
+    { 
+        path: '/catalog/:section/:id', 
+        component: ItemPage,
+    },
+
+    { path: '/cart', component: Cart },
+    { path: '/delivery', component: Delivery },
 
     {
         name: 'Dashboard',

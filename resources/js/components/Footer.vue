@@ -4,7 +4,7 @@
 <footer class="w-auto d-flex bg_blue mt-auto">
     <div class="foot m-auto d-flex flex-row justify-content-between align-items-center position-relative">
         <div class="footer_block1 d-flex justify-content-between flex-column">
-            <router-link to="/"><img src="svg/logo.svg"></router-link>
+            <router-link to="/"><img src="/svg/logo.svg"></router-link>
             <span class="white_color text-center align-items-end">© 2021 – 2023 «Обойкис»</span>
         </div>
         <div class="footer_divider_block">
@@ -40,9 +40,9 @@
             <div class="contact d-flex flex-column">
                 <span class="footer_text1 white_color text-end mb-3">Свяжитесь с нами</span>
                 <div class="text-end d-flex w-50 justify-content-between align-items-end align-self-end">
-                    <a href="#"><img src="svg/vk_icon2.svg"></a>
-                    <a href="#"><img src="svg/tg_icon2.svg"></a>
-                    <a href="#"><img src="svg/wa_icon2.svg"></a>
+                    <a href="#"><img src="/svg/vk_icon2.svg"></a>
+                    <a href="#"><img src="/svg/tg_icon2.svg"></a>
+                    <a href="#"><img src="/svg/wa_icon2.svg"></a>
                 </div>
             </div>
             <div class="footer_divider_block">

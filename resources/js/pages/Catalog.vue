@@ -20,7 +20,7 @@ const menu = [
     {
         id: 1,
         title: 'Обои',
-        icon: 'svg/wallpaper1.svg',
+        icon: '/svg/wallpaper1.svg',
         items: [
             {
                 title: 'Германия',
@@ -70,7 +70,7 @@ const menu = [
     {
         id: 2,
         title: 'Фотообои',
-        icon: 'svg/wallpaper2.svg',
+        icon: '/svg/wallpaper2.svg',
         items: [
             {
                 title: 'Германия',
@@ -120,7 +120,7 @@ const menu = [
     {
         id: 3,
         title: 'Фрески',
-        icon: 'svg/wallpaper3.svg',
+        icon: '/svg/wallpaper3.svg',
         items: [
             {
                 title: 'Германия',
@@ -170,7 +170,7 @@ const menu = [
     {
         id: 4,
         title: 'Лепной декор',
-        icon: 'svg/wallpaper4.svg',
+        icon: '/svg/wallpaper4.svg',
         items: [
             {
                 title: 'Германия',
@@ -220,7 +220,7 @@ const menu = [
     {
         id: 5,
         title: 'Клей',
-        icon: 'svg/bucket.svg',
+        icon: '/svg/bucket.svg',
         items: [
             {
                 title: 'Германия',

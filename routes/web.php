@@ -54,6 +54,26 @@ Route::get('/catalog', function () {
     ]);
 });
 
+Route::get('/catalog/{section}', function () {
+    $title = 'Каталог "Обойкис"';
+    $short_description  = 'Каталог магазина "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
+});
+
+Route::get('/catalog/{section}/{id}', function () {
+    $title = 'Каталог "Обойкис"';
+    $short_description  = 'Каталог магазина "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
+});
+
 Route::get('/dashboard', function () {
     $title = 'Админка "Обойкис"';
     $short_description  = 'Админка "Обойкис"';
@@ -64,18 +84,22 @@ Route::get('/dashboard', function () {
     ]);
 });
 
-Route::get('/filter', function () {
-    return view('pages.filter');
-});
-
-Route::get('/item', function () {
-    return view('pages.item');
-});
-
 Route::get('/cart', function () {
-    return view('pages.cart');
+    $title = 'Корзина';
+    $short_description  = 'Корзина в магазине "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
 });
 
 Route::get('/delivery', function () {
-    return view('pages.delivery');
+    $title = 'Оформление заказа';
+    $short_description  = 'Оформление заказа в магазине "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
 });

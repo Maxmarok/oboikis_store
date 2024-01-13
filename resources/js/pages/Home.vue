@@ -14,7 +14,7 @@ const itemsPopular = [
         price: 7200, 
         discount: 80,
         stock: 11,
-        src: 'img/image_4.png',
+        src: '/img/image_4.png',
     },
 
     {
@@ -27,7 +27,7 @@ const itemsPopular = [
         price: 7200, 
         discount: 80,
         stock: 11,
-        src: 'img/image_4.png',
+        src: '/img/image_4.png',
     },
 
     {
@@ -40,7 +40,7 @@ const itemsPopular = [
         price: 7200, 
         discount: 80,
         stock: 11,
-        src: 'img/image_4.png',
+        src: '/img/image_4.png',
     },
 
     {
@@ -53,7 +53,7 @@ const itemsPopular = [
         price: 7200, 
         discount: 80,
         stock: 11,
-        src: 'img/image_4.png',
+        src: '/img/image_4.png',
     },
 
     {
@@ -66,7 +66,7 @@ const itemsPopular = [
         price: 7200, 
         discount: 80,
         stock: 11,
-        src: 'img/image_4.png',
+        src: '/img/image_4.png',
     },
 
     {
@@ -79,7 +79,7 @@ const itemsPopular = [
         price: 7200, 
         discount: 80,
         stock: 11,
-        src: 'img/image_4.png',
+        src: '/img/image_4.png',
     },
 ];
 
@@ -99,7 +99,7 @@ const feedbacks = [
         id: 1,
         date: '24 мая 2023',
         author: 'Екатерина Югова',
-        src: 'img/image 8-2.png',
+        src: '/img/image 8-2.png',
         description: 'Широкий ассортимент и отличное обслуживание!',
     },
 
@@ -107,7 +107,7 @@ const feedbacks = [
         id: 2,
         date: '14 августа 2023',
         author: 'Елизавета Черткова',
-        src: 'img/image 8-2.png',
+        src: '/img/image 8-2.png',
         description: 'Тот момент, когда хочется оставить отзыв... Выбор обоев - сложный, муторный и долгий процесс...',
     },
 
@@ -115,7 +115,7 @@ const feedbacks = [
         id: 3,
         date: '26 июля 2023',
         author: 'Виктор Клименков',
-        src: 'img/image 8-2.png',
+        src: '/img/image 8-2.png',
         description: 'Магазин шикарен, полностью клиентоориентированный персонал, знают свое дело и являются лучшими...',
     },
 ]

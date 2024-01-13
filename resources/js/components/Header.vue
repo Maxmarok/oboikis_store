@@ -16,22 +16,22 @@ const toggleMenu = () => {
             <div class="menu_contacts d-flex flex-row align-items-center">
                 <div class="contacts d-flex flex-column align-items-center me-4">
                     <div class="number d-flex pb-1"><a href="tel:+79922224244" class="text-decoration-none white_color">+7 (992) 222-42-44</a></div>
-                    <div class="d-flex align-items-center"><a href="mailto:oboikis@yandex.ru" class="text-decoration-none white_color">oboikis<img src="svg/at.svg">yandex.ru</a></div>
+                    <div class="d-flex align-items-center"><a href="mailto:oboikis@yandex.ru" class="text-decoration-none white_color">oboikis<img src="/svg/at.svg">yandex.ru</a></div>
                 </div>
-                <div class="city d-flex align-items-center justify-content-between"><img src="svg/house.svg" class="me-1">г. Пермь</div>
+                <div class="city d-flex align-items-center justify-content-between"><img src="/svg/house.svg" class="me-1">г. Пермь</div>
             </div> 
-            <div class="d-flex align-items-center menu_logo"><router-link to="/"><img src="svg/logo.svg"></router-link></div>
+            <div class="d-flex align-items-center menu_logo"><router-link to="/"><img src="/svg/logo.svg"></router-link></div>
             <div class="header_block3 d-flex justify-content-evenly align-items-center">
                 <div class="search">
                     <form class="d-flex justify-content-center align-items-center" action="" method="GET">
                         <input name="s" placeholder="Поиск..." type="search" class="white_color">
-                        <button type="submit"><img src="svg/glass.svg"></button>
+                        <button type="submit"><img src="/svg/glass.svg"></button>
                     </form>
                 </div>
                 <router-link to="/cart">
                     <div class="d-flex flex-row align-items-center">
                         <div class="counter d-flex align-items-center justify-content-center">0</div>
-                        <div class="menu_cart_block">Корзина<img src="svg/cart.svg" class="ms-2"></div>
+                        <div class="menu_cart_block">Корзина<img src="/svg/cart.svg" class="ms-2"></div>
                     </div>
                 </router-link>
             </div>
@@ -63,12 +63,12 @@ const toggleMenu = () => {
                     <div class="search d-block">
                         <form class="d-flex justify-content-center align-items-center" action="" method="GET">
                             <input name="s" placeholder="Поиск..." type="search" class="white_color">
-                            <button type="submit"><img src="svg/glass.svg"></button>
+                            <button type="submit"><img src="/svg/glass.svg"></button>
                         </form>
                     </div>
                     <div class="contacts d-flex flex-column align-items-center me-4">
                         <div class="number d-flex pb-1"><a href="tel:+79922224244" class="text-decoration-none white_color">+7 (992) 222-42-44</a></div>
-                        <div class="d-flex align-items-center"><a href="mailto:oboikis@yandex.ru" class="text-decoration-none white_color">oboikis<img src="svg/at.svg">yandex.ru</a></div>
+                        <div class="d-flex align-items-center"><a href="mailto:oboikis@yandex.ru" class="text-decoration-none white_color">oboikis<img src="/svg/at.svg">yandex.ru</a></div>
                     </div>
                     <div class="menu2_block2_element d-flex justify-content-between">
                         <a href="#">
