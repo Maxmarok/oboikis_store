@@ -1,5 +1,8 @@
 <script setup>
 import {ref} from 'vue'
+import { useCartStore } from '@js/stores/cartStore'
+const store = useCartStore()
+
 const menuOpen = ref(false)
 
 const toggleMenu = () => {
@@ -9,7 +12,9 @@ const toggleMenu = () => {
 <template>
     <nav class="w-auto bg_blue mobile_header_border">
         <div class="menu d-flex m-auto justify-content-between flex-row bg_blue vw-100">
-            <div class="nav_element align-self-center position-relative" @click="toggleMenu">
+            <div class="nav_element d-flex d-lg-none flex-column  align-self-center position-relative" 
+                :class="{active: menuOpen, 'justify-content-center': menuOpen, 'justify-content-around': !menuOpen}" @click="toggleMenu"
+            >
                 <div class="nav_element_line1" :class="{'nav_element_rotate1': menuOpen}"></div>
                 <div class="nav_element_line2" :class="{'nav_element_rotate2': menuOpen}"></div>
             </div>
@@ -18,19 +23,19 @@ const toggleMenu = () => {
                     <div class="number d-flex pb-1"><a href="tel:+79922224244" class="text-decoration-none white_color">+7 (992) 222-42-44</a></div>
                     <div class="d-flex align-items-center"><a href="mailto:oboikis@yandex.ru" class="text-decoration-none white_color">oboikis<img src="/svg/at.svg">yandex.ru</a></div>
                 </div>
-                <div class="city d-flex align-items-center justify-content-between"><img src="/svg/house.svg" class="me-1">г. Пермь</div>
+                <!-- <div class="city d-flex align-items-center justify-content-between"><img src="/svg/house.svg" class="me-1">г. Пермь</div> -->
             </div> 
-            <div class="d-flex align-items-center menu_logo"><router-link to="/"><img src="/svg/logo.svg"></router-link></div>
-            <div class="header_block3 d-flex justify-content-evenly align-items-center">
-                <div class="search">
+            <div class="d-flex align-items-center menu_logo"><router-link to="/"><img src="/svg/horizontal.svg"></router-link></div>
+            <div class="header_block3 d-flex justify-content-end align-items-center">
+                <!-- <div class="search">
                     <form class="d-flex justify-content-center align-items-center" action="" method="GET">
                         <input name="s" placeholder="Поиск..." type="search" class="white_color">
                         <button type="submit"><img src="/svg/glass.svg"></button>
                     </form>
-                </div>
+                </div> -->
                 <router-link to="/cart">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="counter d-flex align-items-center justify-content-center">0</div>
+                    <div class="d-flex flex-row align-items-center cart_header" :class="{active: store.cart.length > 0}">
+                        <div class="counter d-flex align-items-center justify-content-center" v-html="store.cart.length" />
                         <div class="menu_cart_block">Корзина<img src="/svg/cart.svg" class="ms-2"></div>
                     </div>
                 </router-link>
@@ -60,12 +65,12 @@ const toggleMenu = () => {
                     <div class="menu2_block2_divider w-100 position-relative">
                         <div class="position-absolute"></div>
                     </div>
-                    <div class="search d-block">
+                    <!-- <div class="search d-block">
                         <form class="d-flex justify-content-center align-items-center" action="" method="GET">
                             <input name="s" placeholder="Поиск..." type="search" class="white_color">
                             <button type="submit"><img src="/svg/glass.svg"></button>
                         </form>
-                    </div>
+                    </div> -->
                     <div class="contacts d-flex flex-column align-items-center me-4">
                         <div class="number d-flex pb-1"><a href="tel:+79922224244" class="text-decoration-none white_color">+7 (992) 222-42-44</a></div>
                         <div class="d-flex align-items-center"><a href="mailto:oboikis@yandex.ru" class="text-decoration-none white_color">oboikis<img src="/svg/at.svg">yandex.ru</a></div>

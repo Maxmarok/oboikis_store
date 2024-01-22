@@ -20,7 +20,14 @@ Route::group([
 ], function(){
 
     Route::prefix('items')->group(function(){
-        Route::post('/', [App\Http\Controllers\API\ItemsController::class, 'get']);
+        Route::post('/', [App\Http\Controllers\API\ItemsController::class, 'getItems']);
     });
 
+    Route::prefix('item')->group(function(){
+        Route::post('/', [App\Http\Controllers\API\ItemsController::class, 'getItem']);
+    });
+
+    Route::prefix('cart')->group(function(){
+        Route::post('/', [App\Http\Controllers\API\CartController::class, 'getCart']);
+    });
 });

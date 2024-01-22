@@ -2,13 +2,12 @@
 import helper from '@js/components/helper.js'
 const props = defineProps(['item'])
 
-
-
 const getStock = () => {
     return helper.getNoun(props.item.stock, 'товар', 'товара', 'товаров')
 }
 
 let discount = props.item.discount_percent > 0
+
 </script>
 <template>
 <div class="screen3_block d-flex flex-column p-auto position-relative" 
@@ -43,7 +42,7 @@ let discount = props.item.discount_percent > 0
         </div>
 
         <div class="d-flex w-50">
-            <span class="s3_b_text1" v-html="props.item.description" />
+            <span class="s3_b_text1" :class="{'pink_color': props.item.has_discount, 'blue_color': !props.item.has_discount}" v-html="props.item.description" />
         </div>
     </div>
 
@@ -66,7 +65,7 @@ let discount = props.item.discount_percent > 0
                 <span class="s3_b_f_text2" v-html="`${props.item.discount_price} ₽`" />
             </div>
         </div>
-        <button class="d-flex flex-row align-items-center justify-content-evenly"
+        <router-link :to="`/catalog/${props.item.catalog_url}/${props.item.id}`" class="d-flex flex-row align-items-center justify-content-evenly"
             :class="{
                 'pink_color': discount,
                 'blue_color': !discount
@@ -74,7 +73,7 @@ let discount = props.item.discount_percent > 0
             <span class="s3_b_footer_btn_text1">Купить</span>
             <span class="s3_b_footer_btn_text2">В корзину</span>
             <img :src="discount ? '/svg/pinkcart.svg' : '/svg/bluecart.svg'" />
-        </button>
+        </router-link>
     </div>
 </div>
 </template>

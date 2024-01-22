@@ -9,11 +9,21 @@ class Items extends Model
 {
     use HasFactory;
 
-    protected $appends = ['title', 'discount_price', 'discount_percent'];
+    protected $appends = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url'];
 
     public function catalog()
     {
         return $this->belongsTo(Catalogs::class, 'catalog_id', 'id');
+    }
+
+    public function getTypeAttribute()
+    {
+        return $this->catalog->name;
+    }
+
+    public function getHasDiscountAttribute()
+    {
+        return $this->discount > 0;
     }
 
     public function getDiscountPriceAttribute()
@@ -29,5 +39,15 @@ class Items extends Model
     public function getTitleAttribute()
     {
         return $this->catalog->name . ' ' . $this->producer . ' ' . $this->name;
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->country . ', ' . $this->size . ', ' . $this->material;
+    }
+
+    public function getCatalogUrlAttribute()
+    {
+        return $this->catalog->url;
     }
 }

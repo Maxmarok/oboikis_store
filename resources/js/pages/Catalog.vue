@@ -11,7 +11,7 @@ const breadcrumbs = [
         link: '/',
     },
     {
-        title: ' – Каталог',
+        title: 'Каталог',
         link: null,
     },
 ]

@@ -3,6 +3,8 @@ import {onMounted, ref} from 'vue'
 import Header from '@js/components/Header.vue'
 import Menu from '@js/components/Menu.vue'
 import Footer from '@js/components/Footer.vue'
+import Breadcrumbs from '@js/components/Breadcrumbs.vue'
+
 import Item from '@js/components/Item.vue'
 
 import VueSlider from 'vue-slider-component'
@@ -10,22 +12,9 @@ import 'vue-slider-component/theme/antd.css'
 
 import Multiselect from "@vueform/multiselect"
 
-const breadcrumbs = [
-    {
-        title: 'Главная',
-        link: '/',
-    },
-    {
-        title: ' – Каталог',
-        link: '/catalog',
-    },
-    {
-        title: '– Обои',
-        link: null,
-    },
-]
-
-const items = ref();
+const breadcrumbs = ref()
+const title = ref()
+const items = ref()
 
 let value = [0, 100000]
 const selected = ref(null)
@@ -39,12 +28,16 @@ let options = [
 const getItems = async () => {
     return axios.post('/api/v1/items', {catalog: 'wallpapper'})
         .then((res) => {
-            return res.data.data
+            return res.data
         })
 }
 
 onMounted(() => {
-    getItems().then(res => items.value = res)
+    getItems().then(res => {
+        items.value = res.data
+        breadcrumbs.value = res.breadcrumbs
+        title.value = res.title
+    })
 })
 
 
@@ -55,36 +48,16 @@ onMounted(() => {
 <div class="catalog_filter_block w-auto">
     <div class="bc_block m-auto w-100">
         <div class="breadcrumbs mb-5 ms-auto me-auto mt-5">
-            <a v-for="item in breadcrumbs" 
-                :class="{
-                    'blue_color c_t1_span1': item.link,
-                    'pink_color c_t1_span2': !item.link,
-                }" 
-                v-html="item.title"
-                :href="item.link"
-            />
+            <Breadcrumbs :items="breadcrumbs"/>
         </div>
     </div>
     <div class="catalog_filter_screen me-auto ms-auto d-flex align-items-start justify-content-between flex-column">
         <div class="mb-5 bread">
-            <a v-for="item in breadcrumbs" 
-                :class="{
-                    'blue_color c_t1_span1': item.link,
-                    'pink_color c_t1_span2': !item.link,
-                }" 
-                v-html="item.title"
-                :href="item.link"
-            />
+            <Breadcrumbs :items="breadcrumbs"/>
         </div>
         <div class="d-flex flex-row justify-content-between w-100 mb-3 filter_screen_text">
-            <div class="contacts_text2 blue_color catalog_text2 m-0">Купить <span> Обои </span> в Перми</div>
-            <!-- <div class="sort d-flex flex-column blue_color position-relative">
-                <select>
-                    <option>Сортировать по цене</option>
-                    <option>Сортировать по цене</option>
-                    <option>Сортировать по цене</option>
-                </select>
-            </div> -->
+            <div class="contacts_text2 blue_color catalog_text2 m-0" v-html="title" />
+
         </div>
         <div class="catalog_filter_bottom d-flex flex-row justify-content-between w-100">
             <div class="d-flex flex-column w-100">

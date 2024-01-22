@@ -25,5 +25,9 @@ export default {
 
         noun = five
         return number + ' ' + noun
+    },
+
+    getPrice(value) {
+        return value.toLocaleString('ru')
     }
 }

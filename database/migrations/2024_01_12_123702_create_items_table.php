@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('discount')->default(0);
             $table->integer('stock')->default(0);
             $table->text('image')->nullable();
+            $table->text('gallery')->nullable();
             $table->text('country')->nullable();
             $table->text('producer')->nullable();
             $table->text('material')->nullable();
