@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import { onMounted, ref } from 'vue'
 import { useCartStore } from '@js/stores/cartStore'
 
 import Header from '@js/components/Header.vue'
@@ -126,6 +126,7 @@ const getTotalSum = () => {
 <Header/>
 <Menu />
 <div class="cart_block w-100 position-relative">
+    <img class="position-absolute goods_bg" src="/svg/cart_bg.svg">
     <div class="bc_block m-auto w-100">
         <div class="breadcrumbs mb-5 ms-auto me-auto mt-5">
             <Breadcrumbs :items="breadcrumbs"/>
@@ -136,9 +137,8 @@ const getTotalSum = () => {
         <div class="cart_screen_text">
             <Breadcrumbs :items="breadcrumbs"/>
         </div>
-        <span class="wallpaper_screen_elem1_text blue_color" v-html="title" />
-        <div v-if="cart" class="goods_block d-flex flex-row mt-5 position-relative">
-            <img class="position-absolute goods_bg" src="/svg/cart_bg.svg">
+        <span v-if="cart && cart.length > 0" class="wallpaper_screen_elem1_text blue_color" v-html="title" />
+        <div v-if="cart && cart.length > 0" class="goods_block d-flex flex-row mt-5 position-relative">
             <div class="goods_elem1 me-2">
                 <div class="goods_elem1_header">
                     <div class="goods_elem1_header_elem1 d-flex align-items-center justify-content-center white_color bg_blue"><span>Выбранные товары</span></div>
@@ -200,7 +200,7 @@ const getTotalSum = () => {
                                         <input class="quantity border-start-0 border-end-0 text-center blue_color" :class="{'pink_color': item.has_discount}" type="number" @input="(e) => changeInput(e, item.id)" :value="item.count" />
                                         <button class="q-plus blue_color" :class="{'pink_color': item.has_discount}" @click="changeValue(item.id, 1)">+</button>
                                     </div>
-                                    <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="display-none float-end">
+                                    <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="display-none float-end" @click="removeFromCart(item.id)">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M5.25 9.375C5.25 9.03 5.53 8.75 5.875 8.75C6.22 8.75 6.5 9.03 6.5 9.375V16.875C6.5 17.2206 6.22 17.5 5.875 17.5C5.53 17.5 5.25 17.2206 5.25 16.875V9.375ZM8.375 9.375C8.375 9.03 8.655 8.75 9 8.75C9.345 8.75 9.625 9.03 9.625 9.375V16.875C9.625 17.2206 9.345 17.5 9 17.5C8.655 17.5 8.375 17.2206 8.375 16.875V9.375ZM11.5 9.375C11.5 9.03 11.78 8.75 12.125 8.75C12.47 8.75 12.75 9.03 12.75 9.375V16.875C12.75 17.2206 12.47 17.5 12.125 17.5C11.78 17.5 11.5 17.2206 11.5 16.875V9.375ZM2.125 17.5C2.125 18.8806 3.24437 20 4.625 20H13.375C14.7556 20 15.875 18.8806 15.875 17.5V7.5H2.125V17.5ZM10.875 2.5H7.125V1.875C7.125 1.52938 7.405 1.25 7.75 1.25H10.25C10.595 1.25 10.875 1.52938 10.875 1.875V2.5ZM15.875 2.5H12.125V1.25C12.125 0.56 11.565 0 10.875 0H7.125C6.435 0 5.875 0.56 5.875 1.25V2.5H2.125C1.435 2.5 0.875 3.06 0.875 3.75V5C0.875 5.69 1.43437 6.24937 2.12437 6.25H15.8763C16.5656 6.24937 17.125 5.69 17.125 5V3.75C17.125 3.06 16.565 2.5 15.875 2.5Z" fill="#00ADB5"/>
                                     </svg>
                                     <div class="d-flex flex-column align-items-start ms-3 goods_elem1_footer_text">
@@ -231,23 +231,23 @@ const getTotalSum = () => {
 
                         <div>
                             <span 
-                                :class="{'gray_color2': getDiscountSum() === 0,'orange_color': getDiscountSum() > 0}"
+                                :class="{'gray_color2': getDiscountSum() === 0,'blue_color': getDiscountSum() > 0}"
                             >
-                                Скидка: {{ helper.getPrice(getDiscountSum()) }} ₽
+                                Скидка: <span :class="{'pink_color': getDiscountSum() > 0}">{{ helper.getPrice(getDiscountSum()) }} ₽</span>
                             </span>
                         </div>
 
                         <div>
-                            <span class="blue_color" :class="{'gray_color2': selectedItems.length === 0}">Итого: <span :class="{'pink_color': selectedItems.length > 0}">{{ helper.getPrice(getTotalSum()) }} ₽</span></span>
+                            <span class="blue_color" :class="{'gray_color2': selectedItems.length === 0}">Итого: <span :class="{'pink_color': selectedItems.length > 0 && getDiscountSum() > 0}">{{ helper.getPrice(getTotalSum()) }} ₽</span></span>
                             
                         </div>
                     </div>
                 </div>
                 <div class="goods_elem2_footer d-flex align-items-center justify-content-center">
-                    <button class="white_color bg_pink" v-if="selectedItems.length > 0">
+                    <router-link to="/catalog/cart/delivery" class="white_color bg_pink" v-if="selectedItems.length > 0">
                         <span class="goods_elem2_footer_text1">Заказать выбранные товары</span>
                         <span class="goods_elem2_footer_text2">Оформить заказ</span>
-                    </button>
+                    </router-link>
 
                     <button class="white_color bg_pink" disabled="true" v-else>
                         <span class="goods_elem2_footer_text1">Выберите товары для заказа</span>
@@ -257,7 +257,14 @@ const getTotalSum = () => {
             </div>
         </div>
 
-        <Loader v-else />
+        <div v-if="cart && cart.length === 0" class="cart_screen_block d-flex flex-column align-items-center justify-content-evenly">
+            <span class="blue_color">Корзина пуста</span>
+            <div class="cart_screen_elem blue_color">
+                Добавьте товары из <span class="pink_color"><router-link to="/catalog">каталога</router-link></span>, чтобы оформить заказ
+            </div>
+        </div>
+
+        <Loader v-if="!cart" />
     </div>
 </div>
 <Footer/>

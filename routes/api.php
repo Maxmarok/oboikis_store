@@ -30,4 +30,13 @@ Route::group([
     Route::prefix('cart')->group(function(){
         Route::post('/', [App\Http\Controllers\API\CartController::class, 'getCart']);
     });
+
+    Route::prefix('slider')->group(function(){
+        Route::get('/', [App\Http\Controllers\API\ItemsController::class, 'getItemsForSlider']);
+    });
+
+    Route::prefix('delivery')->group(function(){
+        Route::post('/', [App\Http\Controllers\API\CartController::class, 'sendForm']);
+    });
+    
 });

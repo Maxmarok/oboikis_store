@@ -17,7 +17,7 @@ const routes = [
     { path: '/contacts', component: Contacts },
     { 
         path: '/catalog', 
-        component: Catalog,
+        component: Items,
     },
 
     { 
@@ -30,8 +30,8 @@ const routes = [
         component: ItemPage,
     },
 
-    { path: '/cart', component: Cart },
-    { path: '/delivery', component: Delivery },
+    { path: '/catalog/cart', component: Cart },
+    { path: '/catalog/cart/delivery', component: Delivery },
 
     {
         name: 'Dashboard',

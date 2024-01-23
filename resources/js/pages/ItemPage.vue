@@ -17,24 +17,7 @@ import helper from '@js/components/helper.js'
 const route = useRoute()
 const store = useCartStore()
 
-const breadcrumbs = [
-    {
-        title: 'Главная',
-        link: '/',
-    },
-    {
-        title: 'Каталог',
-        link: '/catalog',
-    },
-    {
-        title: 'Обои',
-        link: '/catalog/wallpaper',
-    },
-    {
-        title: 'Обои Palitra Simple SP72068-17',
-        link: null,
-    }
-]
+const breadcrumbs = ref()
 
 const lightbox = ref(null)
 const item = ref()
@@ -47,7 +30,8 @@ onMounted(() => {
 
 
     getItem(route.params.id).then(res => {
-        item.value = res
+        item.value = res.data
+        breadcrumbs.value = res.breadcrumbs
 
         console.log(store.cart)
 
@@ -72,7 +56,7 @@ onMounted(() => {
 const getItem = async (id) => {
     return axios.post('/api/v1/item', {id: id})
         .then((res) => {
-            return res.data.data
+            return res.data
         })
 }
 
@@ -124,8 +108,8 @@ const changeInput = (e) => {
             <Breadcrumbs :items="breadcrumbs"/>
         </div>
     </div>
-    <div class="contacts_text2 blue_color catalog_text2 m-0" v-if="item">
-        {{item.type}} <span class="blue_color">{{ item.title }}</span>
+    <div class="contacts_text2 blue_color catalog_text2" v-if="item">
+        <span class="blue_color">{{ item.title }}</span>
     </div>
 
     <div class="wallpaper_screen ms-auto me-auto">
@@ -134,7 +118,7 @@ const changeInput = (e) => {
         </div>
         <div v-if="item" class="wallpaper_screen_elem1 d-flex flex-column justify-content-between">
             <span class="wallpaper_screen_elem1_text blue_color" v-html="item.title" />
-            <div class="wallpaper_screen_elem1_body d-flex flex-row justify-content-between">
+            <div class="wallpaper_screen_elem1_body d-flex flex-column flex-lg-row justify-content-between">
                 <div class="wallpaper_screen_elem1_body_block1 position-relative">
                     <img :class="{
                         's3_b_pink': item.has_discount,
@@ -177,26 +161,32 @@ const changeInput = (e) => {
                                 <li v-else class="gray_color">В данный момент товара <span class="pink_color">нет в наличии</span> на складе</li>
                                 <li v-if="item.stock > 0">Заказ свыше, чем <span class="pink_color" v-html="getStock(item.stock)" /> – на заказ от 10 дней</li>
                                 <li v-else>На заказ <span class="pink_color">от 10 дней</span></li>
-                                <li>{{item.price}} ₽ за 1 рулон</li>
+                                <li><span class="text-decoration-line-through me-2 gray_color" v-if="item.has_discount">{{ helper.getPrice(item.price) }}</span><span :class="{'pink_color': item.has_discount}">{{helper.getPrice(item.has_discount ? item.discount_price : item.price)}} ₽</span>  за 1 рулон</li>
                             </ul>
-                            <div class="wallpaper_screen_elem1_body_e_footer d-flex align-self-center m-auto justify-content-between align-items-center ps-3 pe-3">
-                                <span class="st_f_screen_footer_text2 blue_color">{{ helper.getPrice(item.price * itemForCart.count)}} ₽</span>
+                            <div class="wallpaper_screen_elem1_body_e_footer d-flex align-self-center m-auto justify-content-between align-items-center ps-3 pe-3"
+                                :class="{'footer_pink': item.has_discount}">
+                                <div class="d-flex flex-column" v-if="item.has_discount">
+                                    <span class="st_f_screen_footer_text1">{{ helper.getPrice(item.price * itemForCart.count) }}</span>
+                                    <span class="st_f_screen_footer_text2 pink_color">{{ helper.getPrice(item.discount_price * itemForCart.count)}} ₽</span>
+                                </div>
+                                <span class="st_f_screen_footer_text2 blue_color" v-else>{{ helper.getPrice(item.price * itemForCart.count)}} ₽</span>
+
                                 <div class="d-flex">
-                                    <button class="q-minus blue_color" @click="changeValue(-1)">-</button>
-                                    <input class="quantity border-start-0 border-end-0 text-center blue_color" type="number" @input="(e) => changeInput(e)" :value="itemForCart.count">
-                                    <button class="q-plus blue_color" @click="changeValue(1)">+</button>
+                                    <button class="q-minus blue_color" :class="{'pink_color': item.has_discount}" @click="changeValue(-1)">-</button>
+                                    <input class="quantity border-start-0 border-end-0 text-center blue_color" :class="{'pink_color': item.has_discount}" type="number" @input="(e) => changeInput(e)" :value="itemForCart.count">
+                                    <button class="q-plus blue_color" :class="{'pink_color': item.has_discount}" @click="changeValue(1)">+</button>
                                 </div>
 
-                                <button class="footer_button blue_color fb_blue" @click="addToCart" v-if="!itemFromStore">
+                                <button class="footer_button blue_color" :class="{'pink_color': item.has_discount}" @click="addToCart" v-if="!itemFromStore">
                                     <span class="footer_button_text1">В Корзину</span>
                                     <span class="footer_button_text2">Добавить в корзину</span>
-                                    <img class="ms-2" src="/svg/bluecart.svg">
+                                    <img class="ms-2" :src="item.has_discount ? '/svg/pinkcart.svg' : '/svg/bluecart.svg'">
                                 </button>
 
-                                <button class="footer_button blue_color fb_blue" @click="removeFromCart" v-else>
+                                <button class="footer_button blue_color" :class="{'pink_color': item.has_discount}" @click="removeFromCart" v-else>
                                     <span class="footer_button_text1">Убрать</span>
                                     <span class="footer_button_text2">Убрать из корзины</span>
-                                    <img class="ms-2" src="/svg/bluecart.svg">
+                                    <img class="ms-2" :src="item.has_discount ? '/svg/pinkcart.svg' : '/svg/bluecart.svg'">
                                 </button>
                             </div>
                         </div>

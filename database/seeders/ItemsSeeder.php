@@ -8,6 +8,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Faker\Factory;
+use Illuminate\Support\Facades\Log;
 
 class ItemsSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class ItemsSeeder extends Seeder
     public function run(): void
     {
         $faker = Factory::create('ru_RU');
-        $catalog = Catalogs::first();
+        $catalogs = Catalogs::all()->pluck('id');
 
         $sources = [
             '/img/image_2.png',
@@ -52,7 +53,7 @@ class ItemsSeeder extends Seeder
             5000, 10000
         ];
 
-        for($i = 0; $i < 100; $i++) {
+        for($i = 0; $i < 1000; $i++) {
 
             $price = $faker->numberBetween(2000, 10000);
             $discount = $faker->randomElement($discountes);
@@ -60,7 +61,7 @@ class ItemsSeeder extends Seeder
             if($discount >= $price) $discount = 0;
 
             $data[] = [
-                'catalog_id'    => $catalog->id,
+                'catalog_id'    => $faker->randomElement($catalogs),
                 'name'          => $faker->randomElement($names),
                 'url'           => Str::uuid(),
                 'price'         => $price,

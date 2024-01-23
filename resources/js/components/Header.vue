@@ -33,7 +33,7 @@ const toggleMenu = () => {
                         <button type="submit"><img src="/svg/glass.svg"></button>
                     </form>
                 </div> -->
-                <router-link to="/cart">
+                <router-link to="/catalog/cart">
                     <div class="d-flex flex-row align-items-center cart_header" :class="{active: store.cart.length > 0}">
                         <div class="counter d-flex align-items-center justify-content-center" v-html="store.cart.length" />
                         <div class="menu_cart_block">Корзина<img src="/svg/cart.svg" class="ms-2"></div>
@@ -48,17 +48,17 @@ const toggleMenu = () => {
                         <!-- <div class="menu2_block1_divider w-100 position-relative">
                             <div class="position-absolute"></div>
                         </div> -->
-                        <div class="menu2_block1_element_text1">Компания</div>
+                        <div class="menu2_block1_element_text1 mt-4">Компания</div>
                         <div class="menu2_block1_element_text2">О компании</div>
                         <div class="menu2_block1_element_text2">Контакты</div>
                     </div>
                     <div class="menu2_block1_element d-flex flex-column">
-                        <div class="menu2_block1_element_text1">Каталог</div>
-                        <div class="menu2_block1_element_text2">Обои</div>
-                        <div class="menu2_block1_element_text2">Фотообои</div>
-                        <div class="menu2_block1_element_text2">Фрески</div>
-                        <div class="menu2_block1_element_text2">Лепной декор</div>
-                        <div class="menu2_block1_element_text2">Клей</div>
+                        <router-link to="/catalog" class="menu2_block1_element_text1">Каталог</router-link>
+                        <router-link to="/catalog/wallpaper" class="menu2_block1_element_text2">Обои</router-link>
+                        <router-link to="/catalog/photo" class="menu2_block1_element_text2">Фотообои</router-link>
+                        <router-link to="/catalog/fresk" class="menu2_block1_element_text2">Фрески</router-link>
+                        <router-link to="/catalog/decor" class="menu2_block1_element_text2">Лепной декор</router-link>
+                        <router-link to="/catalog/glue" class="menu2_block1_element_text2">Клей</router-link>
                     </div>
                 </div>
                 <div class="menu2_block2 d-flex flex-column align-items-center justify-content-between">

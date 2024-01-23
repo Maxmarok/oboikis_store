@@ -4,8 +4,8 @@
 <footer class="w-auto d-flex bg_blue mt-auto">
     <div class="foot m-auto d-flex flex-row justify-content-between align-items-center position-relative">
         <div class="footer_block1 d-flex justify-content-between flex-column">
-            <router-link to="/"><img src="/svg/logo.svg"></router-link>
-            <span class="white_color text-center align-items-end">© 2021 – 2023 «Обойкис»</span>
+            <router-link to="/"><img src="/svg/horizontal.svg"></router-link>
+            <span class="white_color text-center align-items-end">© 2021 – 2024 «Обойкис»</span>
         </div>
         <div class="footer_divider_block">
             <div class="footer_divider1 footer_divider_white"></div>
@@ -21,11 +21,11 @@
             <div class="footer_element d-flex flex-column">
                 <span class="footer_text1 white_color mb-3">Каталог</span>
                 <div class="d-flex flex-column justify-content-between footer_text2 white_color h-100">
-                    <span>Обои</span>
-                    <span>Фотообои</span>
-                    <span>Фрески</span>
-                    <span>Лепной декор</span>
-                    <span>Клей</span>
+                    <router-link to="/catalog/wallpaper">Обои</router-link>
+                    <router-link to="/catalog/photo">Фотообои</router-link>
+                    <router-link to="/catalog/fresk">Фрески</router-link>
+                    <router-link to="/catalog/decor">Лепной декор</router-link>
+                    <router-link to="/catalog/glue">Клей</router-link>
                 </div>
             </div>
             <div class="footer_element d-flex flex-column">

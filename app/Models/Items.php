@@ -9,7 +9,16 @@ class Items extends Model
 {
     use HasFactory;
 
-    protected $appends = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url'];
+    //protected $appends = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url'];
+
+    const APPENDS = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url'];
+
+    const SECTIONS = [
+        'country' => 'Страна',
+        'producer' => 'Производитель',
+        'size' => 'Размер',
+        'material' => 'Материал'
+    ];
 
     public function catalog()
     {
@@ -33,7 +42,7 @@ class Items extends Model
 
     public function getDiscountPercentAttribute()
     {
-        return $this->discount > 0 ? round($this->discount / $this->price * 100, 0) : 0;
+        return $this->discount > 0 ? floor($this->discount / $this->price * 100) : 0;
     }
 
     public function getTitleAttribute()

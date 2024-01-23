@@ -6,18 +6,16 @@ const getStock = () => {
     return helper.getNoun(props.item.stock, 'товар', 'товара', 'товаров')
 }
 
-let discount = props.item.discount_percent > 0
-
 </script>
 <template>
 <div class="screen3_block d-flex flex-column p-auto position-relative" 
     :class="{
-        's3_b_pink': discount,
-        's3_b_blue': !discount
+        's3_b_pink': props.item.has_discount,
+        's3_b_blue': !props.item.has_discount
     }">
     <div v-if="props.item.discount_percent > 0" class="discount d-flex justify-content-center align-items-center"
         :class="{
-            'bg_pink': discount,
+            'bg_pink': props.item.has_discount,
         }">
         <span v-html="`-${props.item.discount_percent}%`" />
     </div>
@@ -28,13 +26,13 @@ let discount = props.item.discount_percent > 0
 
     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100"
         :class="{
-            's3_b1_text bg_pink2': discount,
-            's3_b_text': !discount
+            's3_b1_text bg_pink2': props.item.has_discount,
+            's3_b_text': !props.item.has_discount
         }">
         <div class="s3_b_text0 d-flex align-items-center justify-content-center"
             :class="{
-                'pink_color': discount,
-                'blue_color': !discount,
+                'pink_color': props.item.has_discount,
+                'blue_color': !props.item.has_discount,
                 'gray_color': props.item.stock === 0
             }">
                 <span v-if="props.item.stock > 0" v-html="getStock()" />
@@ -48,31 +46,31 @@ let discount = props.item.discount_percent > 0
 
     <div class="s3_b_text2 d-flex w-100 justify-content-center align-items-center px-4"
         :class="{
-            'pink_color': discount,
-            'blue_color': !discount
+            'pink_color': props.item.has_discount,
+            'blue_color': !props.item.has_discount
         }">
         <span class="text-center w-100" v-html="props.item.title" />
     </div>
 
     <div class="d-flex flex-row justify-content-between px-3 align-items-center"
         :class="{
-            's3_b_footer_pink': discount,
-            's3_b_footer_blue': !discount
+            's3_b_footer_pink': props.item.has_discount,
+            's3_b_footer_blue': !props.item.has_discount
         }">
         <div>
             <div class="d-flex flex-column">
-                <span class="s3_b_f_text1" v-if="props.item.discount" v-html="`${props.item.price} ₽`" />
-                <span class="s3_b_f_text2" v-html="`${props.item.discount_price} ₽`" />
+                <span class="s3_b_f_text1" v-if="props.item.discount" v-html="`${helper.getPrice(props.item.price)}`" />
+                <span class="s3_b_f_text2" v-html="`${helper.getPrice(props.item.discount_price)} ₽`" />
             </div>
         </div>
         <router-link :to="`/catalog/${props.item.catalog_url}/${props.item.id}`" class="d-flex flex-row align-items-center justify-content-evenly"
             :class="{
-                'pink_color': discount,
-                'blue_color': !discount
+                'pink_color': props.item.has_discount,
+                'blue_color': !props.item.has_discount
             }">
             <span class="s3_b_footer_btn_text1">Купить</span>
             <span class="s3_b_footer_btn_text2">В корзину</span>
-            <img :src="discount ? '/svg/pinkcart.svg' : '/svg/bluecart.svg'" />
+            <img :src="props.item.has_discount ? '/svg/pinkcart.svg' : '/svg/bluecart.svg'" />
         </router-link>
     </div>
 </div>
