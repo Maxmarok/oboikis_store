@@ -3,5 +3,6 @@ composer.lock
 package-lock.json
 node_modules
 laravel-echo-server.lock
-/docker
+# /docker
+/docker/.docker/data/mysql
 /public/build

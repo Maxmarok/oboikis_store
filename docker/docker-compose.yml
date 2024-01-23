@@ -1,0 +1,111 @@
+version: "2.3"
+services:
+  app:
+    build:
+      args:
+        user: docker
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: oboikis-store
+    container_name: oboikis-store-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ../:/var/www
+      - ./php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - oboikis-store
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+    networks:
+      - oboikis-store
+
+  supervisor:
+    build:
+      context: ./
+      dockerfile: supervisor.dockerfile
+    container_name: oboikis-store-supervisor
+    working_dir: /var/www/
+    volumes:
+      - ../:/var/www
+      - ./supervisord.conf:/etc/supervisor/supervisord.conf
+    networks:
+      - oboikis-store
+
+  redis:
+    image: redis:7-alpine
+    container_name: oboikis-store-redis
+    command: redis-server --appendonly yes --replica-read-only no
+    ports:
+      - 6379:6379
+    networks:
+      - oboikis-store
+
+  node:
+    build:
+      context: ./
+      dockerfile: node.dockerfile
+    ports:
+      - 6001:6001
+      - 2126:2126
+    container_name: oboikis-store-node
+    working_dir: /var/www
+    volumes:
+      - ../:/var/www
+    networks:
+      - oboikis-store
+
+  mysql:
+    #platform: linux/x86_64
+    image: mysql:8.0.31
+    container_name: oboikis-store-mysql
+    restart: unless-stopped
+    ports:
+      - 33061:3306
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    command:
+      --sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+    volumes:
+      - .docker/data/mysql:/var/lib/mysql
+    networks:
+      - oboikis-store
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: oboikis-store-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - oboikis-store
+
+  nginx:
+    image: nginx:alpine
+    container_name: oboikis-store-nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 5173:5173
+    volumes:
+      - "../public:/var/www/public:ro"
+      - "../storage/app:/var/www/storage/app:ro"
+      - ../:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - oboikis-store
+
+networks:
+  oboikis-store:
+    driver: bridge
