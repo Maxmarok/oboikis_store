@@ -152,7 +152,7 @@ watch(() => route.params.section,
         </div>
     </div>
     <div class="catalog_filter_screen me-auto ms-auto d-flex align-items-start justify-content-between flex-column">
-        <div class="mb-5 bread">
+        <div class="bread">
             <Breadcrumbs :items="breadcrumbs"/>
         </div>
         <div class="d-flex flex-row justify-content-between w-100 mb-3 filter_screen_text">

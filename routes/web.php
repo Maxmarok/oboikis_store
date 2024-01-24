@@ -84,7 +84,7 @@ Route::get('/dashboard', function () {
     ]);
 });
 
-Route::get('/cart', function () {
+Route::get('/catalog/cart', function () {
     $title = 'Корзина';
     $short_description  = 'Корзина в магазине "Обойкис"';
     
@@ -94,9 +94,31 @@ Route::get('/cart', function () {
     ]);
 });
 
-Route::get('/delivery', function () {
+Route::get('/catalog/cart/order', function () {
     $title = 'Оформление заказа';
     $short_description  = 'Оформление заказа в магазине "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
+});
+
+
+Route::get('/payment', function () {
+    $title = 'Способы оплаты';
+    $short_description  = 'Способы оплаты в магазине "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
+});
+
+
+Route::get('/delivery', function () {
+    $title = 'Условия доставки';
+    $short_description  = 'Условия доставки "Обойкис"';
     
     return view('index', [
         'title' => $title,

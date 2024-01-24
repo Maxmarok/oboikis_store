@@ -19,6 +19,10 @@ Route::group([
     'as' => 'api.',
 ], function(){
 
+    Route::prefix('info')->group(function(){
+        Route::get('/', [App\Http\Controllers\API\InfoController::class, 'getInfo']);
+    });
+
     Route::prefix('items')->group(function(){
         Route::post('/', [App\Http\Controllers\API\ItemsController::class, 'getItems']);
     });

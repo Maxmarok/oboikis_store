@@ -8,7 +8,7 @@ const getStock = () => {
 
 </script>
 <template>
-<div class="screen3_block d-flex flex-column p-auto position-relative" 
+<router-link :to="`/catalog/${props.item.catalog_url}/${props.item.id}`" class="screen3_block d-flex flex-column p-auto position-relative" 
     :class="{
         's3_b_pink': props.item.has_discount,
         's3_b_blue': !props.item.has_discount
@@ -73,5 +73,5 @@ const getStock = () => {
             <img :src="props.item.has_discount ? '/svg/pinkcart.svg' : '/svg/bluecart.svg'" />
         </router-link>
     </div>
-</div>
+</router-link>
 </template>

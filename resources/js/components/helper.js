@@ -29,5 +29,9 @@ export default {
 
     getPrice(value) {
         return value.toLocaleString('ru')
-    }
+    },
+
+    getPhone(value) {
+        return value ? value.replace(/^\D?(\d{1})\D?(\d{3})\D?\D?(\d{3})\D?(\d{2})\D?(\d{2})/, '+$1 ($2) $3-$4-$5') : null
+    },
 }

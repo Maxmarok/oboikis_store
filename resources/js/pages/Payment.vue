@@ -11,7 +11,7 @@ const breadcrumbs = [
         link: '/',
     },
     {
-        title: 'Условия доставки',
+        title: 'Способы оплаты',
         link: null,
     },
 ]
@@ -32,11 +32,9 @@ const breadcrumbs = [
         </div>
         
         <div class="about_company_text d-flex flex-column mb-5">
-            <span class="about_company_text1 blue_color">Условия <span class="pink_color">доставки</span> магазина «Обойкис»</span>
+            <span class="about_company_text1 blue_color">Способы <span>оплаты</span></span>
             <div class="about_company_text3 flex-column justify-content-between">
-                <p>Отправка <span class="pink_color">в любой город</span> или округ</p>
-                <p>Доставка по городу — от <span class="pink_color">500 рублей</span></p>
-                <p>Возможно оформление <span class="pink_color">Яндекс доставки</span></p>
+                <p>Возможна оплата через <span class="pink_color">QR-код</span></p>
             </div>
         </div>
     </div>

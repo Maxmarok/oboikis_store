@@ -609,10 +609,10 @@ nav {
     font-weight: 700;
     letter-spacing: 0em;
     height: 16px;
+    margin-bottom: 5px;
 }
 
-.screen4 a, 
-.screen4 button {
+.s4_e_h_button {
     font-family: "LatoB";
     font-size: 24px;
     font-weight: 700;
@@ -620,7 +620,7 @@ nav {
     width: 220.5px;
     height: 66px;
     border-radius: 14px;
-    color: White;
+    color: white;
     margin-top: 50px;
 }
 
@@ -827,6 +827,9 @@ footer {
     margin: 0 5px;
 }
 
+.about_company_text1 {
+    margin-bottom: 40px;
+}
 
 .contacts_text2, .about_company_text1, .about_company_footer span {
     font-family: 'LatoB';
@@ -1063,41 +1066,50 @@ footer {
 /* About company */
 
 .about_company_screen {
-    margin-top: 50px;
-    margin-bottom: 100px;
-    width: 1234px;
+    margin: 50px 0;
+    max-width: 1234px;
 }
 
 .about_company_block {
     border-top: 5px solid #EBB313;
 }
 
-.about_company_text2 {
+.about_company_text3 {
+    /* padding: 20px; */
+    /* border-radius: 14px; */
+    /* border: 1px solid #00ADB5; */
+    /* border-radius: 14px;
+    background-color: #00adb51a; */
+}
+    
+.about_company_text3 p{
     font-family: 'Lato';
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 24px;
-    letter-spacing: 0em;
-    height: 120px;
+    color: #00adb5;
+    margin-bottom: 20px;
+    background: #00adb51a;
+    padding: 20px;
+    border-radius: 14px;
 }
 
-.about_company_text2 span{
-    color: #FF449F;
-    font-family: 'LatoB';
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0em;
+.about_company_text3 p:last-child {
+    margin-bottom: 0;
 }
 
 .about_company_footer {
-    height: 767px;
-    border: 1px solid #00ADB5;
+    /* height: 767px;
+    border: 1px solid #00ADB5; */
+    padding: 40px 20px;
     border-radius: 14px;
     background-color: #00ADB51A;
 }
 
-.about_company_footer button {
+.about_company_footer .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: 'LatoB';
     font-size: 24px;
     font-weight: 700;
@@ -1109,11 +1121,17 @@ footer {
 }
 
 .about_company_body {
-    width: 1160px;
-    height: 478px;
+    /* width: 1160px;
+    height: 478px; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
 }
 
 .about_company_body_elem {
+    margin: 10px;
     border: 2px solid #00ADB5;
     border-radius: 14px;
     width: 372px;
@@ -1656,7 +1674,7 @@ input[type=number]::-webkit-inner-spin-button {
     border-radius: 5px;
     margin-right: 20px;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center 60%;
     background-size: 50% 50%;
 }
 
@@ -2441,6 +2459,10 @@ select {
     display: none;
 }
 
+.bread {
+    margin-bottom: 40px;
+}
+
 /* .breadcrumbs {
     width: 1234px;
 } */
@@ -3031,8 +3053,8 @@ select {
     }
 
     .screen4_element {
-        width: 215px;
-        height: 128px;
+        width: 235px;
+        height: 138px;
         margin-bottom: 15px;
     }
 
@@ -3067,8 +3089,8 @@ select {
     }
 
     .s4_e_h_element {
-        width: 140px;
-        padding-left: 5px;
+        /* width: 140px; */
+        padding-left: 10px;
     }
 
     .s4_e_h_date {
@@ -3087,6 +3109,7 @@ select {
         line-height: 12px;
         letter-spacing: 0em;
         white-space: nowrap;
+        margin-bottom: -5px;
     }
 
     .rate_number {
@@ -3108,14 +3131,14 @@ select {
         position: relative;
     }
 
-    .s4_text::after {
+    .s4_text:after {
         content: "";
         display: block;
         position: absolute;
         left: 0;
         bottom: 0;
         width: 100%;
-        height: 30px;
+        height: 40px;
         background: linear-gradient(to top, #fff, transparent);
     }
 
@@ -3260,7 +3283,7 @@ select {
         margin: 10px 0;
     }
 
-    .about_company_text1, .contacts_text2 {
+    .contacts_text2 {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -3275,6 +3298,13 @@ select {
         height: 60px;
     }
 
+    .about_company_text1 {
+        margin: 20px 0;
+        font-size: 20px;
+        text-align: center;
+        line-height: 150%;
+    }
+
     .about_company_text1 span {
         margin-left: 5px;
         color: #FF449F;
@@ -3283,25 +3313,28 @@ select {
     .contacts_text2 span {
         margin-left: 5px;
     }
-
+/* 
     .about_company_text2 {
         display: none !important;
+    } */
+
+    .about_company_body {
+        margin: 0;
     }
 
     .about_company_footer {
-        width: 269px;
-        height: 940px;
-        justify-content: flex-start !important;
-        margin: auto;
+        margin: 20px auto;
         border-radius: 5px;
+        padding: 20px;
+        border: 1px solid #00ADB5;
     }
 
-    .about_company_body {
+    /* .about_company_body {
         width: 100%;
         height: 85%;
         align-items: center;
         justify-content: space-between !important;
-    }
+    } */
 
     .about_company_body_row {
         justify-content: space-between !important;
@@ -3312,9 +3345,10 @@ select {
     }
 
     .about_company_body_elem {
-        width: 200px;
+        width: 100%;
         height: 120px;
         border-radius: 5px;
+        margin: 10px 0;
     }
 
     .about_company_body_elem img {
@@ -3324,11 +3358,10 @@ select {
     .about_company_screen {
         margin: 0px;
         width: 300px;
-        height: 1350px;
     }
 
-    .about_company_footer button {
-        width: 200px;
+    .about_company_footer .btn {
+        width: 100%;
         height: 37px;
         font-family: 'LatoB';
         font-size: 12px;
@@ -3336,7 +3369,7 @@ select {
         line-height: 12px;
         letter-spacing: 0em;
         border-radius: 5px;
-        margin-top: 25px;
+        margin-top: 10px;
     }
 
     .about_company_footer span {
@@ -3344,44 +3377,25 @@ select {
         justify-content: center;
         align-items: center;
         font-family: 'LatoB';
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 700;
         line-height: 18px;
         letter-spacing: 0em;
-        height: 50px;
+        height: 30px;
+        margin: 5px 0 10px;
     }
 
     .about_company_text3 {
-        display: flex !important;
-        width: 268px;
-        height: 222px;
-        font-family: 'Lato';
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        letter-spacing: 0em;
+        background: none;
     }
 
-    .about_company_text3 span {
-        font-family: 'LatoB';
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 18px;
-        letter-spacing: 0em;
-    }
-
-    .about_company_text3_block {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 66px;
+    .about_company_text3 p {
         border: 1px solid #00ADB5;
         border-radius: 5px;
-        padding-left: 20px;
-        padding-right: 20px;
-        color: #00ADB5;
+        padding: 20px;
         text-align: center;
+        font-size: 14px;
+        font-weight: 400;
     }
 
     .about_company_bg {

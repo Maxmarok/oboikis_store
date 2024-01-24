@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="about_company_screen me-auto ms-auto position-relative">
-        <div class="mb-5 bread">
+        <div class="bread">
             <span class="blue_color c_t1_span1">Главная </span>
             <span class="pink_color c_t1_span2 align-items-end">— О компании</span>
         </div>

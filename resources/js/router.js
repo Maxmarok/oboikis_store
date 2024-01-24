@@ -7,6 +7,9 @@ import Items from '@js/pages/Items.vue'
 import ItemPage from '@js/pages/ItemPage.vue'
 import Cart from '@js/pages/Cart.vue'
 import Delivery from '@js/pages/Delivery.vue'
+import Payment from '@js/pages/Payment.vue'
+import Order from '@js/pages/Order.vue'
+
 import Dashboard from '@js/pages/dashboard/index.vue'
 
 import auth from '@js/middleware/auth'
@@ -15,6 +18,10 @@ const routes = [
     { path: '/', component: Home },
     { path: '/about', component: About },
     { path: '/contacts', component: Contacts },
+
+    { path: '/delivery', component: Delivery },
+    { path: '/payment', component: Payment },
+
     { 
         path: '/catalog', 
         component: Items,
@@ -31,7 +38,7 @@ const routes = [
     },
 
     { path: '/catalog/cart', component: Cart },
-    { path: '/catalog/cart/delivery', component: Delivery },
+    { path: '/catalog/cart/order', component: Order },
 
     {
         name: 'Dashboard',

@@ -161,7 +161,7 @@ onMounted(() => {
         <div class="screen4_blocks d-flex flex-column w-100">
             <div class="d-flex flex-column m-auto flex-lg-row flex-wrap justify-content-center">
  
-                <div class="screen4_element s3_b_pink" v-for="item in feedbacks">
+                <div class="screen4_element s3_b_pink d-flex flex-column" v-for="item in feedbacks">
                     <div class="s4_e_header d-flex flex-row justify-content-between">
                         <div class="s4_e_img">
                             <img :src="item.src">
@@ -173,22 +173,30 @@ onMounted(() => {
                                 <span class="s4_e_h_text d-flex align-items-start pink_color" v-html="item.author" />
                             </div>
 
-                            <div class="d-flex justify-content-end align-items-start rate">
-                                <span class="rate_number">5</span>
-                                <img src="svg/star-svgrepo-com.svg" class="rate_star">
-                                <img src="svg/star-svgrepo-com.svg" class="rate_star">
-                                <img src="svg/star-svgrepo-com.svg" class="rate_star">
-                                <img src="svg/star-svgrepo-com.svg" class="rate_star">
-                                <img src="svg/star-svgrepo-com.svg">
+                            <div class="d-flex flex-column">
+                                <div class="d-flex justify-content-end align-items-start rate">
+                                    <span class="rate_number">5</span>
+                                    <img src="svg/star-svgrepo-com.svg" class="rate_star">
+                                    <img src="svg/star-svgrepo-com.svg" class="rate_star">
+                                    <img src="svg/star-svgrepo-com.svg" class="rate_star">
+                                    <img src="svg/star-svgrepo-com.svg" class="rate_star">
+                                    <img src="svg/star-svgrepo-com.svg">
+                                </div>
+
+                                <a href="https://go.2gis.com/xeqs3" target="_blank" class="blue_color ms-auto s4_e_h_text">2ГИС</a>
                             </div>
                         </div>
                     </div>
 
-                    <p class="blue_color ms-1 s4_text" v-html="item.description" />
+                    <p class="blue_color s4_text mb-0" v-html="item.description" />
+
+                    <a href="https://go.2gis.com/xeqs3" class="s4_e_h_text mt-auto" target="_blank" >
+                        <span class="pink_color text-decoration-underline">Читать полностью...</span>
+                    </a>
                 </div>
             </div>
         </div>
-        <a href="https://go.2gis.com/xeqs3" target="_blank" class="d-flex justify-content-center align-items-center bg_pink"><span>Смотреть все</span></a>
+        <a href="https://go.2gis.com/xeqs3" target="_blank" class="d-flex justify-content-center align-items-center bg_pink s4_e_h_button"><span>Смотреть все</span></a>
     </div>
 </div>
 <div class="block5 w-auto">

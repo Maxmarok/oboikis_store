@@ -244,7 +244,7 @@ const getTotalSum = () => {
                     </div>
                 </div>
                 <div class="goods_elem2_footer d-flex align-items-center justify-content-center">
-                    <router-link to="/catalog/cart/delivery" class="white_color bg_pink" v-if="selectedItems.length > 0">
+                    <router-link to="/catalog/cart/order" class="white_color bg_pink" v-if="selectedItems.length > 0">
                         <span class="goods_elem2_footer_text1">Заказать выбранные товары</span>
                         <span class="goods_elem2_footer_text2">Оформить заказ</span>
                     </router-link>

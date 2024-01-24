@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="catalog_filter_screen me-auto ms-auto d-flex align-items-start justify-content-between flex-column">
-        <div class="mb-5 bread">
+        <div class="bread">
             <span class="catalog_filter_text1 blue_color"><a href="#">Главная</a></span>
             <span class="blue_color">—</span>
             <span class="catalog_filter_text2 blue_color"><a href="#">Каталог</a></span>
