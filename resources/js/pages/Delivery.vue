@@ -36,7 +36,7 @@ const breadcrumbs = [
             <div class="about_company_text3 flex-column justify-content-between">
                 <p>Отправка <span class="pink_color">в любой город</span> или округ</p>
                 <p>Доставка по городу — от <span class="pink_color">500 рублей</span></p>
-                <p>Возможно оформление <span class="pink_color">Яндекс доставки</span></p>
+                <p>Возможно оформление через <span class="pink_color">Яндекс доставку</span></p>
             </div>
         </div>
     </div>

@@ -34,7 +34,8 @@ const breadcrumbs = [
         <div class="about_company_text d-flex flex-column mb-5">
             <span class="about_company_text1 blue_color">Способы <span>оплаты</span></span>
             <div class="about_company_text3 flex-column justify-content-between">
-                <p>Возможна оплата через <span class="pink_color">QR-код</span></p>
+                <p>Возможна оплата через <span class="pink_color">QR-код</span> или <span class="pink_color">по реквизитам</span></p>
+                <p>Также в салонах магазина можно оплатить <span class="pink_color">наличными</span> или <span class="pink_color">банковскими картами</span></p>
             </div>
         </div>
     </div>
