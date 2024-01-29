@@ -58,13 +58,11 @@ class CartController extends Controller
 
         $price = 0;
 
-        Log::debug($data);
-
         foreach($items as $item) {
 
             $index = array_search($item->id, array_column($data, 'id'));
 
-            if(isset($data[$index])) $price += $item->price - $item->discount * $data[$index]['count'];
+            if(isset($data[$index])) $price += ($item->price - $item->discount) * $data[$index]['count'];
         }
 
         return response()->json([

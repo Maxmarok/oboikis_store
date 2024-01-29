@@ -76,11 +76,15 @@ const changeValue = (id, value) => {
 
     if(index >= 0) {
         if(cart.value[index].count > 1 && value === -1) {
-            cart.value[index].count--
+            let count = cart.value[index].count - 1
+            cart.value[index].count = count
+            store.setCount(id, count)
         }
 
         if(cart.value[index].count < 99 && value === 1) {
-            cart.value[index].count++
+            let count = cart.value[index].count + 1
+            cart.value[index].count = count
+            store.setCount(id, count)
         }
     }
 }
@@ -88,12 +92,14 @@ const changeValue = (id, value) => {
 const changeInput = (e, id) => {
     let value = e.target.value.replace(' ', '').replace(/[^\.0-9]/g, '')
     let index = cart.value.findIndex(x => x.id === id)
+    let count = value
     
     if(value == null || value == '' || !(value > 0 && value < 100)) {
-        e.target.value = cart.value[index].count = 1 
-    } else {
-        cart.value[index].count = value
+        count = 1
     }
+
+    cart.value[index].count = e.target.value = count
+    store.setCount(id, count)
 }
 
 const getSums = (key) => {

@@ -7,6 +7,14 @@ export const useCartStore = defineStore('cart', {
     selected: [],
   }),
   actions: {
+    setCount(id, count) {
+      let index = this.cart.findIndex(x => x.id === id)
+
+      if(index >= 0) {
+        this.cart[index].count = count
+      }
+    },
+
     addItem(item) {
       let index = this.cart.findIndex(x => x.id === item.id)
 

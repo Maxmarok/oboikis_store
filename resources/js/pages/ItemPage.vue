@@ -75,22 +75,29 @@ const removeFromCart = () => {
 
 const changeValue = (value) => {
     if(itemForCart.value.count > 1 && value === -1) {
-        itemForCart.value.count--
+        let count = itemForCart.value.count - 1
+        itemForCart.value.count = count
+        store.setCount(itemForCart.value.id, count)
     }
 
     if(itemForCart.value.count < 99 && value === 1) {
-        itemForCart.value.count++
+        let count = itemForCart.value.count + 1
+        itemForCart.value.count = count
+        store.setCount(itemForCart.value.id, count)
     }
 }
 
 const changeInput = (e) => {
     let value = e.target.value.replace(' ', '').replace(/[^\.0-9]/g, '')
+    let count = value
     
     if(value == null || value == '' || !(value > 0 && value < 100)) {
-        e.target.value = itemForCart.value.count = 1 
-    } else {
-        itemForCart.value.count = value
+        count = 1
     }
+
+    itemForCart.value.count = e.target.value = count
+    
+    store.setCount(itemForCart.value.id, count)
 }
 
 
