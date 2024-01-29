@@ -10,12 +10,11 @@ class Orders extends Model
     use HasFactory;
 
     protected $guarded = [];
-
     protected $appends = ['order_sum'];
 
     public function order_items()
     {
-        return $this->hasMany(Orders::class, 'id', 'order_id');
+        return $this->hasMany(OrderItems::class, 'id', 'order_id');
     }
 
     public function user()

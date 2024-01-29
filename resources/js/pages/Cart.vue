@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useCartStore } from '@js/stores/cartStore'
+import { useRouter } from 'vue-router'
 
 import Header from '@js/components/Header.vue'
 import Menu from '@js/components/Menu.vue'
@@ -9,10 +10,10 @@ import Breadcrumbs from '@js/components/Breadcrumbs.vue'
 import Loader from '@js/components/Loader.vue'
 import helper from '@js/components/helper.js'
 
+const router = useRouter()
 const store = useCartStore()
 
 const breadcrumbs = ref([])
-
 const cart = ref()
 const title = ref()
 
@@ -20,39 +21,35 @@ const getStock = (stock) => {
     return helper.getNoun(stock, 'товар', 'товара', 'товаров')
 }
 
-const getCartItems = async (id) => {
+const getCartItems = () => {
+   
     let ids = store.cart.map(x => x.id)
 
-    return axios.post('/api/v1/cart', {ids: ids})
+    axios.post('/api/v1/cart', {ids: ids})
         .then((res) => {
-            return res.data
+
+            title.value = res.data.title
+            breadcrumbs.value = res.data.breadcrumbs
+
+            cart.value = store.cart.map(x => {
+                let obj = res.data.data.find(y => x.id === y.id)
+                return {...obj, ...x}
+            })
+
+            if(itemsLength() === 0) selectAllItems()
         })
 }
 
-const selectedItems = ref([])
-
 onMounted(() => {
-    getCartItems().then(res => {
-        cart.value = store.cart.map((item, i) => Object.assign([], item, res.data[i]))
-        breadcrumbs.value = res.breadcrumbs
-        title.value = res.title
-        selectedItems.value = cart.value.map(x => x.id)
-    })
+    getCartItems()
 })
 
-const selectAllItems = () => {
-    if(selectedItems.value.length === cart.value.length) {
-        selectedItems.value = []
-    } else {
-        selectedItems.value = cart.value.map(x => x.id)
-    }
-    
-}
-
 const removeSelectedItems = () => {
-    let items = selectedItems.value
+    let items = store.selected
+   
 
     if(items.length > 0) {
+        console.log(Object.values(items))
         Object.values(items).forEach(id => {
             removeFromCart(id)
         })
@@ -61,14 +58,15 @@ const removeSelectedItems = () => {
 
 const removeFromCart = (id) => {
     store.removeItem(id)
+    store.selectItem(id)
     
     let index = cart.value.findIndex(x => x.id === id)
 
     if(index >= 0) {
         cart.value.splice(index, 1)
 
-        let i = selectedItems.value.findIndex(x => x === id)
-        selectedItems.value.splice(i, 1)
+        // let i = store.selected.findIndex(x => x === id)
+        // selectedItems.value.splice(i, 1)
     }
 }
 
@@ -99,7 +97,7 @@ const changeInput = (e, id) => {
 }
 
 const getSums = (key) => {
-    let items = selectedItems.value.length > 0 ? cart.value.filter(x => selectedItems.value.includes(x.id)) : []
+    let items = itemsLength() > 0 ? cart.value.filter(x => checkSelect(x.id)) : []
 
     if(items.length > 0) {
         return items.map(x => x[key] * x.count).reduce((a, b) =>  a + b)
@@ -119,6 +117,22 @@ const getDiscountSum = () => {
 
 const getTotalSum = () => {
     return getSums('discount_price')
+}
+
+const selectItem = (id) => {
+    store.selectItem(id)
+}
+
+const selectAllItems = () => {
+    store.selectAllItems(cart.value.map(x => x.id))
+}
+
+const checkSelect = (id) => {
+    return store.selected.includes(id)
+}
+
+const itemsLength = () => {
+    return store.selected.length
 }
 
 </script>
@@ -144,7 +158,7 @@ const getTotalSum = () => {
                     <div class="goods_elem1_header_elem1 d-flex align-items-center justify-content-center white_color bg_blue"><span>Выбранные товары</span></div>
                     <div class="goods_elem1_header_elem2 d-flex align-items-center ps-4 bg_white">
                         <div class="me-4">
-                            <input class="me-3 goods_input" type="checkbox" id="check_all" :checked="selectedItems.length === cart.length" @change="selectAllItems">
+                            <input class="me-3 goods_input" type="checkbox" id="check_all" :checked="itemsLength() === cart.length" @change="selectAllItems">
                             <label for="check_all"></label>
                         </div>
                         <div class="h-100 d-flex align-items-center">
@@ -159,10 +173,10 @@ const getTotalSum = () => {
                 </div>
                 <div class="goods_elem1_body">
                     <div class="goods_elem1_body_block d-flex justify-content-between align-items-center ps-4 pe-4 bg_white"
-                        :class="{change_bg1: selectedItems.includes(item.id)}"
+                        :class="{change_bg1: checkSelect(item.id)}"
                         v-for="item in cart"
                     >
-                        <input class="me-3 goods_input" type="checkbox" :id="`check_${item.id}`" :value="item.id" v-model="selectedItems">
+                        <input class="me-3 goods_input" type="checkbox" :id="`check_${item.id}`" :value="item.id" :checked="checkSelect(item.id)" @change="() => selectItem(item.id)">
                         <label :for="`check_${item.id}`"></label>
                         <div class="position-relative">
                             <img class="goods_img z-2 position-relative" :class="{'s3_b_pink': item.has_discount, 's3_b_blue': !item.has_discount}" :src="item.image">
@@ -227,7 +241,7 @@ const getTotalSum = () => {
                 <div class="goods_elem2_body d-flex justify-content-center align-items-center">
                     <div class="goods_elem2_body_center d-flex flex-column align-items-center justify-content-between">
                         <div>
-                            <span class="blue_color" :class="{'gray_color2': selectedItems.length === 0}">Цена: {{ helper.getPrice(getPriceSum()) }} ₽</span>
+                            <span class="blue_color" :class="{'gray_color2': itemsLength() === 0}">Цена: {{ helper.getPrice(getPriceSum()) }} ₽</span>
                         </div>
 
                         <div>
@@ -239,13 +253,13 @@ const getTotalSum = () => {
                         </div>
 
                         <div>
-                            <span class="blue_color" :class="{'gray_color2': selectedItems.length === 0}">Итого: <span :class="{'pink_color': selectedItems.length > 0 && getDiscountSum() > 0}">{{ helper.getPrice(getTotalSum()) }} ₽</span></span>
+                            <span class="blue_color" :class="{'gray_color2': itemsLength() === 0}">Итого: <span :class="{'pink_color': itemsLength() > 0 && getDiscountSum() > 0}">{{ helper.getPrice(getTotalSum()) }} ₽</span></span>
                             
                         </div>
                     </div>
                 </div>
                 <div class="goods_elem2_footer d-flex align-items-center justify-content-center">
-                    <router-link to="/catalog/cart/order" class="white_color bg_pink" v-if="selectedItems.length > 0">
+                    <router-link to="/catalog/cart/order" class="white_color bg_pink" v-if="itemsLength() > 0">
                         <span class="goods_elem2_footer_text1">Заказать выбранные товары</span>
                         <span class="goods_elem2_footer_text2">Оформить заказ</span>
                     </router-link>

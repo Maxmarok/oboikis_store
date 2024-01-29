@@ -11,6 +11,8 @@ import Payment from '@js/pages/Payment.vue'
 import Order from '@js/pages/Order.vue'
 
 import Dashboard from '@js/pages/dashboard/index.vue'
+import Orders from '@js/pages/dashboard/orders.vue'
+
 
 import auth from '@js/middleware/auth'
 
@@ -38,7 +40,7 @@ const routes = [
     },
 
     { path: '/catalog/cart', component: Cart },
-    { path: '/catalog/cart/order', component: Order },
+    { path: '/catalog/cart/order', component: Order, name: 'order' },
 
     {
         name: 'Dashboard',
@@ -49,16 +51,16 @@ const routes = [
         },
 
         // redirect: { name: 'Desktop' },
-        // children: [
-        //     {
-        //         name: 'Desktop',
-        //         path: 'desktop',
-        //         component: Desktop,
-        //         // meta: {
-        //         //     middleware: auth
-        //         // },
-        //     },
-        // ]
+        children: [
+            {
+                name: 'Orders',
+                path: 'orders',
+                component: Orders,
+                // meta: {
+                //     middleware: auth
+                // },
+            },
+        ]
     }
 ]
 

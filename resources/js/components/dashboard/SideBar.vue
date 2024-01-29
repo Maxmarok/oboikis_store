@@ -48,17 +48,6 @@ const menuItems = ref([
       label: 'Заказы',
       icon: 'ri-arrow-left-right-fill',
       link: '/dashboard/orders',
-      subItems: [
-        {
-          label: 'Управление заказами',
-          link: '/dashboard/orders/manage'
-        },
-
-        {
-          label: 'Самовывоз и доставка',
-          link: '/dashboard/orders/rules'
-        },
-      ]
     },
 
     {

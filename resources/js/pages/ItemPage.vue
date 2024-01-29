@@ -27,13 +27,9 @@ const itemForCart = ref({
 const itemFromStore = ref()
 
 onMounted(() => {
-
-
     getItem(route.params.id).then(res => {
         item.value = res.data
         breadcrumbs.value = res.breadcrumbs
-
-        console.log(store.cart)
 
         itemFromStore.value = store.cart.find(x => x.id === item.value.id)
 

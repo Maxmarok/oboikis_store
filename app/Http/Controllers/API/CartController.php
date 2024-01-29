@@ -17,6 +17,8 @@ class CartController extends Controller
     {
         $ids = $request->ids;
 
+        Log::debug($ids);
+
         $items = Items::whereIn('id', $ids)->get()->each->setAppends(Items::APPENDS);
 
         $breadcrumbs = [
@@ -39,6 +41,35 @@ class CartController extends Controller
             'data' => $items,
             'breadcrumbs' => $breadcrumbs,
             'title' => '<span>Корзина</span> товаров',
+        ]);
+    }
+
+    public function getOrder(Request $request)
+    {
+        $data = $request->items;
+        
+        $ids = [];
+
+        foreach($data as $item) {
+            $ids[] = $item['id'];
+        }
+
+        $items = Items::whereIn('id', $ids)->select('id', 'price', 'discount')->get();
+
+        $price = 0;
+
+        Log::debug($data);
+
+        foreach($items as $item) {
+
+            $index = array_search($item->id, array_column($data, 'id'));
+
+            if(isset($data[$index])) $price += $item->price - $item->discount * $data[$index]['count'];
+        }
+
+        return response()->json([
+            'success' => true,
+            'price' => $price,
         ]);
     }
 

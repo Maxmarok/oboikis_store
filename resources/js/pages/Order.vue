@@ -1,12 +1,16 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useCartStore } from '@js/stores/cartStore'
+import { useRoute } from 'vue-router'
+
 import Header from '@js/components/Header.vue'
 import Menu from '@js/components/Menu.vue'
 import Footer from '@js/components/Footer.vue'
 import Breadcrumbs from '@js/components/Breadcrumbs.vue'
-import OrderInput from '../components/OrderInput.vue'
+import OrderInput from '@js/components/OrderInput.vue'
+import helper from '@js/components/helper.js'
 
+const route = useRoute()
 const store = useCartStore()
 
 const breadcrumbs = [
@@ -20,7 +24,7 @@ const breadcrumbs = [
     },
     {
         title: 'Корзина',
-        link: '/cart',
+        link: '/catalog/cart',
     },
     {
         title: 'Оформление заказа',
@@ -54,16 +58,30 @@ const errors = ref({
     rules: null,
 })
 
+const delivery = 500
+const price = ref(0)
+
+onMounted(() => {
+    getOrder()
+})
+
+const getOrder = () => {
+    axios.post('/api/v1/order', {items: store.selectedItems()})
+        .then((res) => {
+            console.log(res.data)
+            price.value = res.data.price
+        })
+}
+
+
 const sendForm = () => {
     
     form.value.items = store.cart
-    console.log(form.value)
+    Object.keys(errors.value).forEach(x => errors.value[x] = null)
 
     axios.post('/api/v1/delivery', form.value)
         .then(res => {
             console.log(res)
-
-            errors.value.forEach(x => x = null)
 
             // let items = res.data.items
 
@@ -72,10 +90,8 @@ const sendForm = () => {
             // })           
         })
         .catch(e => {
-            console.log(e.response)
-            if(e.response.status === 422) {
+            if(e.response.status !== undefined && e.response.status === 422) {
                 errors.value = e.response.data.errors
-                console.log(errors.value)
             }
         })
 }
@@ -205,13 +221,13 @@ const onChange = (val, name) => {
                     </div>
                 </div>
                 <div class="reciever_block_e2_footer_1 align-self-end d-flex align-items-center justify-content-center w-100" v-if="form.delivery === 'pickup'">
-                    <div><span class="blue_color">К оплате:</span><span class="pink_color"> 90 200 ₽</span></div>
+                    <div><span class="blue_color">К оплате: </span><span class="pink_color">{{ helper.getPrice(price) }} ₽</span></div>
                 </div>
 
                 <div class="reciever_block_e2_footer_2 align-self-end d-flex align-items-center justify-content-evenly flex-column w-100 position-relative" v-if="form.delivery === 'ship'">
-                    <div class="reciever_block_e2_footer_2_text1"><span class="blue_color me-1">Доставка:</span><span class="pink_color">500 ₽</span></div>
+                    <div class="reciever_block_e2_footer_2_text1"><span class="blue_color me-1">Доставка: </span><span class="pink_color">{{ helper.getPrice(delivery) }} ₽</span></div>
                     <div class="reciever_block_e2_footer_border position-absolute"></div>
-                    <div><span class="blue_color">К оплате:</span><span class="pink_color"> 90 200 ₽</span></div>
+                    <div><span class="blue_color">К оплате: </span><span class="pink_color">{{ helper.getPrice(price + delivery) }} ₽</span></div>
                 </div>
             </div>
         </div>

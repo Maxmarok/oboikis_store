@@ -92,13 +92,13 @@ const toggleMenu = () => {
                     </div>
                     <div class="menu2_block2_element d-flex justify-content-between">
                         <a :href="info.vk" target="_blank">
-                            <img class="contacts_icon" src="svg/vk_icon2.svg">
+                            <img class="contacts_icon" src="/svg/vk_icon2.svg">
                         </a>
                         <a :href="info.telegram" target="_blank">
-                            <img class="contacts_icon" src="svg/tg_icon2.svg">
+                            <img class="contacts_icon" src="/svg/tg_icon2.svg">
                         </a>
                         <a :href="info.whatsapp" target="_blank">
-                            <img class="contacts_icon" src="svg/wa_icon2.svg">
+                            <img class="contacts_icon" src="/svg/wa_icon2.svg">
                         </a>
                     </div>
                 </div>

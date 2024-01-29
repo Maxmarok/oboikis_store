@@ -23,6 +23,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/dashboard/{any}', function () { 
+    return view('main'); 
+})->whereIn('any', ['orders']); 
+
 Route::get('/about', function () {
     $title = 'О компании "Обойкис"';
     $short_description  = 'О компании "Обойкис"';

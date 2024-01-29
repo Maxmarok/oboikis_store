@@ -35,12 +35,21 @@ Route::group([
         Route::post('/', [App\Http\Controllers\API\CartController::class, 'getCart']);
     });
 
+    Route::prefix('order')->group(function(){
+        Route::post('/', [App\Http\Controllers\API\CartController::class, 'getOrder']);
+    });
+
     Route::prefix('slider')->group(function(){
         Route::get('/', [App\Http\Controllers\API\ItemsController::class, 'getItemsForSlider']);
     });
 
     Route::prefix('delivery')->group(function(){
         Route::post('/', [App\Http\Controllers\API\CartController::class, 'sendForm']);
+    });
+
+
+    Route::prefix('dashboard')->group(function(){
+        Route::get('/orders', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'getOrders']);
     });
     
 });

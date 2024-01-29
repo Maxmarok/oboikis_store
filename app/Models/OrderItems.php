@@ -10,7 +10,6 @@ class OrderItems extends Model
     use HasFactory;
 
     protected $guarded = [];
-
     protected $appends = ['total'];
 
     const APPENDS = ['title'];
@@ -18,6 +17,11 @@ class OrderItems extends Model
     public function item()
     {
         return $this->belongsTo(Items::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Orders::class, 'order_id', 'id');
     }
 
     public function items()
