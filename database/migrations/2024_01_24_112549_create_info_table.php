@@ -21,6 +21,8 @@ return new class extends Migration
             $table->text('whatsapp')->nullable();
             $table->text('viber')->nullable();
             $table->text('instagram')->nullable();
+            $table->text('file_1')->nullable();
+            $table->text('file_2')->nullable();
         });
     }
 

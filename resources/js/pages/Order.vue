@@ -5,6 +5,7 @@ import Header from '@js/components/Header.vue'
 import Menu from '@js/components/Menu.vue'
 import Footer from '@js/components/Footer.vue'
 import Breadcrumbs from '@js/components/Breadcrumbs.vue'
+import OrderInput from '../components/OrderInput.vue'
 
 const store = useCartStore()
 
@@ -37,6 +38,20 @@ const form = ref({
     city: '',
     address: '',
     items: [],
+    rules: true,
+})
+
+const errors = ref({
+    name: null,
+    email: null,
+    phone: null,
+    comment: null,
+    reciever: null,
+    delivery: null,
+    city: null,
+    address: null,
+    items: null,
+    rules: null,
 })
 
 const sendForm = () => {
@@ -44,16 +59,29 @@ const sendForm = () => {
     form.value.items = store.cart
     console.log(form.value)
 
-    axios.post('/api/v1/delivery', {form: form.value})
+    axios.post('/api/v1/delivery', form.value)
         .then(res => {
             console.log(res)
 
-            let items = res.data.items
+            errors.value.forEach(x => x = null)
 
-            items.forEach(x => {
-                store.removeItem(x.item_id)
-            })           
+            // let items = res.data.items
+
+            // items.forEach(x => {
+            //     store.removeItem(x.item_id)
+            // })           
         })
+        .catch(e => {
+            console.log(e.response)
+            if(e.response.status === 422) {
+                errors.value = e.response.data.errors
+                console.log(errors.value)
+            }
+        })
+}
+
+const onChange = (val, name) => {
+    form.value[name] = val
 }
 </script>
 <template>
@@ -92,21 +120,31 @@ const sendForm = () => {
                 </div>
                 <div class="reciever_block_body d-flex flex-column">
                     <div class="reciever_block_body_span_font">
-                        <div class="d-flex flex-column mb-3">
-                            <div class="reciever_block_body_text1 d-flex justify-content-between">
-                                <div><span class="reciever_block_text_bold blue_color">Имя</span><span class="pink_color"> *</span></div>
-                                <div class="reciever_block_body_text1_italic"><span class="pink_color">*</span><span class="blue_color"> поля, обязательные к заполнению</span></div>
-                            </div>
-                            <input class="reciever_block_input s3_b_blue bg_white mt-1 blue_color" type="text" placeholder="Введите фамилию получателя" v-model="form.name">
-                        </div>
-                        <div class="d-flex flex-column mb-3">
-                            <div><span class="reciever_block_text_bold blue_color">Email</span><span class="pink_color"> *</span></div>
-                            <input class="reciever_block_input s3_b_blue bg_white mt-1 blue_color" type="text" placeholder="Введите электронную почту получателя" v-model="form.email">
-                        </div>
-                        <div class="d-flex flex-column mb-3">
-                            <div><span class="reciever_block_text_bold blue_color">Телефон</span><span class="pink_color"> *</span></div>
-                            <input class="reciever_block_input s3_b_blue bg_white mt-1 blue_color" type="text" placeholder="Введите номер телефона получателя" v-model="form.phone">
-                        </div>
+                        <OrderInput
+                            :name="'Имя'"
+                            :placeholder="'Введите имя получателя'"
+                            :value="form.name"
+                            :errors="errors.name"
+                            :required_text="true"
+                            @change="(val) => onChange(val, 'name')"
+                        />
+
+                        <OrderInput
+                            :name="'Email'"
+                            :placeholder="'Введите электронную почту получателя'"
+                            :value="form.email"
+                            :errors="errors.email"
+                            @change="(val) => onChange(val, 'email')"
+                        />
+
+                        <OrderInput
+                            :name="'Телефон'"
+                            :placeholder="'Введите номер телефона получателя'"
+                            :value="form.phone"
+                            :errors="errors.phone"
+                            @change="(val) => onChange(val, 'phone')"
+                        />
+
                         <div class="d-flex flex-column mb-3">
                             <div><span class="reciever_block_text_bold blue_color">Комментарий</span></div>
                             <div class="position-relative mt-1">
@@ -114,11 +152,17 @@ const sendForm = () => {
                             </div>
                         </div>
                     </div>
-                    <div class="check d-flex align-items-center mt-3 mb-2">
-                        <input class="me-3 goods_input1" type="checkbox" id="check4">
-                        <label for="check4"></label>
-                        <div class="check_text"><label for="check4" class="blue_color ms-2">согласен(-на) на обработку</label><a href="#" class="pink_color border_bottom_pink ms-1">персональных данных</a></div>
+                    <div>
+                        <div class="check d-flex align-items-center mt-3 mb-2">
+                            <input class="me-3 goods_input" type="checkbox" id="rules" v-model="form.rules">
+                            <label for="rules" :class="{'error': errors.rules}"></label>
+                            <div class="check_text"><label for="rules" class="blue_color ms-2">согласен(-на) на обработку</label><a href="#" class="pink_color border_bottom_pink ms-1">персональных данных</a></div>
+                        </div>
+                        <div class="invalid-feedback" v-if="errors.rules">
+                            <p v-for="error in errors.rules" v-html="error" />
+                        </div>
                     </div>
+                   
                 </div>
                 <div class="reciever_block_footer d-flex align-items-center flex-column justify-content-center w-100">
                     <button class="white_color text-center bg_pink mb-3" @click="sendForm">Оформить заказ</button>
@@ -141,14 +185,23 @@ const sendForm = () => {
                     </div>
 
                     <div class="reciever_block_e2_2_body_block2 d-flex flex-column justify-content-between ms-auto me-auto" v-if="form.delivery === 'ship'">
-                        <div class="reciever_block_e2_2_body_block2_e1 d-flex flex-column">
-                            <div class="mb-1"><span class="">Город получателя</span><span class="pink_color"> *</span></div>
-                            <input type="text" placeholder="Введите город получателя" class="blue_color" v-model="form.city">
-                        </div>
-                        <div class="reciever_block_e2_2_body_block2_e1 d-flex flex-column">
-                            <div class="mb-1"><span class="">Адрес доставки</span><span class="pink_color"> *</span></div>
-                            <input type="text" placeholder="Введите адрес получателя" class="blue_color" v-model="form.address">
-                        </div>
+
+                        <OrderInput
+                            :name="'Город получателя'"
+                            :placeholder="'Введите город получателя'"
+                            :value="form.city"
+                            :errors="errors.city"
+                            @change="(val) => onChange(val, 'city')"
+                        />
+
+                        <OrderInput
+                            :name="'Адрес доставки'"
+                            :placeholder="'Введите адрес получател'"
+                            :value="form.address"
+                            :errors="errors.address"
+                            @change="(val) => onChange(val, 'address')"
+                        />
+
                     </div>
                 </div>
                 <div class="reciever_block_e2_footer_1 align-self-end d-flex align-items-center justify-content-center w-100" v-if="form.delivery === 'pickup'">

@@ -6,3 +6,5 @@ laravel-echo-server.lock
 # /docker
 /docker/.docker/data/mysql
 /public/build
+.env
+public/storage

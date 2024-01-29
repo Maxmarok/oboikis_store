@@ -162,7 +162,7 @@ const getTotalSum = () => {
                         :class="{change_bg1: selectedItems.includes(item.id)}"
                         v-for="item in cart"
                     >
-                        <input class="me-3 goods_input1" type="checkbox" :id="`check_${item.id}`" :value="item.id" v-model="selectedItems">
+                        <input class="me-3 goods_input" type="checkbox" :id="`check_${item.id}`" :value="item.id" v-model="selectedItems">
                         <label :for="`check_${item.id}`"></label>
                         <div class="position-relative">
                             <img class="goods_img z-2 position-relative" :class="{'s3_b_pink': item.has_discount, 's3_b_blue': !item.has_discount}" :src="item.image">
@@ -174,9 +174,10 @@ const getTotalSum = () => {
                         <div class="goods_elem1_body_block_end d-flex flex-column justify-content-between">
                             <div class="goods_elem1_body_block_end_header d-flex justify-content-between">
                                 <div class="d-flex flex-column align-items-start justify-content-between">
-                                    <span class="goods_elem1_header_text1 blue_color" 
+                                    <router-link class="goods_elem1_header_text1 blue_color" 
                                          :class="{'pink_color': item.has_discount}" 
                                          v-html="item.title"
+                                         :to="`/catalog/${item.catalog.url}/${item.id}`"
                                     />
                                     <span class="goods_elem1_header_text2 blue_color" 
                                          :class="{'pink_color': item.has_discount}" 

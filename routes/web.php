@@ -72,7 +72,7 @@ Route::get('/catalog/{section}/{id}', function () {
         'title' => $title,
         'short_description' => $short_description,
     ]);
-});
+})->name('catalog_item');
 
 Route::get('/dashboard', function () {
     $title = 'Админка "Обойкис"';

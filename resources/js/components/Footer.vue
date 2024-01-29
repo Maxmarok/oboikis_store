@@ -61,11 +61,11 @@ const info = useInfoStore()
                 <div class="footer_divider2 footer_divider_white"></div>
             </div>
             <div class="d-flex flex-column align-items-end white_color flex-nowrap footer_block2_elem1">
-                <a href="#">
+                <a :href="info.file_1">
                     <span class="footer_block2_text1 f_b2_text_border_white">Политика конфиденциальности</span>
                 </a>
 
-                <a href="#">
+                <a :href="info.file_2">
                     <span class="footer_block2_text2 f_b2_text_border_white">Публичная оферта</span>
                 </a>
             </div>
