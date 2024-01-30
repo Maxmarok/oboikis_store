@@ -68,7 +68,6 @@ onMounted(() => {
 const getOrder = () => {
     axios.post('/api/v1/order', {items: store.selectedItems()})
         .then((res) => {
-            console.log(res.data)
             price.value = res.data.price
         })
 }
@@ -81,13 +80,11 @@ const sendForm = () => {
 
     axios.post('/api/v1/delivery', form.value)
         .then(res => {
-            console.log(res)
+            let items = res.data.items
 
-            // let items = res.data.items
-
-            // items.forEach(x => {
-            //     store.removeItem(x.item_id)
-            // })           
+            items.forEach(x => {
+                store.removeItem(x.item_id)
+            })           
         })
         .catch(e => {
             if(e.response.status !== undefined && e.response.status === 422) {

@@ -140,6 +140,11 @@ body[data-layout="horizontal"] {
   }
 }
 
+.table-responsive {
+  border-radius: 14px;
+  margin-bottom: 0;
+}
+
 .table-centered td {
   vertical-align: middle !important;
 }

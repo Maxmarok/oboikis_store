@@ -9,7 +9,7 @@ class Items extends Model
 {
     use HasFactory;
 
-    //protected $appends = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url'];
+    protected $appends = ['title', 'link'];
 
     const APPENDS = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url'];
 
@@ -23,6 +23,11 @@ class Items extends Model
     public function catalog()
     {
         return $this->belongsTo(Catalogs::class, 'catalog_id', 'id');
+    }
+
+    public function getLinkAttribute()
+    {
+        return route('catalog_item', ['section' => $this->catalog->url, 'id' => $this->id]);
     }
 
     public function getTypeAttribute()

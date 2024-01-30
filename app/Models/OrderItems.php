@@ -31,6 +31,6 @@ class OrderItems extends Model
 
     public function getTotalAttribute()
     {
-        return ($this->items->sum('price') - $this->items->sum('discount')) * $this->quantity;
+        return ($this->item->price - $this->item->discount) * $this->quantity;
     }
 }
