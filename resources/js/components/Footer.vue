@@ -43,7 +43,7 @@ const info = useInfoStore()
         <div class="footer_block2 d-flex justify-content-between flex-column">
             <div class="contact d-flex flex-column">
                 <span class="footer_text1 white_color text-end mb-3">Свяжитесь с нами</span>
-                <div class="text-end d-flex w-50 justify-content-between align-items-end align-self-end">
+                <div class="contact_icons">
                     <a :href="info.vk" v-if="info.vk" target="_blank">
                         <img src="/svg/vk_icon2.svg">
                     </a>
@@ -54,6 +54,10 @@ const info = useInfoStore()
 
                     <a :href="info.whatsapp" v-if="info.whatsapp" target="_blank">
                         <img src="/svg/wa_icon2.svg">
+                    </a>
+
+                    <a :href="info.viber" v-if="info.viber" target="_blank">
+                        <img src="/svg/vb_icon2.svg">
                     </a>
                 </div>
             </div>

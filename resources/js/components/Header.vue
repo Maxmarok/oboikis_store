@@ -90,7 +90,7 @@ const toggleMenu = () => {
                             <a :href="`mailto:${info.email}`" class="text-decoration-none white_color" v-html="info.email" />
                         </div>
                     </div>
-                    <div class="menu2_block2_element d-flex justify-content-between">
+                    <div class="contact_icons">
                         <a :href="info.vk" target="_blank">
                             <img class="contacts_icon" src="/svg/vk_icon2.svg">
                         </a>
@@ -99,6 +99,9 @@ const toggleMenu = () => {
                         </a>
                         <a :href="info.whatsapp" target="_blank">
                             <img class="contacts_icon" src="/svg/wa_icon2.svg">
+                        </a>
+                        <a :href="info.viber" target="_blank">
+                            <img class="contacts_icon" src="/svg/vb_icon2.svg">
                         </a>
                     </div>
                 </div>

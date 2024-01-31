@@ -2,7 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Mail\OrderShipped;
+use App\Mail\OrderShippedAdmin;
+use App\Mail\OrderShippedUser;
 use App\Models\OrderItems;
 use App\Models\Orders;
 use Illuminate\Bus\Queueable;
@@ -18,19 +19,23 @@ class MakeOrderJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    var $admin;
+
     /**
      * Create a new job instance.
      */
     public function __construct(
         public Orders $order,
-        public Collection $items,
-    ){}
+    ){
+        $this->admin = env('MAIL_FROM_ADDRESS');
+    }
 
     /**
      * Execute the job.
      */
     public function handle(): void
     {
-        Mail::to($this->order->user)->send(new OrderShipped($this->order, $this->items));
+        Mail::to($this->order->user)->send(new OrderShippedUser($this->order));
+        Mail::to($this->admin)->send(new OrderShippedAdmin($this->order));
     }
 }

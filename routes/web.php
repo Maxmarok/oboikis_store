@@ -25,7 +25,11 @@ Route::get('/', function () {
 
 Route::get('/dashboard/{any}', function () { 
     return view('main'); 
-})->whereIn('any', ['orders']); 
+})->whereIn('any', ['orders']);
+
+Route::get('/dashboard/orders', function () { 
+    return view('main'); 
+})->name('dashboard.orders');
 
 Route::get('/about', function () {
     $title = 'О компании "Обойкис"';

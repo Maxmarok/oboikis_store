@@ -114,14 +114,11 @@ class CartController extends Controller
         }
 
         OrderItems::insert($arr);
-
-        $order_items = OrderItems::where('order_id', $order->id)->get();
-        MakeOrderJob::dispatch($order, $order_items);
+        MakeOrderJob::dispatchAfterResponse($order);
 
         return response()->json([
             'success' => true,
             'order' => $order,
-            'items' => $order_items,
         ]);
     }
 }

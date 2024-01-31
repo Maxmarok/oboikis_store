@@ -186,11 +186,13 @@ const changeInput = (e) => {
                                     <img class="ms-2" :src="item.has_discount ? '/svg/pinkcart.svg' : '/svg/bluecart.svg'">
                                 </button>
 
-                                <button class="footer_button blue_color" :class="{'pink_color': item.has_discount}" @click="removeFromCart" v-else>
-                                    <span class="footer_button_text1">Убрать</span>
-                                    <span class="footer_button_text2">Убрать из корзины</span>
+                                <img src="/svg/trash.svg" height="24" @click="removeFromCart" v-if="itemFromStore">
+
+                                <router-link :to="'/catalog/cart'" class="footer_button blue_color" :class="{'pink_color': item.has_discount}" @click="addToCart" v-if="itemFromStore">
+                                    <span class="footer_button_text1">Оформить</span>
+                                    <span class="footer_button_text2">Оформить заказ</span>
                                     <img class="ms-2" :src="item.has_discount ? '/svg/pinkcart.svg' : '/svg/bluecart.svg'">
-                                </button>
+                                </router-link>
                             </div>
                         </div>
                     </div>

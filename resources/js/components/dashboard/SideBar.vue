@@ -54,20 +54,7 @@ const menuItems = ref([
       label: 'Товары',
       icon: 'mdi mdi-view-list ',
       link: '/dashboard/items',
-      subItems: [
-        {
-          label: 'Добавить товар',
-          link: '/dashboard/items/add'
-        },
-        {
-          label: 'Список товаров',
-          link: '/dashboard/items/list'
-        },
-      ]
     },
-
-
-
 
     {
       label: 'Страницы',

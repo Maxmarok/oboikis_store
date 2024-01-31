@@ -10,7 +10,7 @@ class Orders extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $appends = ['order_sum'];
+    protected $appends = ['order_sum', 'recieve'];
 
     public function order_items()
     {
@@ -24,6 +24,11 @@ class Orders extends Model
 
     public function getOrderSumAttribute()
     {
-        return $this->order_items->sum('total');
+        return $this->order_items->sum('total_sum');
+    }
+
+    public function getRecieveAttribute()
+    {
+        return $this->delivery === 'ship' ? ($this->city . ', ' . $this->address) : 'Самовывоз';
     }
 }

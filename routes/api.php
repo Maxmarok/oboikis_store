@@ -48,8 +48,13 @@ Route::group([
     });
 
 
-    Route::prefix('dashboard')->group(function(){
-        Route::get('/orders', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'getOrders']);
+    Route::prefix('dashboard')->as('dashboard.')->group(function(){
+        Route::prefix('orders')->as('orders.')->group(function(){
+            Route::get('/', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'getOrders']);
+            Route::get('/confirm/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'confirmOrder'])->name('confirm');
+            Route::get('/cancel/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'cancelOrder'])->name('cancel');
+            Route::get('/complete/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'completeOrder'])->name('complete');
+        });
     });
     
 });

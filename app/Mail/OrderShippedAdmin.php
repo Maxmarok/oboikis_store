@@ -12,17 +12,20 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderShipped extends Mailable
+class OrderShippedAdmin extends Mailable
 {
     use Queueable, SerializesModels;
+
+    var $url;
 
     /**
      * Create a new message instance.
      */
     public function __construct(
         public Orders $order,
-        public Collection $items,
-    ){}
+    ){
+        $this->url = route('dashboard.orders');
+    }
 
     /**
      * Get the message envelope.
@@ -30,7 +33,7 @@ class OrderShipped extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Заказ #'.$this->order->id.' в интернет-магазине «Обойкис»',
+            subject: 'Новый заказ #'.$this->order->id.' в интернет-магазине «Обойкис»',
         );
     }
 
@@ -40,7 +43,10 @@ class OrderShipped extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.orders.shipped',
+            markdown: 'mail.orders.admin_shipped',
+            with: [
+                'url' => $this->url,
+            ],
         );
     }
 

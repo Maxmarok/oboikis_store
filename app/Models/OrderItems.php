@@ -10,7 +10,7 @@ class OrderItems extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $appends = ['total'];
+    protected $appends = ['total', 'total_sum'];
 
     const APPENDS = ['title'];
 
@@ -31,6 +31,11 @@ class OrderItems extends Model
 
     public function getTotalAttribute()
     {
-        return ($this->item->price - $this->item->discount) * $this->quantity;
+        return $this->item->price - $this->item->discount;
+    }
+
+    public function getTotalSumAttribute()
+    {
+        return $this->total * $this->quantity;
     }
 }
