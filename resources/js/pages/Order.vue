@@ -80,11 +80,11 @@ const sendForm = () => {
 
     axios.post('/api/v1/delivery', form.value)
         .then(res => {
-            // let items = res.data.order.order_items
-            // items.forEach(x => {
-            //     store.removeItem(x.item_id)
-            //     store.selectItem(x.item_id)
-            // })
+            let items = res.data.order.order_items
+            items.forEach(x => {
+                store.removeItem(x.item_id)
+                store.selectItem(x.item_id)
+            })
         })
         .catch(e => {
             if(e.response.status !== undefined && e.response.status === 422) {
