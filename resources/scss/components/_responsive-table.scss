@@ -183,3 +183,43 @@ body[data-layout="horizontal"] {
   background-color: #e9ecef;
   border-color: #dee2e6;
 }
+
+.table .table-number {
+  vertical-align: middle;
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.table .table-number.success {
+  color: #00ADB5;
+}
+
+.table .table-number.danger {
+  color: #ff449f;
+}
+
+.table p {
+  margin-bottom: 0;
+}
+
+// .table p span strong {
+//   width: 15px;
+//   display: inline-block;
+//   text-align: center;
+// }
+
+.table a, 
+.table span {
+  font-weight: bold;
+  color: #ff449f;
+  text-decoration: none;
+}
+
+.table strong {
+  color: #00ADB5;
+}
+
+.table .table-items {
+  margin-bottom: 10px;
+}

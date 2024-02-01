@@ -15,19 +15,19 @@ const onToggleMenu = () => {
         <div class="navbar-brand-box">
           <a href="/" class="logo logo-dark">
             <span class="logo-sm">
-              <img src="@js/assets/images/logo-sm-dark.png" height="22" />
+              <img src="@js/assets/images/logo-admin.svg" height="22" />
             </span>
             <span class="logo-lg">
-              <img src="@js/assets/images/logo-dark.png" height="20" />
+              <img src="@js/assets/images/icon-admin.svg" height="20" />
             </span>
           </a>
 
           <a href="/" class="logo logo-light">
             <span class="logo-sm">
-              <img src="@js/assets/images/logo-sm-light.png" height="22" />
+              <img src="@js/assets/images/icon-admin.svg" height="22" />
             </span>
             <span class="logo-lg">
-              <img src="@js/assets/images/logo-light.png" height="20" />
+              <img src="@js/assets/images/logo-admin.svg" height="20" />
             </span>
           </a>
         </div>

@@ -132,7 +132,7 @@ const cancelOrder = (id) => {
   <div class="col-12">
     <div class="card" v-if="orders && orders.length > 0">
       <div class="table-responsive">
-        <table class="table table-sticky mb-0 text-nowrap">
+        <table class="table table-sticky table-centered table-bordered mb-0 text-nowrap">
           <thead class="thead-light">
             <tr>
                 <th>Номер заказа</th>
@@ -143,8 +143,8 @@ const cancelOrder = (id) => {
           </thead>
           <tbody>
             <tr v-for="order in orders"> 
-                <td>
-                  <p v-html="order.id" />
+                <td class="table-number" :class="{'success': order.status !== 2, 'danger': order.status === 2}">
+                  <p v-html="`#${order.id}`" />
                 </td>
 
                 <td>
@@ -175,21 +175,21 @@ const cancelOrder = (id) => {
                 </td>
 
                 <td>
-                  <p v-for="order_item, i in order.order_items">
-                    <span>{{i + 1}}. <a :href="order_item.item.link" target="_blank">{{order_item.item.title}}</a> {{order_item.quantity}} шт. x {{order_item.total.toLocaleString('ru')}} ₽</span>
+                  <p v-for="order_item, i in order.order_items" class="table-items">
+                    <span><img :src="order_item.item.image" height="40" /> <a :href="order_item.item.link" target="_blank"><strong>{{order_item.item.title}}</strong></a> {{order_item.quantity}} шт. x {{order_item.total.toLocaleString('ru')}} ₽</span>
                   </p>
-                  <p>Итого: {{ order.order_sum.toLocaleString('ru') }}₽</p>
+                  <p><strong>Итого:</strong> <span>{{ order.order_sum.toLocaleString('ru') }} ₽</span></p>
                 </td>
 
-                <td>
+                <td class="table-number" :class="{'success': order.status !== 2, 'danger': order.status === 2}">
                   <div class="d-flex flex-column" v-if="order.status === 0">
                     <button class="btn btn-success mb-2" @click="confirmOrder(order.id)">Подтвердить заказ</button>
                     <button class="btn btn-danger" @click="cancelOrder(order.id)">Отменить заказ</button>
                   </div>
 
                   <button v-if="order.status === 1" class="btn btn-success" @click="completeOrder(order.id)">Завершить заказ</button>
-                  <p v-if="order.status === 2" class="text-danger">Отменен</p>
-                  <p v-if="order.status === 3" class="text-success">Завершен</p>
+                  <p v-if="order.status === 2">Отменен</p>
+                  <p v-if="order.status === 3">Завершен</p>
                 </td>
             </tr>
           </tbody>
