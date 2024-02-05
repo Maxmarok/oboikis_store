@@ -59,8 +59,8 @@ const getStock = () => {
         }">
         <div>
             <div class="d-flex flex-column">
-                <span class="s3_b_f_text1" v-if="props.item.discount" v-html="`${helper.getPrice(props.item.price)}`" />
-                <span class="s3_b_f_text2" v-html="`${helper.getPrice(props.item.discount_price)} ₽`" />
+                <span class="s3_b_f_text1" v-if="props.item.discount" v-html="helper.getPrice(props.item.price, false)" />
+                <span class="s3_b_f_text2" v-html="helper.getPrice(props.item.discount_price)" />
             </div>
         </div>
         <router-link :to="`/catalog/${props.item.catalog_url}/${props.item.id}`" class="d-flex flex-row align-items-center justify-content-evenly"

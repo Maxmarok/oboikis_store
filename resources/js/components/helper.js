@@ -27,8 +27,10 @@ export default {
         return number + ' ' + noun
     },
 
-    getPrice(value) {
-        return value.toLocaleString('ru')
+    getPrice(value, symbol = true) {
+        let string = value.toLocaleString('ru')
+        if (symbol) string += ' ₽'
+        return string
     },
 
     getPhone(value) {

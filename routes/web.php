@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard/{any}', function () { 
     return view('main'); 
-})->whereIn('any', ['orders']);
+})->whereIn('any', ['orders', 'items', 'info']);
 
 Route::get('/dashboard/orders', function () { 
     return view('main'); 

@@ -10,7 +10,7 @@ class OrdersController extends Controller
 {
     public function getOrders()
     {
-        $orders = Orders::with(['order_items', 'user'])->orderBy('status', 'asc')->orderBy('id', 'desc')->get();
+        $orders = Orders::with(['order_items', 'user'])->orderByRaw('FIELD(status, 0,1,3,2)')->orderBy('id', 'desc')->paginate(10);
 
         return response()->json([
             'success' => true,

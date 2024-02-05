@@ -11,7 +11,9 @@ import Payment from '@js/pages/Payment.vue'
 import Order from '@js/pages/Order.vue'
 
 import Dashboard from '@js/pages/dashboard/index.vue'
-import Orders from '@js/pages/dashboard/orders.vue'
+import DashboardOrders from '@js/pages/dashboard/orders.vue'
+import DashboardItems from '@js/pages/dashboard/items.vue'
+import DashboardInfo from '@js/pages/dashboard/info.vue'
 
 
 import auth from '@js/middleware/auth'
@@ -55,7 +57,25 @@ const routes = [
             {
                 name: 'Orders',
                 path: 'orders',
-                component: Orders,
+                component: DashboardOrders,
+                // meta: {
+                //     middleware: auth
+                // },
+            },
+
+            {
+                name: 'Items',
+                path: 'items',
+                component: DashboardItems,
+                // meta: {
+                //     middleware: auth
+                // },
+            },
+
+            {
+                name: 'Info',
+                path: 'info',
+                component: DashboardInfo,
                 // meta: {
                 //     middleware: auth
                 // },

@@ -55,6 +55,15 @@ Route::group([
             Route::get('/cancel/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'cancelOrder'])->name('cancel');
             Route::get('/complete/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'completeOrder'])->name('complete');
         });
+
+        Route::prefix('items')->as('items.')->group(function(){
+            Route::get('/', [App\Http\Controllers\API\Dashboard\ItemsController::class, 'getItems']);
+        });
+
+        Route::prefix('info')->as('info.')->group(function(){
+            Route::get('/', [App\Http\Controllers\API\Dashboard\InfoController::class, 'getInfo']);
+            Route::post('/update', [App\Http\Controllers\API\Dashboard\InfoController::class, 'updateInfo']);
+        });
     });
     
 });

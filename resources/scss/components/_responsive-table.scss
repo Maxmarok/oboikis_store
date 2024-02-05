@@ -188,7 +188,7 @@ body[data-layout="horizontal"] {
   vertical-align: middle;
   text-align: center;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .table .table-number.success {
@@ -222,4 +222,18 @@ body[data-layout="horizontal"] {
 
 .table .table-items {
   margin-bottom: 10px;
+}
+
+.table img.lg {
+  border-radius: 14px;
+  border: 1px solid #00adb5;
+}
+
+.table img.sm {
+  border-radius: 5px;
+  border: .5px solid #00adb5;
+}
+
+.table img.sm.discount {
+  border-color: #ff449f;
 }

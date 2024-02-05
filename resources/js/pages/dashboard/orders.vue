@@ -22,17 +22,17 @@ const confirmOrder = (id) => {
   swal({
     title: `Подтверждение заказа`,
     text: `Вы действительно хотите подтвердить заказ #${id}?`,
-    type: "success",
+    icon: "success",
     showCancelButton: true,
-    //confirmButtonColor: "#3085d6",
-    confirmButtonText: "Подтвердить",
-    cancelButtonText: "Вернуться",
+    confirmButtonColor: "#00ADB5",
+    confirmButtonText: "Подтвердить заказ",
+    cancelButtonText: "Закрыть",
   }).then((result) => { // <--
       if (result.value) { // <-- if confirmed
         axios.get(`/api/v1/dashboard/orders/confirm/${id}`)
         .then(res => {
-          let index = orders.value.findIndex(x => x.id === res.data.data.id)
-          orders.value[index].status = res.data.data.status
+          let index = orders.value.data.findIndex(x => x.id === res.data.data.id)
+          orders.value.data[index].status = res.data.data.status
 
           swal.fire({
             text: 'Заказ подтвержден',
@@ -51,17 +51,17 @@ const completeOrder = (id) => {
   swal({
     title: `Завершение заказа`,
     text: `Вы действительно хотите завершить заказ #${id}?`,
-    type: "error",
+    icon: "success",
     showCancelButton: true,
-    //confirmButtonColor: "#3085d6",
-    confirmButtonText: "Завершить",
-    cancelButtonText: "Вернуться",
+    //confirmButtonColor: "#00ADB5",
+    confirmButtonText: "Завершить заказ",
+    cancelButtonText: "Закрыть",
   }).then((result) => { // <--
       if (result.value) { // <-- if confirmed
         axios.get(`/api/v1/dashboard/orders/complete/${id}`)
         .then(res => {
-          let index = orders.value.findIndex(x => x.id === res.data.data.id)
-          orders.value[index].status = res.data.data.status
+          let index = orders.value.data.findIndex(x => x.id === res.data.data.id)
+          orders.value.data[index].status = res.data.data.status
 
           swal.fire({
             text: 'Заказ завершен',
@@ -80,17 +80,17 @@ const cancelOrder = (id) => {
   swal({
     title: `Отмена заказа`,
     text: `Вы действительно хотите отменить заказ #${id}?`,
-    type: "error",
+    icon: "error",
     showCancelButton: true,
-    //confirmButtonColor: "#3085d6",
-    confirmButtonText: "Отменить",
-    cancelButtonText: "Вернуться",
+    confirmButtonColor: "#ff449f",
+    confirmButtonText: "Отменить заказ",
+    cancelButtonText: "Закрыть",
   }).then((result) => { // <--
       if (result.value) { // <-- if confirmed
         axios.get(`/api/v1/dashboard/orders/cancel/${id}`)
         .then(res => {
-          let index = orders.value.findIndex(x => x.id === res.data.data.id)
-          orders.value[index].status = res.data.data.status
+          let index = orders.value.data.findIndex(x => x.id === res.data.data.id)
+          orders.value.data[index].status = res.data.data.status
 
           swal.fire({
             text: 'Заказ отменен',
@@ -103,22 +103,6 @@ const cancelOrder = (id) => {
         });
       } 
   });
-
-
-  axios.post('/api/v1/dashboard/orders/confirmlete', {id: id})
-  .then(res => {
-    let index = orders.value.findIndex(x => x.id === res.data.data.id)
-    orders.value[index].status = res.data.data.status
-
-    swal.fire({
-      text: 'Заказ отменен',
-      position: 'bottom-end',
-      // toast: true,
-      showConfirmButton: false,
-      icon: 'error',
-      timer: 2000,
-    })
-  })
 }
 
 </script>
@@ -130,7 +114,7 @@ const cancelOrder = (id) => {
 
 <div class="row">
   <div class="col-12">
-    <div class="card" v-if="orders && orders.length > 0">
+    <div class="card" v-if="orders && orders.data.length > 0">
       <div class="table-responsive">
         <table class="table table-sticky table-centered table-bordered mb-0 text-nowrap">
           <thead class="thead-light">
@@ -142,7 +126,7 @@ const cancelOrder = (id) => {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="order in orders"> 
+            <tr v-for="order in orders.data"> 
                 <td class="table-number" :class="{'success': order.status !== 2, 'danger': order.status === 2}">
                   <p v-html="`#${order.id}`" />
                 </td>
@@ -176,20 +160,20 @@ const cancelOrder = (id) => {
 
                 <td>
                   <p v-for="order_item, i in order.order_items" class="table-items">
-                    <span><img :src="order_item.item.image" height="40" /> <a :href="order_item.item.link" target="_blank"><strong>{{order_item.item.title}}</strong></a> {{order_item.quantity}} шт. x {{order_item.total.toLocaleString('ru')}} ₽</span>
+                    <span><img :src="order_item.item.image" width="40" class="sm" :class="{'discount': order_item.item.discount > 0}" /> <a :href="order_item.item.link" target="_blank"><strong>{{order_item.item.title}}</strong></a> {{order_item.quantity}} шт. x {{order_item.total.toLocaleString('ru')}} ₽</span>
                   </p>
                   <p><strong>Итого:</strong> <span>{{ order.order_sum.toLocaleString('ru') }} ₽</span></p>
                 </td>
 
                 <td class="table-number" :class="{'success': order.status !== 2, 'danger': order.status === 2}">
                   <div class="d-flex flex-column" v-if="order.status === 0">
-                    <button class="btn btn-success mb-2" @click="confirmOrder(order.id)">Подтвердить заказ</button>
-                    <button class="btn btn-danger" @click="cancelOrder(order.id)">Отменить заказ</button>
+                    <button class="btn btn-sm btn-success mb-2" @click="confirmOrder(order.id)">Подтвердить заказ</button>
+                    <button class="btn btn-sm btn-danger" @click="cancelOrder(order.id)">Отменить заказ</button>
                   </div>
-
-                  <button v-if="order.status === 1" class="btn btn-success" @click="completeOrder(order.id)">Завершить заказ</button>
+                  <p v-if="order.status === 1" class="mb-2">Подтвержден</p>
+                  <button v-if="order.status === 1" class="btn btn-sm btn-primary" @click="completeOrder(order.id)">Завершить заказ</button>
                   <p v-if="order.status === 2">Отменен</p>
-                  <p v-if="order.status === 3">Завершен</p>
+                  <p v-if="order.status === 3" class="text-primary">Завершен</p>
                 </td>
             </tr>
           </tbody>
@@ -198,7 +182,7 @@ const cancelOrder = (id) => {
       </div>
     </div>
 
-    <div v-if="orders && orders.length === 0" >
+    <div v-if="orders && orders.data.length === 0" >
       <p>Заказов нет</p>
     </div>
 

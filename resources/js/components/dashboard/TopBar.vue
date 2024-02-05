@@ -43,17 +43,7 @@ const onToggleMenu = () => {
 
       </div>
 
-      <div class="d-flex">  
-        <div class="dropdown d-inline-block">
-          <button
-            type="button"
-            class="btn header-item noti-icon right-bar-toggle waves-effect toggle-right"
-            @click="toggleRightSidebar"
-          >
-            <i class="ri-settings-2-line toggle-right"></i>
-          </button>
-        </div>
-      </div>
+      
     </div>
   </header>
 </template>

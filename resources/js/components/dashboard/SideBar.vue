@@ -57,21 +57,9 @@ const menuItems = ref([
     },
 
     {
-      label: 'Страницы',
+      label: 'Информация',
       icon: 'ri-menu-fill',
-      //link: '/dashboard/contacts',
-      subItems: [
-        {
-          label: 'О компании',
-          link: '/dashboard/about'
-        },
-
-        {
-          label: 'Контакты',
-          link: '/dashboard/contacts'
-        },
-
-      ]
+      link: '/dashboard/info',
     },
 
     {
