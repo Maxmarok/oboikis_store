@@ -134,7 +134,7 @@ const changeInput = (e) => {
                         <span v-html="`–${item.discount_percent}%`" />
                     </div>
 
-                    <div class="wallpaper_screen_elem1_footer" id="gallery">
+                    <div class="wallpaper_screen_elem1_footer" id="gallery" v-if="item.gallery">
                         <a v-for="image in item.gallery.split(',')" :href="image" data-pswp-width="1200" data-pswp-height="1000">
                             <img class="s3_b_orange" :src="image">
                         </a>

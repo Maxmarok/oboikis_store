@@ -2,10 +2,10 @@
 import {onMounted, ref, inject} from 'vue'
 import PageHeader from "@js/components/dashboard/PageHeader.vue"
 import { useInfoStore } from '@js/stores/infoStore'
-const info = useInfoStore()
-
+import FileUpload from "@js/components/FileUpload.vue"
 import InfoModal from '@js/components/modals/InfoModal.vue'
 
+const info = useInfoStore()
 const title = "Основная информация"
 
 const data = ref({
@@ -97,13 +97,11 @@ onMounted(() => {
 
                     <div class="col-lg-4">
                         <div class="form-group mb-4">
-                            <label for="logo">Логотип</label>
-                            <input
-                                type="text"
-                                class="form-control"
+                            <FileUpload 
+                                label="Логотип"
+                                url=""
+                                :data="data.logo"
                                 id="logo"
-                                placeholder="Введите email адрес"
-                                v-model="data.logo"
                             />
                         </div>
                     </div>

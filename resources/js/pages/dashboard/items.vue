@@ -2,6 +2,7 @@
 import { onMounted, ref, inject } from 'vue'
 import PageHeader from "@js/components/dashboard/PageHeader.vue"
 import helper from '@js/components/helper.js'
+import { Bootstrap5Pagination } from 'laravel-vue-pagination'
 
 //import AddItemModal from '@/components/modals/AddItemModal.vue'
 
@@ -19,8 +20,8 @@ onMounted(() => {
   getItems()
 });
 
-const getItems = () => {
-  axios.get('/api/v1/dashboard/items')
+const getItems = (page = 1) => {
+  axios.get(`/api/v1/dashboard/items?page=${page}`)
   .then(res => {
     items.value = res.data.data
   })
@@ -146,22 +147,24 @@ const openCreateModal = (title, type, item) => {
     @action="getItems"
 />
 
-<PageHeader :title="title">
-    <template #right>
-        <div>
-            <button @click="openCreateModal('Добавить товар')" class="btn btn-sm btn-success">
-                <i class="mdi mdi-plus mr-2"></i> Добавить товар
-            </button>
-        </div>
-    </template>
-</PageHeader>
+<PageHeader :title="title" />
 <div class="d-flex align-items-center row mb-3">
 
 </div>
 
 <div class="row">
   <div class="col-12">
+    <Bootstrap5Pagination
+        :data="items"
+        @pagination-change-page="getItems"
+        :show-disabled="true"
+        :limit="5"
+        v-if="items && items.data.length > 0"
+    />
+      
     <div class="card" v-if="items && items.data.length > 0">
+     
+
       <div class="table-responsive">
         <table class="table table-sticky table-centered table-bordered mb-0 text-nowrap">
           <thead class="thead-light">
@@ -178,7 +181,7 @@ const openCreateModal = (title, type, item) => {
                     <p class="mb-2">
                         <strong v-html="item.title" />
                     </p>
-                    <p><img :src="item.image" height="200" class="lg" /></p>
+                    <p v-if="item.image"><img :src="item.image" height="200" class="lg" /></p>
                     
                 </td>
 
@@ -230,8 +233,19 @@ const openCreateModal = (title, type, item) => {
             </tr>
           </tbody>
         </table>
+        
       </div>
+
+      
     </div>
+
+    <Bootstrap5Pagination
+      :data="items"
+      @pagination-change-page="getItems"
+      :show-disabled="true"
+      :limit="5"
+      v-if="items && items.data.length > 0"
+    />
 
     <div v-if="items && items.data.length === 0" >
       <p>Товаров нет</p>

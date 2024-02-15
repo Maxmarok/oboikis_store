@@ -19,4 +19,9 @@ class ItemsController extends Controller
     {
         return $this->service->getItems();
     }
+
+    public function addItems()
+    {
+        return $this->service->addItems();
+    }
 }

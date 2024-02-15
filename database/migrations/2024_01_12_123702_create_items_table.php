@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text('main_material')->nullable();
             $table->text('size')->nullable();
             $table->text('color')->nullable();
+            $table->text('sbis_id')->nullable();
             $table->timestamps();
         });
     }

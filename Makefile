@@ -68,3 +68,5 @@ db_seed:
 	${DOCKER_COMPOSE} exec supervisor php artisan db:seed
 ziggy:
 	${DOCKER_COMPOSE} exec supervisor php artisan ziggy:generate
+add_items:
+	${DOCKER_COMPOSE} exec app php artisan items:add

@@ -22,4 +22,12 @@ class ItemsService
             'data' => $orders,
         ]); 
     }
+
+    public function addItems(): \Illuminate\Http\JsonResponse
+    {
+
+        return response()->json([
+            'success' => true,
+        ]); 
+    }
 }
