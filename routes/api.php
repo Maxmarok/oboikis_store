@@ -19,33 +19,19 @@ Route::group([
     'as' => 'api.',
 ], function(){
 
-    Route::prefix('info')->group(function(){
-        Route::get('/', [App\Http\Controllers\API\InfoController::class, 'getInfo']);
-    });
+    Route::get('/info', [App\Http\Controllers\API\InfoController::class, 'getInfo']);
 
-    Route::prefix('items')->group(function(){
-        Route::post('/', [App\Http\Controllers\API\ItemsController::class, 'getItems']);
-    });
+    Route::post('/items', [App\Http\Controllers\API\ItemsController::class, 'getItems']);
 
-    Route::prefix('item')->group(function(){
-        Route::post('/', [App\Http\Controllers\API\ItemsController::class, 'getItem']);
-    });
+    Route::post('/item', [App\Http\Controllers\API\ItemsController::class, 'getItem']);
 
-    Route::prefix('cart')->group(function(){
-        Route::post('/', [App\Http\Controllers\API\CartController::class, 'getCart']);
-    });
+    Route::post('/cart', [App\Http\Controllers\API\CartController::class, 'getCart']);
 
-    Route::prefix('order')->group(function(){
-        Route::post('/', [App\Http\Controllers\API\CartController::class, 'getOrder']);
-    });
+    Route::post('/order', [App\Http\Controllers\API\CartController::class, 'getOrder']);
 
-    Route::prefix('slider')->group(function(){
-        Route::get('/', [App\Http\Controllers\API\ItemsController::class, 'getItemsForSlider']);
-    });
+    Route::get('/slider', [App\Http\Controllers\API\ItemsController::class, 'getItemsForSlider']);
 
-    Route::prefix('delivery')->group(function(){
-        Route::post('/', [App\Http\Controllers\API\CartController::class, 'sendForm']);
-    });
+    Route::post('/delivery', [App\Http\Controllers\API\CartController::class, 'createOrder']);
 
 
     Route::prefix('dashboard')->as('dashboard.')->group(function(){

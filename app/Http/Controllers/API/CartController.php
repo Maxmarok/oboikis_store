@@ -8,72 +8,49 @@ use App\Models\Items;
 use App\Models\OrderItems;
 use App\Models\Orders;
 use App\Models\User;
+use App\Services\CartController\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
-    public function getCart(Request $request)
+    private CartService $service;
+
+    public function __construct()
     {
-        $ids = $request->ids;
-
-        Log::debug($ids);
-
-        $items = Items::whereIn('id', $ids)->get()->each->setAppends(Items::APPENDS);
-
-        $breadcrumbs = [
-            [
-                'title' => 'Главная', 
-                'link' => '/',
-            ],
-            [
-                'title' => 'Каталог', 
-                'link' => '/catalog',
-            ],
-            [
-                'title' => 'Корзина', 
-                'link' => null,
-            ],
-        ];
-
-        return response()->json([
-            'success' => true,
-            'data' => $items,
-            'breadcrumbs' => $breadcrumbs,
-            'title' => '<span>Корзина</span> товаров',
-        ]);
+        $this->service = new CartService();
     }
 
-    public function getOrder(Request $request)
+    /**
+    * Get items from cart
+    */
+    public function getCart(Request $request): \Illuminate\Http\JsonResponse
     {
-        $data = $request->items;
-        
-        $ids = [];
-
-        foreach($data as $item) {
-            $ids[] = $item['id'];
-        }
-
-        $items = Items::whereIn('id', $ids)->select('id', 'price', 'discount')->get();
-
-        $price = 0;
-
-        foreach($items as $item) {
-
-            $index = array_search($item->id, array_column($data, 'id'));
-
-            if(isset($data[$index])) $price += ($item->price - $item->discount) * $data[$index]['count'];
-        }
-
-        return response()->json([
-            'success' => true,
-            'price' => $price,
+        $data = $request->validate([
+            'ids' => 'sometimes|array',
         ]);
+
+        return $this->service->getCart($data);
     }
 
-    public function sendForm(Request $request)
+    /**
+    * Get info about order
+    */
+    public function getOrder(Request $request): \Illuminate\Http\JsonResponse
     {
-        $form = $request->validate([
+        $data = $request->validate([
+            'items' => 'sometimes|array',
+        ]);
+
+        return $this->service->getOrder($data);
+    }
+
+    /**
+    * Make order
+    */
+    public function createOrder(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
@@ -86,39 +63,6 @@ class CartController extends Controller
             'rules' => 'accepted',
         ]);
 
-        $user = User::firstOrCreate(
-            ['email' => $form['email']],
-            ['email' => $form['email']],
-        );
-
-        $order = $user->order()->create([
-            'user_id' => $user->id,
-            'name' => $form['name'],
-            'phone' => $form['phone'],
-            'comment' => $form['comment'],
-            'reciever' => $form['reciever'],
-            'delivery' => $form['delivery'],
-            'city' => $form['city'],
-            'address' => $form['address'],
-        ]);
-
-        $arr = [];
-        $items = $form['items'];
-       
-        foreach($items as $item) {
-            $arr[] = [
-                'order_id' => $order->id,
-                'item_id' => $item['id'],
-                'quantity' => $item['count'],
-            ];
-        }
-
-        OrderItems::insert($arr);
-        MakeOrderJob::dispatchAfterResponse($order);
-
-        return response()->json([
-            'success' => true,
-            'order' => $order,
-        ]);
+        return $this->service->createOrder($data);
     }
 }

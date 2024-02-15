@@ -4,31 +4,30 @@ namespace App\Http\Controllers\API\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Info;
+use App\Services\Dashboard\InfoController\InfoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class InfoController extends Controller
 {
-    public function getInfo()
-    {
-        $data = Info::first();
+    private InfoService $service;
 
-        return response()->json([
-            'success' => true,
-            'data' => $data,
-        ]);
+    public function __construct()
+    {
+        $this->service = new InfoService();
     }
 
-    public function updateInfo(Request $request)
+    public function getInfo(): \Illuminate\Http\JsonResponse
     {
-        $info = $request->info;
+        return $this->service->getInfo();
+    }
 
-        Info::first()->update($info);
-
-        Cache::put('info', Info::first(), 5000);
-
-        return response()->json([
-            'success' => true,
+    public function updateInfo(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $data = $request->validate([
+            'info' => 'required|array'
         ]);
+
+        return $this->service->updateInfo($data);
     }
 }

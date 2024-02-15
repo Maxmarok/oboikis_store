@@ -387,7 +387,9 @@ nav {
     border-top-right-radius: 13px;
 }
 
-.screen3_block .discount {
+.screen3_block .discount,
+.wallpaper_screen_elem1_body .discount,
+.goods_elem1_body .discount {
     font-family: 'Lato';
     font-size: 18px;
     font-weight: 400;
@@ -2910,7 +2912,9 @@ select {
         height: 458px;
     }
 
-    .screen3_block  .discount {
+    .screen3_block  .discount,
+    .wallpaper_screen_elem1_body .discount,
+    .goods_elem1_body .discount {
         width: 46px;
         height: 26px;
         font-family: 'Lato';

@@ -4,56 +4,35 @@ namespace App\Http\Controllers\API\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Orders;
+use App\Services\Dashboard\OrdersController\OrdersService;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
-    public function getOrders()
-    {
-        $orders = Orders::with(['order_items', 'user'])->orderByRaw('FIELD(status, 0,1,3,2)')->orderBy('id', 'desc')->paginate(10);
+    private OrdersService $service;
 
-        return response()->json([
-            'success' => true,
-            'data' => $orders,
-        ]); 
+    public function __construct()
+    {
+        $this->service = new OrdersService();
     }
 
-    public function confirmOrder($id)
+    public function getOrders(): \Illuminate\Http\JsonResponse
     {
-        $order = $this->changeStatus($id, 1);
-
-        return response()->json([
-            'success' => true,
-            'data' => $order,
-        ]); 
+        return $this->service->getOrders();
     }
 
-    public function cancelOrder($id)
+    public function confirmOrder(string $id): \Illuminate\Http\JsonResponse
     {
-        $order = $this->changeStatus($id, 2);
-
-        return response()->json([
-            'success' => true,
-            'data' => $order,
-        ]); 
+        return $this->service->confirmOrder($id);
     }
 
-    public function completeOrder($id)
+    public function cancelOrder(string $id): \Illuminate\Http\JsonResponse
     {
-        $order = $this->changeStatus($id, 3);
-
-        return response()->json([
-            'success' => true,
-            'data' => $order,
-        ]); 
+        return $this->service->cancelOrder($id);
     }
 
-    protected function changeStatus($id, $status)
+    public function completeOrder(string $id): \Illuminate\Http\JsonResponse
     {
-        $order = Orders::find($id);
-        $order->status = $status;
-        $order->save();
-
-        return $order;
+        return $this->service->completeOrder($id);
     }
 }
