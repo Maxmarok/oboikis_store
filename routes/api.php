@@ -20,19 +20,12 @@ Route::group([
 ], function(){
 
     Route::get('/info', [App\Http\Controllers\API\InfoController::class, 'getInfo']);
-
     Route::post('/items', [App\Http\Controllers\API\ItemsController::class, 'getItems']);
-
     Route::post('/item', [App\Http\Controllers\API\ItemsController::class, 'getItem']);
-
     Route::post('/cart', [App\Http\Controllers\API\CartController::class, 'getCart']);
-
     Route::post('/order', [App\Http\Controllers\API\CartController::class, 'getOrder']);
-
     Route::get('/slider', [App\Http\Controllers\API\ItemsController::class, 'getItemsForSlider']);
-
     Route::post('/delivery', [App\Http\Controllers\API\CartController::class, 'createOrder']);
-
 
     Route::prefix('dashboard')->as('dashboard.')->group(function(){
         Route::prefix('orders')->as('orders.')->group(function(){
@@ -49,6 +42,7 @@ Route::group([
         Route::prefix('info')->as('info.')->group(function(){
             Route::get('/', [App\Http\Controllers\API\Dashboard\InfoController::class, 'getInfo']);
             Route::post('/update', [App\Http\Controllers\API\Dashboard\InfoController::class, 'updateInfo']);
+            Route::post('/upload', [App\Http\Controllers\API\Dashboard\InfoController::class, 'uploadFile']);
         });
     });
     

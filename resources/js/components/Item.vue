@@ -21,7 +21,7 @@ const getStock = () => {
     </div>
 
     <div class="s3_b_img">
-        <img :src="props.item.image">
+        <img :src="props.item.image ?? '/svg/vertical_white.svg'" :width="!props.item.image ? '50%' : '100%'">
     </div>
 
     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100"

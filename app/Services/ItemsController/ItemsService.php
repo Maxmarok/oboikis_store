@@ -5,6 +5,7 @@ namespace App\Services\ItemsController;
 use App\Models\Catalogs;
 use App\Models\Items;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class ItemsService {
 
@@ -16,13 +17,6 @@ class ItemsService {
         'discount_price', 
         'discount_percent', 
         'catalog_url',
-    ];
-
-    private const SECTIONS = [
-        'country' => 'Страна',
-        'producer' => 'Производитель',
-        'size' => 'Размер',
-        'material' => 'Материал',
     ];
 
     public function getItems(array $data): \Illuminate\Http\JsonResponse
@@ -71,13 +65,15 @@ class ItemsService {
                 });
             }
 
-            $values = $values->get()->pluck($key);
+            $values = array_filter($values->get()->pluck($key)->toArray());
 
-            $sections[] = [
-                'title' => $title,
-                'key' => $key,
-                'values' => $values
-            ];
+            if(count($values) > 0) {
+                $sections[] = [
+                    'title' => $title,
+                    'key' => $key,
+                    'values' => $values
+                ];
+            }
         }
 
         $breadcrumbs = [
@@ -91,8 +87,7 @@ class ItemsService {
             ],
         ];
 
-        $title = isset($catalog) && $catalog ? $catalog->name : 'Обои';
-
+        $title = $catalog->name ?: 'Обои';
         if($title === 'Клей') $title .= ' для обоев';
 
         return response()->json([
@@ -135,12 +130,12 @@ class ItemsService {
     public function getItemsForSlider(): \Illuminate\Http\JsonResponse
     {
         if(!Cache::has('slider_popular')) {
-            $popular = Items::take(8)->get()->each->setAppends(self::APPENDS);
+            $popular = Items::where('stock', '>', 0)->take(8)->get()->each->setAppends(self::APPENDS);
             Cache::put('slider_popular', $popular, 6000);
         }
 
         if(!Cache::has('slider_sales')) {
-            $sales = Items::where('discount', '>', 0)->take(8)->get()->each->setAppends(self::APPENDS);
+            $sales = Items::where('discount', '>', 0)->where('stock', '>', 0)->take(8)->get()->each->setAppends(self::APPENDS);
             Cache::put('slider_sales', $sales, 6000);
         }
 

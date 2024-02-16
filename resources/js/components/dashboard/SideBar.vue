@@ -41,7 +41,7 @@ const menuItems = ref([
     {
         label: 'Рабочий стол',
         icon: 'ri-dashboard-line',
-        link: '/dashboard/desktop',
+        link: '/dashboard',
     },
 
     {

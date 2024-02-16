@@ -224,16 +224,16 @@ body[data-layout="horizontal"] {
   margin-bottom: 10px;
 }
 
-.table img.lg {
-  border-radius: 14px;
-  border: 1px solid #00adb5;
-}
-
-.table img.sm {
+.table img {
+  display: inline-block;
+  width: 50px;
   border-radius: 5px;
-  border: .5px solid #00adb5;
+  margin-right: 10px;
+  // border: 1px solid #00adb5;
 }
 
-.table img.sm.discount {
-  border-color: #ff449f;
+.table img + strong {
+  display: inline-block;
+  vertical-align: middle;
+  width: calc(100% - 60px);
 }

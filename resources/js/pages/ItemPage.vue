@@ -123,10 +123,13 @@ const changeInput = (e) => {
             <span class="wallpaper_screen_elem1_text blue_color" v-html="item.title" />
             <div class="wallpaper_screen_elem1_body d-flex flex-column flex-lg-row justify-content-between">
                 <div class="wallpaper_screen_elem1_body_block1 position-relative">
-                    <img :class="{
+                    <div class="wallpaper_screen_elem1_body_img" 
+                    :class="{
                         's3_b_pink': item.has_discount,
-                        's3_b_blue': !item.has_discount
-                    }" :src="item.image">
+                        's3_b_blue': !item.has_discount,
+                    }">
+                        <img :src="item.image ?? '/svg/vertical_white.svg'" :width="!item.image ? '50%' : '100%'">
+                    </div>
 
                     <div v-if="item.has_discount" 
                         class="discount d-flex justify-content-center align-items-center bg_pink m_disc"
@@ -136,25 +139,26 @@ const changeInput = (e) => {
 
                     <div class="wallpaper_screen_elem1_footer" id="gallery" v-if="item.gallery">
                         <a v-for="image in item.gallery.split(',')" :href="image" data-pswp-width="1200" data-pswp-height="1000">
-                            <img class="s3_b_orange" :src="image">
+                            <img class="s3_b_orange" :src="image ?? '/svg/vertical_white.svg'" :width="!image ? '50%' : '100%'">
                         </a>
                     </div>
                 </div>
                 <div class="wallpaper_screen_elem1_body_block2">
                     <div class="wallpaper_screen_elem1_body_container">
-                        <div class="wallpaper_screen_elem1_body_e1">
-                        <div class="wallpaper_screen_elem1_body_e_header white_color">Описание</div>
-                        <div class="wallpaper_screen_elem1_body_e1_text blue_color d-flex align-items-center justify-content-start pe-4 ps-4">
-                            {{item.country}}, <span class="ms-1 me-1">{{ item.size }},</span> {{ item.material }}
-                        </div>
+                        <div class="wallpaper_screen_elem1_body_e1" v-if="item.description">
+                            <div class="wallpaper_screen_elem1_body_e_header white_color">Описание</div>
+
+                            <div class="wallpaper_screen_elem1_body_e1_text blue_color d-flex align-items-center justify-content-start pe-4 ps-4">
+                                {{ item.description }}
+                            </div>
                         </div>
                         <div class="wallpaper_screen_elem1_body_e2">
                             <div class="wallpaper_screen_elem1_body_e_header white_color">Характеристики</div>
                             <div class="wallpaper_screen_elem1_body_e2_text d-flex justify-content-center align-items-start flex-column blue_color pe-4 ps-4">
-                                <div class="pb-3">Тип товара: <span v-html="item.type" /></div>
-                                <div class="pb-3">Бренд: <span v-html="item.producer" /></div>
-                                <div class="pb-3">Артикул: <span v-html="item.id" /></div>
-                                <div>Производство: <span v-html="item.country" /></div>
+                                <div v-if="item.id" class="pb-3">Артикул: <span v-html="item.id" /></div>
+                                <div v-if="item.type" class="pb-3">Тип товара: <span v-html="item.type" /></div>
+                                <div v-if="item.producer" class="pb-3">Бренд: <span v-html="item.producer" /></div>
+                                <div v-if="item.country">Производство: <span v-html="item.country" /></div>
                             </div>
                         </div>
                         <div class="wallpaper_screen_elem1_body_e3">

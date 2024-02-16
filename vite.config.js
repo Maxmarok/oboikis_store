@@ -9,6 +9,9 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+
+                'resources/scss/dashboard.scss',
+                'resources/js/dashboard.js',
             ],
             refresh: true,
         }),

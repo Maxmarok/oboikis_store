@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->text('phone')->nullable();
             $table->text('email')->nullable();
-            $table->text('logo')->nullable();
             $table->text('vk')->nullable();
             $table->text('telegram')->nullable();
             $table->text('whatsapp')->nullable();

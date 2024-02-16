@@ -53,6 +53,8 @@ const getItems = (forLoading = false) => {
 
     let catalog = route.params.section
 
+    title.value = null
+
     axios.post('/api/v1/items', {
         catalog: catalog,
         filters: filters.value,
@@ -61,6 +63,9 @@ const getItems = (forLoading = false) => {
     })
     .then((res) => {
         res = res.data
+
+        breadcrumbs.value = res.breadcrumbs
+        title.value = res.title
 
         if(res.data.length > 0) {
             console.log(forLoading)
@@ -71,8 +76,6 @@ const getItems = (forLoading = false) => {
                 items.value = res.data
             }
             
-            breadcrumbs.value = res.breadcrumbs
-            title.value = res.title
             sections.value = res.sections
 
             setTimeout(() => {
@@ -87,8 +90,6 @@ const getItems = (forLoading = false) => {
 
 const loadingItems = () => {
     page.value++
-    console.log('start loading');
-
     getItems(true)
 }
 
@@ -105,7 +106,6 @@ const onScroll = (e) => {
     }
 
     if (delta < 0) {
-        console.log('scroll down')
         
         // if(!startScroll.value) {
         //     changePage(currentPage.value + 1)

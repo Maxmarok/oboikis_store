@@ -52,12 +52,14 @@ class Items extends Model
 
     public function getTitleAttribute()
     {
-        return $this->catalog->name . ' ' . $this->producer . ' ' . $this->name;
+        //return $this->catalog->name . ' ' . $this->producer . ' ' . $this->name;
+        return $this->name;
     }
 
     public function getDescriptionAttribute()
     {
-        return $this->country . ', ' . $this->size . ', ' . $this->material;
+        $arr = array_filter([$this->country, $this->size, $this->material]);
+        return implode(', ', $arr);
     }
 
     public function getCatalogUrlAttribute()

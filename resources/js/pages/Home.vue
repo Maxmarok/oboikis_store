@@ -6,8 +6,8 @@ import Footer from '@js/components/Footer.vue'
 import Carousel from '@js/components/Carousel.vue'
 import Loader from '@js/components/Loader.vue'
 
-const itemsPopular = ref([])
-const itemsSales = ref([])
+const itemsPopular = ref(null)
+const itemsSales = ref(null)
 
 const breakpoints = {
     1000: {
@@ -111,7 +111,7 @@ onMounted(() => {
     </div>
 </div>
         
-<div class="block3 w-auto mg_s3 border_top">
+<div class="block3 w-auto mg_s3 border_top" v-if="itemsPopular && itemsPopular.length > 0">
     <div class="screen3 d-flex m-auto flex-column align-items-center">
         <div class="screen3_text screen3_text_bg_blue">
             <span class="blue_color">Популярные товары</span>
@@ -121,15 +121,14 @@ onMounted(() => {
             <Carousel 
                 :items="itemsPopular"
                 :breakpoints="breakpoints"
-                v-if="itemsPopular.length > 0"
             />
-
-            <Loader v-else />
         </div>
     </div>
 </div>
 
-<div class="block3 w-auto mg_s3">
+<Loader v-if="!itemsPopular" />
+
+<div class="block3 w-auto mg_s3" v-if="itemsSales && itemsSales > 0">
     <div class="screen3 d-flex m-auto flex-column align-items-center">
         <div class="screen3_text screen3_text_bg_pink">
             <span class="pink_color">Товары по акции</span>
@@ -144,13 +143,12 @@ onMounted(() => {
             <Carousel 
                 :items="itemsSales"
                 :breakpoints="breakpoints"
-                v-if="itemsSales.length > 0"
-            />
-
-            <Loader v-else />
+            />    
         </div>
     </div>
 </div>
+
+<Loader v-if="!itemsSales" />
 
 <div class="block4 w-auto bg_blue">
     <div class="screen4 m-auto d-flex flex-column align-items-center justify-content-evenly bg_blue">

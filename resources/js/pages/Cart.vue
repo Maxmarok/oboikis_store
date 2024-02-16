@@ -184,8 +184,11 @@ const itemsLength = () => {
                     >
                         <input class="me-3 goods_input" type="checkbox" :id="`check_${item.id}`" :value="item.id" :checked="checkSelect(item.id)" @change="() => selectItem(item.id)">
                         <label :for="`check_${item.id}`"></label>
-                        <div class="position-relative">
-                            <img class="goods_img z-2 position-relative" :class="{'s3_b_pink': item.has_discount, 's3_b_blue': !item.has_discount}" :src="item.image">
+                        <div class="position-relative d-none d-md-block">
+                            
+                            <div class="goods_img z-2 position-relative" :class="{'s3_b_pink': item.has_discount, 's3_b_blue': !item.has_discount}">
+                                <img :src="item.image ?? '/svg/vertical_white.svg'" :width="!item.image ? '50%' : '100%'">
+                            </div>
                             <img class="goods_sale position-absolute z-1" src="/svg/sale.svg" v-if="item.has_discount">
                             <div class="discount d-flex justify-content-center align-items-center bg_pink z-2" v-if="item.has_discount">
                                 <span v-html="`-${item.discount_percent}%`" />
@@ -204,11 +207,15 @@ const itemsLength = () => {
                                          v-html="item.description"
                                     />
                                 </div>
-                                <div class="position-relative display-none">
-                                    <img class="goods_img z-0" :class="{s3_b_pink: item.has_discount}" :src="item.image">
+                                <div class="position-relative d-block d-md-none">
+                                    
+                                    <div class="goods_img" :class="{'s3_b_pink': item.has_discount, 's3_b_blue': !item.has_discount}">
+                                        <img class="z-0" :src="item.image ?? '/svg/vertical_white.svg'" :width="!item.image ? '50%' : '100%'">
+                                    </div>
+
                                     <div class="goods_disc position-absolute bg_pink" v-if="item.has_discount" v-html="`-${item.discount_percent}%`" />
                                 </div>
-                                <div class="goods_elem1_body_block_end_div2 d-flex justify-content-center align-items-center flex-row" v-if="item.stock > 0">
+                                <div class="goods_elem1_body_block_end_div2 d-flex justify-content-center align-items-center flex-row mt-3" v-if="item.stock > 0">
                                     <span class="end_div2_text1 blue_color me-1">В наличии:</span>
                                     <span class="end_div2_text2 pink_color" v-html="getStock(item.stock)"></span>
                                 </div>
@@ -232,8 +239,8 @@ const itemsLength = () => {
                                 <span class="goods_elem1_header_elem2_t2 pink_color align-self-end cursor-pointer" @click="removeFromCart(item.id)">Удалить</span>
 
                                 <div class="goods_elem1_body_block_end_footer_bottom_m display-none">
-                                    <div class="goods_elem1_body_block_end_footer_bottom_m_text1 bg_pink">70 200 ₽</div>
-                                    <div class="goods_elem1_body_block_end_footer_bottom_m_text2">140 200 ₽</div>
+                                    <div class="goods_elem1_body_block_end_footer_bottom_m_text1" :class="{'bg_pink': item.has_discount, 'bg_blue': !item.has_discount}">{{ helper.getPrice(item.discount_price * item.count) }}</div>
+                                    <div class="goods_elem1_body_block_end_footer_bottom_m_text2" v-if="item.has_discount">{{ helper.getPrice(item.price * item.count) }}</div>
                                 </div>
                             </div> 
                         </div>

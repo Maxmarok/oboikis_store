@@ -3,6 +3,7 @@
 namespace App\Services\Dashboard\ItemsController;
 
 use App\Jobs\AddItemsJob;
+use App\Models\Catalogs;
 use App\Models\Items;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -11,29 +12,12 @@ use Illuminate\Support\Facades\Log;
 
 class SbisService
 {
-    private $app_client_id;
-    private $login;
-    private $password;
-    private $url_token;
-    private $url_point;
-    private $url_price;
-    private $url_items;
-
     private const PAGE_SIZE = 100;
-
     private string $date;
     private Client $client;
 
     public function __construct()
     {
-        $this->app_client_id = config('sbis.app_client_id');
-        $this->login = config('sbis.login');
-        $this->password = config('sbis.password');
-        $this->url_token = config('sbis.url.token');
-        $this->url_point = config('sbis.url.point');
-        $this->url_price = config('sbis.url.price');
-        $this->url_items = config('sbis.url.items');
-
         $this->date = now()->format('Y.M.D');
         $this->client = new Client();
         self::checkCache();
@@ -43,26 +27,29 @@ class SbisService
     {
         $data = self::getItems($page);
         
-
         if(count($data) > 0) {
             self::insertItems($data);
             $page++;
-            AddItemsJob::dispatchAfterResponse($page);
+            AddItemsJob::dispatch($page)->delay(now()->addSeconds(10));
+            Cache::delete('slider_popular');
+            Cache::delete('slider_sales');
         }
     }
 
     public function insertItems(array $data): void
     {
         $arr = [];
+        $catalog = Catalogs::select('id', 'name')->get();
 
         foreach($data as $item) {
             $arr[] = [
                 'id' => $item['id'],
                 'name' => $item['name'],
-                'material' => $item['description_simple'],
+                'description_simple' => $item['description_simple'],
                 'sbis_id' => $item['nomNumber'],
                 'price' => $item['cost'],
-                'catalog_id' => 1,
+                'catalog_id' => self::getCatalogId($item['name'], $catalog),
+                'stock' => $item['balance'],
             ];
         }
 
@@ -79,9 +66,10 @@ class SbisService
             'priceListId' => Cache::get('sbis_price'),
             'page' => $page,
             'pageSize' => $pageSize,
+            'withBalance' => 'true',
         ]);
 
-        $url = $this->url_items . chr(077) . $arr;
+        $url = config('sbis.url.items') . chr(077) . $arr;
 
         try {
             $request = $this->client->request('GET', $url, [
@@ -112,7 +100,7 @@ class SbisService
     public function setPrice(): void
     {
         $arr = http_build_query(['actualDate' => $this->date]);
-        $url = $this->url_price . chr(077) . $arr;
+        $url = config('sbis.url.price') . chr(077) . $arr;
 
         try {
             $request = $this->client->request('GET', $url, [
@@ -134,7 +122,7 @@ class SbisService
     public function setPoint(): void
     {
         try {
-            $request = $this->client->request('GET', $this->url_point, [
+            $request = $this->client->request('GET', config('sbis.url.point'), [
                 "headers" => self::getAuthHeader()
             ]);
 
@@ -153,11 +141,11 @@ class SbisService
     public function setToken(): void
     {
         try {
-            $request = $this->client->request('POST', $this->url_token, [
+            $request = $this->client->request('POST', config('sbis.url.token'), [
                 'json' => [
-                    'app_client_id' => $this->app_client_id,
-                    'login' => $this->login,
-                    'password' => $this->password,
+                    'app_client_id' => config('sbis.app_client_id'),
+                    'login' => config('sbis.login'),
+                    'password' => config('sbis.password'),
                 ]
             ]);
 
@@ -205,5 +193,23 @@ class SbisService
     private function getAuthHeader(): array
     {
         return ["X-SBISAccessToken" => Cache::get('sbis_token')];
+    }
+
+    private function getCatalogId(string $item, \Illuminate\Database\Eloquent\Collection $catalog): int
+    {
+        $data = $catalog->toArray();
+        $id = $data[0]['id'];
+
+        $names = $catalog->pluck('name')->toArray();
+        
+        foreach($names as $name) {
+            if(str_contains($item, $name)) {
+                
+                $index = array_search($name, array_column($data, 'name'));
+                if($index !== false) $id = $data[$index]['id'];
+            }
+        }
+        
+        return $id;
     }
 }

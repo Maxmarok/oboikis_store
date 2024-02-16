@@ -5,17 +5,15 @@ import { useInfoStore } from '@js/stores/infoStore'
 import FileUpload from "@js/components/FileUpload.vue"
 import InfoModal from '@js/components/modals/InfoModal.vue'
 
-const info = useInfoStore()
-const title = "Основная информация"
-
 const data = ref({
-    name: null,
-    tax: null,
+    phone: null,
+    email: null,
+    vk: null,
+    telegram: null,
+    whatsapp: null,
+    viber: null,
+    instagram: null,
 })
-
-const id = ref()
-
-const modalApiKey = ref()
 
 const modalTitle = ref()
 const modalType = ref()
@@ -31,10 +29,33 @@ const getInfo = () => {
         })
 }
 
-const updateInfo = () => {
-   
-   axios.post(`/api/v1/dashboard/info/update`, {info: data.value})
-       .then((res) => {
+const updateInfo = (index) => {
+
+    let info = {}
+
+    switch (index) {
+        case 0:
+            info = {
+                phone: data.value.phone,
+                email: data.value.email,
+            }
+            break;
+        case 1:
+            info = {
+                vk: data.value.vk,
+                telegram: data.value.telegram,
+                whatsapp: data.value.whatsapp,
+                viber: data.value.viber,
+                instagram: data.value.instagram,
+            }
+            break;
+        default:
+            break;
+    }
+
+    if(info) {
+        axios.post(`/api/v1/dashboard/info/update`, info)
+        .then((res) => {
            swal.fire({
             text: 'Информация обновлена',
             //position: 'bottom-end',
@@ -44,6 +65,29 @@ const updateInfo = () => {
             timer: 2000,
           })
        })
+    }
+}
+
+const uploadFile = (e, type) => {
+    console.log(e.target.files[0]);
+
+    const formData = new FormData();
+    formData.append('file', e.target.files[0]);
+    formData.append('type', type)
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    axios.post('/api/v1/dashboard/info/upload', formData, { headers })
+    .then((res) => {
+        data.value[type] = res.data.data[type];
+
+        swal.fire({
+            text: 'Файл успешно загружен',
+            //position: 'bottom-end',
+            // toast: true,
+            showConfirmButton: false,
+            icon: 'success',
+            timer: 2000,
+          })
+    });
 }
 
 onMounted(() => {
@@ -58,7 +102,8 @@ onMounted(() => {
     :item="modalItem"
     @action="getData"
 />
-<PageHeader :title="title" />
+<PageHeader :title="'Основная информация'" />
+
 
 <div class="d-flex align-items-center row mb-3">
 
@@ -94,18 +139,30 @@ onMounted(() => {
                             />
                         </div>
                     </div>
-
-                    <div class="col-lg-4">
-                        <div class="form-group mb-4">
-                            <FileUpload 
-                                label="Логотип"
-                                url=""
-                                :data="data.logo"
-                                id="logo"
-                            />
-                        </div>
-                    </div>
                 </div>
+
+                <button class="btn btn-sm btn-success" @click="updateInfo(0)">
+                    Сохранить изменения
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<PageHeader :title="'Соц. сети'" />
+
+<div class="d-flex align-items-center row mb-3">
+
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+
+        <div class="card">
+            <div class="card-body">
+                
 
                 <div class="row">
                     <div class="col-lg-4">
@@ -176,37 +233,39 @@ onMounted(() => {
                     </div>
                 </div>
 
+                <button class="btn btn-sm btn-success" @click="updateInfo(1)">
+                    Сохранить изменения
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="form-group mb-4">
-                            <label for="file_1">Политика конфиденциальности</label>
-                            <input
-                                type="text"
-                                class="form-control"
+                        <div class="form-group mb-4 mb-lg-0">
+                            <FileUpload 
+                                label="Политика конфиденциальности"
+                                :url="url"
+                                :data="data.file_1"
                                 id="file_1"
-                                placeholder="Введите ссылку для viber"
-                                v-model="data.file_1"
+                                @onUpload="(e) => uploadFile(e, 'file_1')"
                             />
                         </div>
                     </div>
 
                     <div class="col-lg-4">
-                        <div class="form-group mb-4">
-                            <label for="file_2">Публичная оферта</label>
-                            <input
-                                type="text"
-                                class="form-control"
+                        <div class="form-group">
+                            <FileUpload 
+                                label="Публичная оферта"
+                                :url="url"
+                                :data="data.file_2"
                                 id="file_2"
-                                placeholder="Введите ссылку для instagram"
-                                v-model="data.file_2"
+                                @onUpload="(e) => uploadFile(e, 'file_2')"
                             />
                         </div>
                     </div>
                 </div>
-
-                <button class="btn btn-sm btn-success" @click="updateInfo">
-                    Сохранить изменения
-                </button>
             </div>
         </div>
     </div>

@@ -25,9 +25,26 @@ class InfoController extends Controller
     public function updateInfo(Request $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validate([
-            'info' => 'required|array'
+            'phone' => 'sometimes|string',
+            'email' => 'sometimes|string',
+            'vk' => 'sometimes|string',
+            'telegram' => 'sometimes|string',
+            'whatsapp' => 'sometimes|string',
+            'viber' => 'sometimes|string',
+            'instagram' => 'sometimes|string',
         ]);
 
         return $this->service->updateInfo($data);
     }
+
+    public function uploadFile(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $data = $request->validate([
+            'file' => 'required|file',
+            'type' => 'required|string',
+        ]);
+
+        return $this->service->uploadFile($data);
+    }
+    
 }

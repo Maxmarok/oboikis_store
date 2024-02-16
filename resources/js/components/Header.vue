@@ -34,7 +34,7 @@ const toggleMenu = () => {
             </div> 
             <div class="d-flex align-items-center menu_logo">
                 <router-link to="/">
-                    <img :src="info.logo">
+                    <img src="/svg/horizontal.svg">
                 </router-link>
             </div>
             <div class="header_block3 d-flex justify-content-end align-items-center">

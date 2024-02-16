@@ -147,7 +147,15 @@ const openCreateModal = (title, type, item) => {
     @action="getItems"
 />
 
-<PageHeader :title="title" />
+<PageHeader :title="title">
+    <template #right>
+        <div>
+            <button @click="openCreateModal('Синхронизировать со Сбис')" class="btn btn-sm btn-success">
+                <i class="mdi mdi-refresh mr-2"></i> Синхронизировать со Сбис
+            </button>
+        </div>
+    </template>
+</PageHeader>
 <div class="d-flex align-items-center row mb-3">
 
 </div>
@@ -166,53 +174,48 @@ const openCreateModal = (title, type, item) => {
      
 
       <div class="table-responsive">
-        <table class="table table-sticky table-centered table-bordered mb-0 text-nowrap">
+        <table class="table table-sticky table-centered table-bordered mb-0">
           <thead class="thead-light">
             <tr>
                 <th>Товар</th>
                 <th>Характеристики</th>
                 <th>Наличие и цена</th>
-                <th>Ред.</th>
+                <th>Действие</th>
             </tr>
           </thead>
+          
           <tbody>
             <tr v-for="item in items.data">
-                <td>
+                <td class="w-50">
                     <p class="mb-2">
+                        <img :src="item.image ?? '/svg/vertical_white.svg'" width="50" class="lg" />
                         <strong v-html="item.title" />
                     </p>
-                    <p v-if="item.image"><img :src="item.image" height="200" class="lg" /></p>
-                    
                 </td>
 
                 <td>
                     <p>
-                        <strong v-html="'Тип товара: '" />
-                        <span v-html="item.type" />
+                        <strong :class="{'text-secondary': !item.id}" v-html="'Артикул: '" />
+                        <span :class="{'text-secondary': !item.id}" v-html="item.id ?? 'не указано'" />
                     </p>
 
                     <p>
-                        <strong v-html="'Бренд: '" />
-                        <span v-html="item.producer" />
+                        <strong :class="{'text-secondary': !item.type}" v-html="'Тип товара: '" />
+                        <span :class="{'text-secondary': !item.type}" v-html="item.type ?? 'не указано'" />
                     </p>
 
                     <p>
-                        <strong v-html="'Артикул: '" />
-                        <span v-html="item.id" />
+                        <strong :class="{'text-secondary': !item.producer}" v-html="'Бренд: '" />
+                        <span :class="{'text-secondary': !item.producer}" v-html="item.producer ?? 'не указано'" />
                     </p>
 
                     <p>
-                        <strong v-html="'Производство: '" />
-                        <span v-html="item.country" />
+                        <strong :class="{'text-secondary': !item.country}" v-html="'Производство: '" />
+                        <span :class="{'text-secondary': !item.country}" v-html="item.country ?? 'не указано'" />
                     </p>
                 </td>
 
                 <td>
-                    <p>
-                        <strong v-html="'Наличие: '" />
-                        <span v-html="item.stock > 0 ? item.stock : 'Нет в наличии'" :class="{'': item.stock === 0}" />
-                    </p>
-
                     <p>
                         <strong v-html="'Цена: '" />
                         <span v-html="helper.getPrice(item.price)" />
@@ -226,9 +229,14 @@ const openCreateModal = (title, type, item) => {
                         <strong v-html="'Цена со скидкой: '" />
                         <span v-html="helper.getPrice(item.discount_price)" />
                     </p>
+
+                    <p>
+                        <strong :class="{'text-secondary': item.stock <= 0}" v-html="'Наличие: '" />
+                        <span :class="{'text-secondary': item.stock <= 0}" v-html="item.stock > 0 ? `${item.stock} шт.` : 'нет в наличии'" />
+                    </p>
                 </td>
-                <td>
-                    <button class="btn btn-sm btn-primary">Редактировать</button>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-success"><i class="mdi mdi-refresh mr-2"></i> Обновить</button>
                 </td>
             </tr>
           </tbody>

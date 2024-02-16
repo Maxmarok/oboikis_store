@@ -4,6 +4,8 @@ namespace App\Services\Dashboard\InfoController;
 
 use App\Models\Info;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class InfoService {
 
@@ -17,27 +19,48 @@ class InfoService {
     */
     public function getInfo(): \Illuminate\Http\JsonResponse
     {
-        $data = Info::first();
+        if(!Cache::has('info')) {
+            Cache::put('info', Info::first(), 5000);
+        }
 
         return response()->json([
             'success' => true,
-            'data' => $data,
+            'data' => Cache::get('info'),
         ]);
     }
 
     /**
     * Update information and information cache 
     */
-    public function updateInfo(array $data)
+    public function updateInfo(array $data): \Illuminate\Http\JsonResponse
     {
-        $info = $data['info'];
-
-        Info::first()->update($info);
+        Info::first()->update($data);
 
         Cache::put('info', Info::first(), 5000);
 
-        return response()->json([
-            'success' => true,
-        ]);
+        return $this->getInfo();
     }
+
+    public function uploadFile(array $data): \Illuminate\Http\JsonResponse
+    {
+        $file = $data['file'];
+        $type = $data['type'];
+        //$this->deleteFile($type);
+
+        $upload = Storage::put('public/docs', $file);
+        $file = Storage::url($upload);
+
+        $info = [
+            $type => $file
+        ];
+
+        return $this->updateInfo($info);
+    }
+
+    // public function deleteFile(string $type): void
+    // {
+    //     $data = Cache::get('info');
+    //     $path = Storage::path($data[$type]);
+    //     File::delete($path);
+    // }
 }

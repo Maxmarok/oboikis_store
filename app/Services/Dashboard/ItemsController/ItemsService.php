@@ -25,7 +25,6 @@ class ItemsService
 
     public function addItems(): \Illuminate\Http\JsonResponse
     {
-
         return response()->json([
             'success' => true,
         ]); 

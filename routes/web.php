@@ -24,11 +24,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard/{any}', function () { 
-    return view('main'); 
+    return view('dashboard'); 
 })->whereIn('any', ['orders', 'items', 'info']);
 
 Route::get('/dashboard/orders', function () { 
-    return view('main'); 
+    return view('dashboard'); 
 })->name('dashboard.orders');
 
 Route::get('/about', function () {

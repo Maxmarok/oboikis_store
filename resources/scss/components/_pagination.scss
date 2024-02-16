@@ -10,4 +10,13 @@
         border: none;
         text-align: center;
     }
-  }
+}
+
+.page-link {
+    color: $success;
+}
+
+.page-link.active, .active>.page-link {
+    border-color: $success;
+    background-color: $success;
+}

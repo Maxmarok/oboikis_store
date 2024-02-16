@@ -5,9 +5,9 @@ const info = useInfoStore()
 <template>
 <footer class="w-auto d-flex bg_blue mt-auto">
     <div class="foot m-auto d-flex flex-row justify-content-between align-items-center position-relative">
-        <div class="footer_block1 d-flex justify-content-between flex-column" v-if="info.logo">
+        <div class="footer_block1 d-flex justify-content-between flex-column">
             <router-link to="/">
-                <img :src="info.logo">
+                <img src="/svg/horizontal.svg">
             </router-link>
             <span class="white_color text-center align-items-end">© 2021 – 2024 «Обойкис»</span>
         </div>
