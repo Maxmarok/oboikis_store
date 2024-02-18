@@ -37,6 +37,7 @@ Route::group([
 
         Route::prefix('items')->as('items.')->group(function(){
             Route::get('/', [App\Http\Controllers\API\Dashboard\ItemsController::class, 'getItems']);
+            Route::get('/update/{id}', [App\Http\Controllers\API\Dashboard\ItemsController::class, 'updateItem']);
         });
 
         Route::prefix('info')->as('info.')->group(function(){

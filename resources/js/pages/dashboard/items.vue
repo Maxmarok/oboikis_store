@@ -34,6 +34,46 @@ const openCreateModal = (title, type, item) => {
   //modalAccount.value.showModal()
 }
 
+const updateItem = (id, name) => {
+
+  swal.fire({
+    title: 'Обновление товара',
+    text: name,
+    showCancelButton: true,
+
+    confirmButtonText: "Обновить",
+    cancelButtonText: "Вернуться",
+    showLoaderOnConfirm: true,
+    
+    preConfirm: async () => {
+      try {
+        await axios.get(`/api/v1/dashboard/items/update/${id}`)
+        .then(async res => {
+          let index = items.value.data.findIndex(x => x.id === res.data.item.id)
+          if(index >= 0) items.value.data[index] = res.data.item
+        });
+      } catch (error) {
+        swal.showValidationMessage(`
+          Ошибка: ${error}
+        `);
+      }
+    },
+  })
+  .then((result) => {
+  if (result.isConfirmed) {
+    swal.fire({
+      text: 'Товар обновлен',
+      //position: 'bottom-end',
+      // toast: true,
+      showConfirmButton: false,
+      icon: 'success',
+      timer: 2000,
+    })
+  }
+});
+      
+}
+
 // const confirmOrder = (id) => {
 //   swal({
 //     title: `Подтверждение заказа`,
@@ -236,7 +276,7 @@ const openCreateModal = (title, type, item) => {
                     </p>
                 </td>
                 <td class="text-center">
-                    <button class="btn btn-sm btn-success"><i class="mdi mdi-refresh mr-2"></i> Обновить</button>
+                    <button class="btn btn-sm btn-success" @click="updateItem(item.id, item.name)"><i class="mdi mdi-refresh mr-2"></i> Обновить</button>
                 </td>
             </tr>
           </tbody>

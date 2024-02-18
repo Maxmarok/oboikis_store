@@ -23,6 +23,37 @@ class SbisService
         self::checkCache();
     }
 
+    public function updateItem(string $name): \Illuminate\Http\JsonResponse
+    {
+        $data = self::getItems(0, $name);
+
+        if(count($data) > 0) {
+            $item = $data[0];
+
+            $arr = [
+                'description_simple' => $item['description_simple'],
+                'price' => $item['cost'],
+                'stock' => $item['balance'],
+            ];
+
+            $item = Items::where('name', $name);
+            $item->update($arr);
+
+            $item = $item->first()->setAppends(Items::APPENDS);
+
+            return response()->json([
+                'success' => true,
+                'item' => $item,
+            ]);
+
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Товар с именем '.$name.' не найден',
+            ]); 
+        }
+    }
+
     public function addItems(int $page = 0): void
     {
         $data = self::getItems($page);
@@ -56,36 +87,33 @@ class SbisService
         Items::insert($arr);
     }
 
-    public function getItems(int $page = 0, int $pageSize = self::PAGE_SIZE): array
+    public function getItems(int $page = 0, string $search = null): array
     {
         $data = [];
 
-        $arr = http_build_query([
+        $query = [
             'headers' => self::getAuthHeader(),
             'pointId' => Cache::get('sbis_point'),
             'priceListId' => Cache::get('sbis_price'),
             'page' => $page,
-            'pageSize' => $pageSize,
+            'pageSize' => self::PAGE_SIZE,
             'withBalance' => 'true',
-        ]);
+        ];
 
-        $url = config('sbis.url.items') . chr(077) . $arr;
+        if($search) $query['searchString'] = $search;
+
+        $url = config('sbis.url.items') . chr(077) . http_build_query($query);
 
         try {
             $request = $this->client->request('GET', $url, [
                 'headers' => self::getAuthHeader(),
-                'pointId' => Cache::get('sbis_point'),
-                'priceListId' => Cache::get('sbis_price'),
-                'page' => $page,
-                'pageSize' => $pageSize,
             ]);
 
             $response = json_decode($request->getBody(), true);
 
-            if($response['outcome']['hasMore']) {
-                $data = $response['nomenclatures'];
-            }
-           
+            $data = $response['nomenclatures'];
+
+            Log::debug($response);
 
         } catch (GuzzleException $exception){
             // return match ($exception->getCode()) {

@@ -8,19 +8,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
-class AddItemsJob implements ShouldQueue
+class UpdateItemJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $page;
+    public string $name;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(int $page = 0)
+    public function __construct(string $name = null)
     {
-        $this->page = $page;
+        $this->name = $name;
     }
 
     /**
@@ -29,6 +30,6 @@ class AddItemsJob implements ShouldQueue
     public function handle(): void
     {
         $sbis = new SbisService();
-        $sbis->addItems($this->page);
+        $sbis->updateItem($this->name);
     }
 }

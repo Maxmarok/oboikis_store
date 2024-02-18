@@ -2,13 +2,33 @@
 
 namespace App\Services\Dashboard\ItemsController;
 
+use App\Jobs\UpdateItemJob;
 use App\Models\Items;
+use Illuminate\Http\Request;
 
 class ItemsService
 {
+    public SbisService $service;
+
     public function __construct()
     {
-        
+        $this->service = new SbisService();
+    }
+
+    public function updateItem(string $id): \Illuminate\Http\JsonResponse
+    {
+        $item = Items::find($id);
+
+        if($item) {
+            //UpdateItemJob::dispatch($item->name)->delay(now()->addSeconds(5));
+            return $this->service->updateItem($item->name);
+            
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Товар с именем '.$item->name .' не найден',
+            ]); 
+        }
     }
 
     public function getItems(): \Illuminate\Http\JsonResponse

@@ -15,6 +15,11 @@ class ItemsController extends Controller
         $this->service = new ItemsService();
     }
 
+    public function updateItem(string $id): \Illuminate\Http\JsonResponse
+    {
+        return $this->service->updateItem($id);
+    }
+
     public function getItems(): \Illuminate\Http\JsonResponse
     {
         return $this->service->getItems();
