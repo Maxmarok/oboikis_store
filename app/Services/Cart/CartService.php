@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\CartController;
+namespace App\Services\Cart;
 
 use App\Jobs\MakeOrderJob;
 use App\Models\Items;
@@ -8,22 +8,18 @@ use App\Models\OrderItems;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class CartService {
+class CartService implements CartInterface {
 
     public function __construct()
     {
         
     }
 
-    
-    /**
-    * Return items in cart and breadcrumbs for cart page
-    */
     public function getCart(array $data): \Illuminate\Http\JsonResponse
     {
         $ids = $data['ids'];
 
-        $items = Items::whereIn('id', $ids)->get()->each->setAppends(Items::APPENDS);
+        $items = Items::whereIn('id', $ids)->get();
 
         $breadcrumbs = [
             [
@@ -41,16 +37,12 @@ class CartService {
         ];
 
         return response()->json([
-            'success' => true,
             'data' => $items,
             'breadcrumbs' => $breadcrumbs,
             'title' => '<span>Корзина</span> товаров',
         ]);
     }
 
-    /**
-    * Return items from order
-    */
     public function getOrder(array $data): \Illuminate\Http\JsonResponse
     {
         $data = $data['items'];
@@ -78,9 +70,6 @@ class CartService {
         ]);
     }
 
-    /**
-    * Create order from form
-    */
     public function createOrder(array $data): \Illuminate\Http\JsonResponse
     {
         $user = User::firstOrCreate(

@@ -1,32 +1,26 @@
 <?php
 
-namespace App\Services\ItemsController;
+namespace App\Services\Items;
 
 use App\Models\Catalogs;
 use App\Models\Items;
+use App\Services\Sbis\SbisService;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 
-class ItemsService {
+class ItemsService implements ItemsInterface {
 
-    private const APPENDS = [
-        'title', 
-        'type', 
-        'description', 
-        'has_discount', 
-        'discount_price', 
-        'discount_percent', 
-        'catalog_url',
-    ];
+    protected SbisService $service;
 
-    public function getItems(array $data): \Illuminate\Http\JsonResponse
+    public function __construct(SbisService $service)
     {
-        $limit = 9;
-        $page = $data['page'] ?: 0;
+        $this->service = $service;
+    }
 
+    public function getItemsForUser(array $data): \Illuminate\Http\JsonResponse
+    {
         $catalogUrl = $data['catalog'];
 
-        $items = Items::skip($limit * $page)->take($limit);
+        $items = new Items();
 
         if($catalogUrl) {
             $catalog = Catalogs::where('url', $catalogUrl)->first();
@@ -36,7 +30,7 @@ class ItemsService {
             });
         }
 
-        if(isset($data['filters'])) {
+        if(isset($data['filters']) && $data['filters']) {
             $filters = array_filter($data['filters'], function ($v) {
                 return $v !== null;
             });
@@ -46,9 +40,14 @@ class ItemsService {
             }
         }
 
+        if(isset($data['search']) && $data['search']) {
+            $search = $data['search'];
+            $items = $items->where('name', 'like', '%'.$search.'%');
+        }
+
         if($data['sales']) $items = $items->where('discount', '>', 0);
 
-        $items = $items->get()->each->setAppends(Items::APPENDS);
+        $items = $items->paginate(6);
 
         $sections = [];
 
@@ -87,15 +86,14 @@ class ItemsService {
             ],
         ];
 
-        $title = $catalog->name ?: 'Обои';
-        if($title === 'Клей') $title .= ' для обоев';
+        $title = self::getTitle($catalog->name);
 
         return response()->json([
             'success' => true,
             'sections' => $sections,
             'data' => $items,
             'breadcrumbs' => $breadcrumbs,
-            'title' => 'Купить <span> '. $title .' </span> в Перми',
+            'title' => $title,
         ]);
     }
 
@@ -103,7 +101,7 @@ class ItemsService {
     {
         $itemId = $data['id'];
 
-        $item = Items::where('id', $itemId)->first()->setAppends(self::APPENDS);
+        $item = Items::where('id', $itemId)->first();
 
         $breadcrumbs = [
             [
@@ -130,12 +128,12 @@ class ItemsService {
     public function getItemsForSlider(): \Illuminate\Http\JsonResponse
     {
         if(!Cache::has('slider_popular')) {
-            $popular = Items::where('stock', '>', 0)->take(8)->get()->each->setAppends(self::APPENDS);
+            $popular = Items::where('stock', '>', 0)->take(8)->get();
             Cache::put('slider_popular', $popular, 6000);
         }
 
         if(!Cache::has('slider_sales')) {
-            $sales = Items::where('discount', '>', 0)->where('stock', '>', 0)->take(8)->get()->each->setAppends(self::APPENDS);
+            $sales = Items::where('discount', '>', 0)->where('stock', '>', 0)->take(8)->get();
             Cache::put('slider_sales', $sales, 6000);
         }
 
@@ -144,5 +142,43 @@ class ItemsService {
             'popular' => Cache::get('slider_popular'),
             'sales' => Cache::get('slider_sales'),
         ]);
+    }
+
+
+    public function updateItem(string $id): \Illuminate\Http\JsonResponse
+    {
+        $item = Items::find($id);
+
+        if($item) {
+            return $this->service->updateItem($item->name);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Товар не найден',
+            ]); 
+        }
+    }
+
+    public function getItemsForAdmin(): \Illuminate\Http\JsonResponse
+    {
+        $orders = Items::orderBy('id', 'desc')->paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'data' => $orders,
+        ]); 
+    }
+
+    public function addItems(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+        ]); 
+    }
+
+    private function getTitle(string $name = 'Обои'): string
+    {
+        if($name === 'Клей') $name .= ' для обоев';
+        return 'Купить <span> '. $name .' </span> в Перми';
     }
 }

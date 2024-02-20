@@ -19,12 +19,13 @@ const routes = [
 
     { 
         path: '/catalog', 
-        component: Items,
+        redirect: { name: 'Catalog', params: {section: 'wallpaper'} },
     },
 
     { 
         path: '/catalog/:section', 
         component: Items,
+        name: 'Catalog',
     },
 
     { 

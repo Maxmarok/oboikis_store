@@ -5,6 +5,7 @@ import Menu from '@js/components/Menu.vue'
 import Footer from '@js/components/Footer.vue'
 import Breadcrumbs from '@js/components/Breadcrumbs.vue'
 import Loader from '@js/components/Loader.vue'
+import { Bootstrap5Pagination } from 'laravel-vue-pagination'
 
 import { useRoute } from 'vue-router'
 
@@ -18,11 +19,11 @@ import Multiselect from "@vueform/multiselect"
 const route = useRoute()
 const breadcrumbs = ref()
 const title = ref()
-const items = ref([])
+const items = ref(null)
 const sections = ref()
 const loading = ref(true)
 const endLoading = ref(false)
-const page = ref(0)
+const search = ref()
 
 const filters = ref({
     country: null,
@@ -38,108 +39,39 @@ const menuOpen = ref(false)
 const value = ref(5200)
 const selected = ref(null)
 
-let options = [
-    'Обои',
-    'Фотообои',
-    'Фреска',
-    'Лепной декор',
-]
-
-const getItems = (forLoading = false) => {
-
-    loading.value = true
-    endLoading.value = false
-    if(!forLoading) page.value = 0
-
-    let catalog = route.params.section
+const getItems = (page = 1) => {
 
     title.value = null
+    items.value = null
+    loading.value = true
+    endLoading.value = false
 
-    axios.post('/api/v1/items', {
-        catalog: catalog,
+    let obj = {
+        catalog: route.params.section,
         filters: filters.value,
         sales: filterSales.value,
-        page: page.value
-    })
+        page: page,
+    }
+    if(search.value) obj.search = search.value
+
+    axios.post('/api/v1/items', obj)
     .then((res) => {
         res = res.data
-
         breadcrumbs.value = res.breadcrumbs
         title.value = res.title
-
-        if(res.data.length > 0) {
-            console.log(forLoading)
-
-            if(forLoading) {
-                items.value.push(...res.data)
-            } else {
-                items.value = res.data
-            }
-            
-            sections.value = res.sections
-
-            setTimeout(() => {
-                loading.value = false
-            }, 1000)
-        } else {
-            if(!forLoading) items.value = []
-            endLoading.value = true
-        }
+        items.value = res.data
+        sections.value = res.sections
     })
 }
 
-const loadingItems = () => {
-    page.value++
-    getItems(true)
-}
-
-const onScroll = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    let delta
-
-    if (e.wheelDelta){
-        delta = e.wheelDelta
-    } else {
-        delta = -1 * e.deltaY
-    }
-
-    if (delta < 0) {
-        
-        // if(!startScroll.value) {
-        //     changePage(currentPage.value + 1)
-        // }
-
-        let elemPosition = window.scrollY + document.querySelector('#loading').getBoundingClientRect().top
-        let scrollPosition = window.scrollY
-
-        //console.log(window.scrollY + document.querySelector('#loading').getBoundingClientRect().top, window.scrollY)
-
-        if(scrollPosition + 1000 > elemPosition && !loading.value && !endLoading.value) {
-            loading.value = true
-            loadingItems()
-        }
-       
-    }
-}
-
-onMounted(() => {
-    document.querySelector('body').addEventListener('wheel', onScroll);
-
-    getItems()
-})
-
-onUnmounted(() => document.querySelector('body').removeEventListener('wheel', onScroll))
+onMounted(() => getItems())
 
 watch(() => route.params.section,
     newSection => {
-        items.value = []
-        page.value = 0
+        items.value = null
         getItems()
     }
 )
-
 
 </script>
 <template>
@@ -158,14 +90,20 @@ watch(() => route.params.section,
         <div class="d-flex flex-row justify-content-between w-100 mb-3 filter_screen_text">
             <div class="contacts_text2 blue_color catalog_text2 m-0" v-html="title" />
         </div>
+        <Bootstrap5Pagination
+            :data="items"
+            @pagination-change-page="getItems"
+            :show-disabled="true"
+            :limit="5"
+            v-if="items && items.data.length > 0"
+        />
         <div class="catalog_filter_bottom d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-between align-items-center align-items-lg-start m-auto m-lg-0 w-100">
+           
             <div class="d-flex flex-column w-100">
-                <div class="catalog_filter_cards">
-                    <Item v-for="item in items" :item="item" />
+                <div class="catalog_filter_cards" v-if="items && items.data.length > 0">
+                    <Item v-for="item in items.data" :item="item" />
                 </div>
-                <div id="loading">
-                    <Loader v-if="loading && !endLoading" />
-                </div>
+                <Loader v-if="!items" />
             </div>
             <div class="show_filter d-flex d-lg-none">
                 <div class="show_filter_header align-self-center" @click="menuOpen = !menuOpen">
@@ -180,6 +118,13 @@ watch(() => route.params.section,
                 <div class="filter_container s3_b_blue">
                     <div class="d-flex align-items-center filter_header justify-content-center bg_blue white_color">Фильтр</div>
                     <div class="filter_body">
+                        <div class="filter_body_center d-flex justify-content-between flex-column">
+                            <div class="filter_body_center_elem d-flex flex-column blue_color">
+                                <span class="mb-2">Поиск</span>
+                                <input type="text" class="search bg_white mt-1 blue_color s3_b_blue" placeholder="Введите ключевые слова" v-model="search" />
+                            </div>
+                        </div>
+
                         <!-- <div class="filter_body_header d-flex flex-column justify-content-evenly blue_color">
                             <span class="mb-3">Цена</span>
                             <div class="d-flex justify-content-between flex-column">
@@ -225,6 +170,13 @@ watch(() => route.params.section,
                 </div>
             </div>
         </div>
+        <Bootstrap5Pagination
+            :data="items"
+            @pagination-change-page="getItems"
+            :show-disabled="true"
+            :limit="5"
+            v-if="items && items.data.length > 0"
+        />
     </div>
 </div>
 

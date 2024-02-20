@@ -13,25 +13,6 @@ import helper from '@js/components/helper.js'
 const route = useRoute()
 const store = useCartStore()
 
-const breadcrumbs = [
-    {
-        title: 'Главная',
-        link: '/',
-    },
-    {
-        title: 'Каталог',
-        link: '/catalog',
-    },
-    {
-        title: 'Корзина',
-        link: '/catalog/cart',
-    },
-    {
-        title: 'Оформление заказа',
-        link: null,
-    },
-]
-
 const form = ref({
     name: '',
     email: '',

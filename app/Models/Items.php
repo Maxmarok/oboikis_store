@@ -9,9 +9,7 @@ class Items extends Model
 {
     use HasFactory;
 
-    protected $appends = ['title', 'link'];
-
-    const APPENDS = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url'];
+    protected $appends = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url'];
 
     const SECTIONS = [
         'country' => 'Страна',

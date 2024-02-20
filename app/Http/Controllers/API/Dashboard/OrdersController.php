@@ -3,36 +3,39 @@
 namespace App\Http\Controllers\API\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Orders;
-use App\Services\Dashboard\OrdersController\OrdersService;
-use Illuminate\Http\Request;
+use App\Services\Orders\OrdersInterface;
 
 class OrdersController extends Controller
 {
-    private OrdersService $service;
-
-    public function __construct()
+    /**
+     * Get orders list
+     */
+    public function getOrders(OrdersInterface $service): \Illuminate\Http\JsonResponse
     {
-        $this->service = new OrdersService();
+        return $service->getOrders();
     }
 
-    public function getOrders(): \Illuminate\Http\JsonResponse
+    /**
+     * Order confirmation by admin 
+     */
+    public function confirmOrder(OrdersInterface $service, string $id): \Illuminate\Http\JsonResponse
     {
-        return $this->service->getOrders();
+        return $service->confirmOrder($id);
     }
 
-    public function confirmOrder(string $id): \Illuminate\Http\JsonResponse
+    /** 
+     * Order canceling by admin
+     */
+    public function cancelOrder(OrdersInterface $service, string $id): \Illuminate\Http\JsonResponse
     {
-        return $this->service->confirmOrder($id);
+        return $service->cancelOrder($id);
     }
 
-    public function cancelOrder(string $id): \Illuminate\Http\JsonResponse
+    /**
+     * Order compliting by admin
+     */
+    public function completeOrder(OrdersInterface $service, string $id): \Illuminate\Http\JsonResponse
     {
-        return $this->service->cancelOrder($id);
-    }
-
-    public function completeOrder(string $id): \Illuminate\Http\JsonResponse
-    {
-        return $this->service->completeOrder($id);
+        return $service->completeOrder($id);
     }
 }

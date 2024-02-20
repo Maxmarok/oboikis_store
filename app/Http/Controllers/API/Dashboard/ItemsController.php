@@ -3,30 +3,23 @@
 namespace App\Http\Controllers\API\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Items;
-use App\Services\Dashboard\ItemsController\ItemsService;
+use App\Services\Dashboard\ItemsService;
+use App\Services\Items\ItemsInterface;
 
 class ItemsController extends Controller
 {
-    private ItemsService $service;
-
-    public function __construct()
+    public function updateItem(ItemsInterface $service, string $id): \Illuminate\Http\JsonResponse
     {
-        $this->service = new ItemsService();
+        return $service->updateItem($id);
     }
 
-    public function updateItem(string $id): \Illuminate\Http\JsonResponse
+    public function getItems(ItemsInterface $service): \Illuminate\Http\JsonResponse
     {
-        return $this->service->updateItem($id);
+        return $service->getItemsForAdmin();
     }
 
-    public function getItems(): \Illuminate\Http\JsonResponse
+    public function addItems(ItemsInterface $service): \Illuminate\Http\JsonResponse
     {
-        return $this->service->getItems();
-    }
-
-    public function addItems()
-    {
-        return $this->service->addItems();
+        return $service->addItems();
     }
 }

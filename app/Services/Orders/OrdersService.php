@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Services\Dashboard\OrdersController;
+namespace App\Services\Orders;
 
-use App\Http\Controllers\Controller;
 use App\Models\Orders;
-use Illuminate\Http\Request;
 
-class OrdersService
+class OrdersService implements OrdersInterface
 {
     public function __construct()
     {
@@ -53,7 +51,7 @@ class OrdersService
         ]); 
     }
 
-    protected function changeStatus($id, $status): \App\Models\Orders
+    private function changeStatus($id, $status): \App\Models\Orders
     {
         $order = Orders::find($id);
         $order->status = $status;

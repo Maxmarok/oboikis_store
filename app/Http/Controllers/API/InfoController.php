@@ -3,25 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Info;
-use App\Services\InfoController\InfoService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use App\Services\Info\InfoInterface;
 
 class InfoController extends Controller
 {
-    private InfoService $service;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function getInfo(InfoInterface $service): \Illuminate\Http\JsonResponse
     {
-        $this->service = new InfoService();
-    }
-
-    public function getInfo(): \Illuminate\Http\JsonResponse
-    {
-        return $this->service->getInfo();
+        return $service->getInfo();
     }
 }

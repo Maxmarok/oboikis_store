@@ -3,48 +3,24 @@
 namespace App\Http\Controllers\API\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Info;
-use App\Services\Dashboard\InfoController\InfoService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use App\Http\Requests\FileUploadRequest;
+use App\Http\Requests\InfoUpdateRequest;
+use App\Services\Info\InfoInterface;
 
 class InfoController extends Controller
 {
-    private InfoService $service;
-
-    public function __construct()
+    public function getInfo(InfoInterface $service): \Illuminate\Http\JsonResponse
     {
-        $this->service = new InfoService();
+        return $service->getInfo();
     }
 
-    public function getInfo(): \Illuminate\Http\JsonResponse
+    public function updateInfo(InfoInterface $service, InfoUpdateRequest $request): \Illuminate\Http\JsonResponse
     {
-        return $this->service->getInfo();
+        return $service->updateInfo($request->validated());
     }
 
-    public function updateInfo(Request $request): \Illuminate\Http\JsonResponse
+    public function uploadFile(InfoInterface $service, FileUploadRequest $request): \Illuminate\Http\JsonResponse
     {
-        $data = $request->validate([
-            'phone' => 'sometimes|string',
-            'email' => 'sometimes|string',
-            'vk' => 'sometimes|string',
-            'telegram' => 'sometimes|string',
-            'whatsapp' => 'sometimes|string',
-            'viber' => 'sometimes|string',
-            'instagram' => 'sometimes|string',
-        ]);
-
-        return $this->service->updateInfo($data);
+        return $service->uploadFile($request->validated());
     }
-
-    public function uploadFile(Request $request): \Illuminate\Http\JsonResponse
-    {
-        $data = $request->validate([
-            'file' => 'required|file',
-            'type' => 'required|string',
-        ]);
-
-        return $this->service->uploadFile($data);
-    }
-    
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Dashboard\ItemsController;
+namespace App\Services\Sbis;
 
 use App\Jobs\AddItemsJob;
 use App\Models\Catalogs;
@@ -10,16 +10,16 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
-class SbisService
+class SbisService implements SbisInterface
 {
     private const PAGE_SIZE = 100;
     private string $date;
     private Client $client;
 
-    public function __construct()
+    public function __construct(Client $client)
     {
         $this->date = now()->format('Y.M.D');
-        $this->client = new Client();
+        $this->client = $client;
         self::checkCache();
     }
 
@@ -39,7 +39,7 @@ class SbisService
             $item = Items::where('name', $name);
             $item->update($arr);
 
-            $item = $item->first()->setAppends(Items::APPENDS);
+            $item = $item->first();
 
             return response()->json([
                 'success' => true,
@@ -125,7 +125,7 @@ class SbisService
         return $data;
     }
 
-    public function setPrice(): void
+    private function setPrice(): void
     {
         $arr = http_build_query(['actualDate' => $this->date]);
         $url = config('sbis.url.price') . chr(077) . $arr;
@@ -147,7 +147,7 @@ class SbisService
         }
     }
 
-    public function setPoint(): void
+    private function setPoint(): void
     {
         try {
             $request = $this->client->request('GET', config('sbis.url.point'), [
@@ -166,7 +166,7 @@ class SbisService
         }
     }
 
-    public function setToken(): void
+    private function setToken(): void
     {
         try {
             $request = $this->client->request('POST', config('sbis.url.token'), [

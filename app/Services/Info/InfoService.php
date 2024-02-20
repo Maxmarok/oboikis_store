@@ -1,22 +1,18 @@
 <?php
 
-namespace App\Services\Dashboard\InfoController;
+namespace App\Services\Info;
 
 use App\Models\Info;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-class InfoService {
+class InfoService implements InfoInterface {
 
     public function __construct()
     {
         
     }
 
-    /**
-    * Return all information
-    */
     public function getInfo(): \Illuminate\Http\JsonResponse
     {
         if(!Cache::has('info')) {
@@ -29,9 +25,6 @@ class InfoService {
         ]);
     }
 
-    /**
-    * Update information and information cache 
-    */
     public function updateInfo(array $data): \Illuminate\Http\JsonResponse
     {
         Info::first()->update($data);
@@ -56,11 +49,4 @@ class InfoService {
 
         return $this->updateInfo($info);
     }
-
-    // public function deleteFile(string $type): void
-    // {
-    //     $data = Cache::get('info');
-    //     $path = Storage::path($data[$type]);
-    //     File::delete($path);
-    // }
 }
