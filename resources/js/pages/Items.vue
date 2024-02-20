@@ -41,10 +41,7 @@ const selected = ref(null)
 
 const getItems = (page = 1) => {
 
-    title.value = null
     items.value = null
-    loading.value = true
-    endLoading.value = false
 
     let obj = {
         catalog: route.params.section,
@@ -69,6 +66,7 @@ onMounted(() => getItems())
 watch(() => route.params.section,
     newSection => {
         items.value = null
+        title.value = null
         getItems()
     }
 )
@@ -102,6 +100,9 @@ watch(() => route.params.section,
             <div class="d-flex flex-column w-100">
                 <div class="catalog_filter_cards" v-if="items && items.data.length > 0">
                     <Item v-for="item in items.data" :item="item" />
+                </div>
+                <div class="about_company_text3 mt-4 me-5" v-if="items && items.data.length === 0">
+                    <p>Товары с указанным фильтром <span class="pink_color">не найдены</span></p>
                 </div>
                 <Loader v-if="!items" />
             </div>

@@ -979,7 +979,7 @@ footer {
 .filter {
     /* height: 966px; */
     width: 30%;
-    margin-top: 28px;
+    margin: 28px 0;
 }
 
 .filter_container {
