@@ -50,7 +50,7 @@ class Items extends Model
 
     public function getTitleAttribute()
     {
-        //return $this->catalog->name . ' ' . $this->producer . ' ' . $this->name;
+        //return "{$this->catalog->name} {$this->producer} {$this->name}";
         return $this->name;
     }
 

@@ -15,11 +15,40 @@ class CatalogsSeeder extends Seeder
     {
 
         $data = [
-            ['name' => 'Обои', 'url' => 'wallpaper', 'icon' => '/svg/wallpaper1.svg'],
-            ['name' => 'Фотообои', 'url' => 'photo', 'icon' => '/svg/wallpaper2.svg'],
-            ['name' => 'Фрески', 'url' => 'fresk', 'icon' => '/svg/wallpaper3.svg'],
-            ['name' => 'Лепной декор', 'url' => 'decor', 'icon' => '/svg/wallpaper4.svg'],
-            ['name' => 'Клей', 'url' => 'glue', 'icon' => '/svg/bucket.svg'],
+            [
+                'name' => 'Обои', 
+                'seo_title' => 'Купить Обои в Перми',
+                'url' => 'wallpaper', 
+                'icon' => '/svg/wallpaper1.svg'
+            ],
+            
+            [
+                'name' => 'Фотообои', 
+                'seo_title' => 'Купить Фотообои в Перми',
+                'url' => 'photo', 
+                'icon' => '/svg/wallpaper2.svg'
+            ],
+
+            [
+                'name' => 'Фрески', 
+                'seo_title' => 'Купить Фрески в Перми',
+                'url' => 'fresk', 
+                'icon' => '/svg/wallpaper3.svg'
+            ],
+
+            [
+                'name' => 'Лепной декор', 
+                'seo_title' => 'Купить Лепной декор в Перми',
+                'url' => 'decor', 
+                'icon' => '/svg/wallpaper4.svg'
+            ],
+
+            [
+                'name' => 'Клей', 
+                'seo_title' => 'Купить Клей для обоев в Перми',
+                'url' => 'glue', 
+                'icon' => '/svg/bucket.svg'
+            ],
         ];
 
         Catalogs::insert($data);

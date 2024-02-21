@@ -2,9 +2,11 @@
 
 namespace App\Services\Sbis;
 
+use Illuminate\Http\JsonResponse;
+
 interface SbisInterface
 {
-    public function updateItem(string $name): \Illuminate\Http\JsonResponse;
+    public function updateItem(string $name): JsonResponse;
 
     public function addItems(int $page = 0): void;
 

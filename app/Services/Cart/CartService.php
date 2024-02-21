@@ -6,6 +6,7 @@ use App\Jobs\MakeOrderJob;
 use App\Models\Items;
 use App\Models\OrderItems;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CartService implements CartInterface {
@@ -15,7 +16,7 @@ class CartService implements CartInterface {
         
     }
 
-    public function getCart(array $data): \Illuminate\Http\JsonResponse
+    public function getCart(array $data): JsonResponse
     {
         $ids = $data['ids'];
 
@@ -43,7 +44,7 @@ class CartService implements CartInterface {
         ]);
     }
 
-    public function getOrder(array $data): \Illuminate\Http\JsonResponse
+    public function getOrder(array $data): JsonResponse
     {
         $data = $data['items'];
         
@@ -70,7 +71,7 @@ class CartService implements CartInterface {
         ]);
     }
 
-    public function createOrder(array $data): \Illuminate\Http\JsonResponse
+    public function createOrder(array $data): JsonResponse
     {
         $user = User::firstOrCreate(
             ['email' => $data['email']],

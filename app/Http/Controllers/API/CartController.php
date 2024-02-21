@@ -7,13 +7,14 @@ use App\Http\Requests\CreateOrderRequest;
 use App\Http\Requests\GetCartRequest;
 use App\Http\Requests\GetOrderRequest;
 use App\Services\Cart\CartInterface;
+use Illuminate\Http\JsonResponse;
 
 class CartController extends Controller
 {
     /**
     * Get items from cart
     */
-    public function getCart(CartInterface $service, GetCartRequest $request): \Illuminate\Http\JsonResponse
+    public function getCart(CartInterface $service, GetCartRequest $request): JsonResponse
     {
         return $service->getCart($request->validated());
     }
@@ -21,7 +22,7 @@ class CartController extends Controller
     /**
     * Get info about order
     */
-    public function getOrder(CartInterface $service, GetOrderRequest $request): \Illuminate\Http\JsonResponse
+    public function getOrder(CartInterface $service, GetOrderRequest $request): JsonResponse
     {
         return $service->getOrder($request->validated());
     }
@@ -29,7 +30,7 @@ class CartController extends Controller
     /**
     * Make order
     */
-    public function createOrder(CartInterface $service, CreateOrderRequest $request): \Illuminate\Http\JsonResponse
+    public function createOrder(CartInterface $service, CreateOrderRequest $request): JsonResponse
     {
         return $service->createOrder($request->validated());
     }

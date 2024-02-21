@@ -5,6 +5,7 @@ namespace App\Services\Items;
 use App\Models\Catalogs;
 use App\Models\Items;
 use App\Services\Sbis\SbisService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 
 class ItemsService implements ItemsInterface {
@@ -16,7 +17,7 @@ class ItemsService implements ItemsInterface {
         $this->service = $service;
     }
 
-    public function getItemsForUser(array $data): \Illuminate\Http\JsonResponse
+    public function getItemsForUser(array $data): JsonResponse
     {
         $catalogUrl = $data['catalog'];
 
@@ -86,7 +87,7 @@ class ItemsService implements ItemsInterface {
             ],
         ];
 
-        $title = self::getTitle($catalog->name);
+        $title = $catalog->seo_title;
 
         return response()->json([
             'success' => true,
@@ -97,7 +98,7 @@ class ItemsService implements ItemsInterface {
         ]);
     }
 
-    public function getItem(array $data): \Illuminate\Http\JsonResponse
+    public function getItem(array $data): JsonResponse
     {
         $itemId = $data['id'];
 
@@ -125,7 +126,7 @@ class ItemsService implements ItemsInterface {
         ]);
     }
 
-    public function getItemsForSlider(): \Illuminate\Http\JsonResponse
+    public function getItemsForSlider(): JsonResponse
     {
         if(!Cache::has('slider_popular')) {
             $popular = Items::where('stock', '>', 0)->take(8)->get();
@@ -145,7 +146,7 @@ class ItemsService implements ItemsInterface {
     }
 
 
-    public function updateItem(string $id): \Illuminate\Http\JsonResponse
+    public function updateItem(string $id): JsonResponse
     {
         $item = Items::find($id);
 
@@ -159,7 +160,7 @@ class ItemsService implements ItemsInterface {
         }
     }
 
-    public function getItemsForAdmin(): \Illuminate\Http\JsonResponse
+    public function getItemsForAdmin(): JsonResponse
     {
         $orders = Items::orderBy('id', 'desc')->paginate(10);
 
@@ -169,16 +170,10 @@ class ItemsService implements ItemsInterface {
         ]); 
     }
 
-    public function addItems(): \Illuminate\Http\JsonResponse
+    public function addItems(): JsonResponse
     {
         return response()->json([
             'success' => true,
         ]); 
-    }
-
-    private function getTitle(string $name = 'Обои'): string
-    {
-        if($name === 'Клей') $name .= ' для обоев';
-        return 'Купить <span> '. $name .' </span> в Перми';
     }
 }

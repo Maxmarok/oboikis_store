@@ -7,6 +7,8 @@ use App\Models\Catalogs;
 use App\Models\Items;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
@@ -23,7 +25,7 @@ class SbisService implements SbisInterface
         self::checkCache();
     }
 
-    public function updateItem(string $name): \Illuminate\Http\JsonResponse
+    public function updateItem(string $name): JsonResponse
     {
         $data = self::getItems(0, $name);
 
@@ -140,9 +142,12 @@ class SbisService implements SbisInterface
             Cache::put('sbis_price', $response['priceLists'][0]['id']);
 
         } catch (GuzzleException $exception){
-            // return match ($exception->getCode()) {
-            //     default => Log::debug($exception->getMessage())
-            // };
+            if($exception->getCode() === 401) {
+                self::checkToken();
+                self::setPoint();
+            }
+
+            Log::error($exception->getMessage());
             Log::debug($exception->getMessage());
         }
     }
@@ -159,10 +164,12 @@ class SbisService implements SbisInterface
             Cache::put('sbis_point', $response['salesPoints'][0]['id']);
 
         } catch (GuzzleException $exception){
-            // return match ($exception->getCode()) {
-            //     default => Log::debug($exception->getMessage())
-            // };
-            Log::debug($exception->getMessage());
+            if($exception->getCode() === 401) {
+                self::checkToken();
+                self::setPoint();
+            }
+
+            Log::error($exception->getMessage());
         }
     }
 
@@ -220,10 +227,12 @@ class SbisService implements SbisInterface
 
     private function getAuthHeader(): array
     {
-        return ["X-SBISAccessToken" => Cache::get('sbis_token')];
+        return [
+            'X-SBISAccessToken' => Cache::get('sbis_token')   
+        ];
     }
 
-    private function getCatalogId(string $item, \Illuminate\Database\Eloquent\Collection $catalog): int
+    private function getCatalogId(string $item, Collection $catalog): int
     {
         $data = $catalog->toArray();
         $id = $data[0]['id'];

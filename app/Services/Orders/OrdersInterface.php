@@ -2,24 +2,26 @@
 
 namespace App\Services\Orders;
 
+use Illuminate\Http\JsonResponse;
+
 interface OrdersInterface
 {
     /**
      * Get orders list
      */
-    public function getOrders(): \Illuminate\Http\JsonResponse;
+    public function getOrders(): JsonResponse;
     /**
      * Order confirmation by admin 
      */
-    public function confirmOrder(string $id): \Illuminate\Http\JsonResponse;
+    public function confirmOrder(string $id): JsonResponse;
 
     /** 
      * Order canceling by admin
      */
-    public function cancelOrder(string $id): \Illuminate\Http\JsonResponse;
+    public function cancelOrder(string $id): JsonResponse;
 
     /**
      * Order compliting by admin
      */
-    public function completeOrder(string $id): \Illuminate\Http\JsonResponse;
+    public function completeOrder(string $id): JsonResponse;
 }

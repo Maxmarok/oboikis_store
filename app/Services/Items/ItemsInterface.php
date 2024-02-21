@@ -2,17 +2,19 @@
 
 namespace App\Services\Items;
 
+use Illuminate\Http\JsonResponse;
+
 interface ItemsInterface {
 
-    public function getItemsForUser(array $data): \Illuminate\Http\JsonResponse;
-    
-    public function getItem(array $data): \Illuminate\Http\JsonResponse;
+    public function getItemsForAdmin(): JsonResponse;
 
-    public function getItemsForSlider(): \Illuminate\Http\JsonResponse;
+    public function getItemsForUser(array $data): JsonResponse;
 
-    public function updateItem(string $id): \Illuminate\Http\JsonResponse;
+    public function getItemsForSlider(): JsonResponse;
 
-    public function getItemsForAdmin(): \Illuminate\Http\JsonResponse;
+    public function getItem(array $data): JsonResponse;
 
-    public function addItems(): \Illuminate\Http\JsonResponse;
+    public function addItems(): JsonResponse;
+
+    public function updateItem(string $id): JsonResponse;
 }

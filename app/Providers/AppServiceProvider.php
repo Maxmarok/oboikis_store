@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Catalog\CatalogInterface, App\Services\Catalog\CatalogService;
 use App\Services\Cart\CartInterface, App\Services\Cart\CartService;
 use App\Services\Info\InfoInterface, App\Services\Info\InfoService;
 use App\Services\Items\ItemsInterface, App\Services\Items\ItemsService;
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(CatalogInterface::class, CatalogService::class);
         $this->app->bind(CartInterface::class, CartService::class);
         $this->app->bind(InfoInterface::class, InfoService::class);
         $this->app->bind(ItemsInterface::class, ItemsService::class);
