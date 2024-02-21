@@ -6,14 +6,17 @@ use App\Jobs\MakeOrderJob;
 use App\Models\Items;
 use App\Models\OrderItems;
 use App\Models\User;
+use App\Services\Breadcrumbs\BreadcrumbsInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CartService implements CartInterface {
 
-    public function __construct()
+    private BreadcrumbsInterface $breadcrumbs;
+
+    public function __construct(BreadcrumbsInterface $breadcrumbs)
     {
-        
+        $this->breadcrumbs = $breadcrumbs;
     }
 
     public function getCart(array $data): JsonResponse
@@ -22,25 +25,16 @@ class CartService implements CartInterface {
 
         $items = Items::whereIn('id', $ids)->get();
 
-        $breadcrumbs = [
-            [
-                'title' => 'Главная', 
-                'link' => '/',
-            ],
-            [
-                'title' => 'Каталог', 
-                'link' => '/catalog',
-            ],
-            [
-                'title' => 'Корзина', 
-                'link' => null,
-            ],
-        ];
+        $title = 'Корзина товаров';
+
+        $breadcrumbs = $this->breadcrumbs->get([
+            'Корзина' => null
+        ]);
 
         return response()->json([
-            'data' => $items,
+            'title' => $title,
             'breadcrumbs' => $breadcrumbs,
-            'title' => '<span>Корзина</span> товаров',
+            'data' => $items,
         ]);
     }
 
@@ -65,7 +59,16 @@ class CartService implements CartInterface {
             if(isset($data[$index])) $price += ($item->price - $item->discount) * $data[$index]['count'];
         }
 
+        $title = 'Оформление заказа';
+
+        $breadcrumbs = $this->breadcrumbs->get([
+            'Корзина' => '/cart',
+            $title => null,
+        ]);
+
         return response()->json([
+            'title' => $title,
+            'breadcrumbs' => $breadcrumbs,
             'success' => true,
             'price' => $price,
         ]);

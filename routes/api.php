@@ -19,6 +19,7 @@ Route::group([
     'as' => 'api.',
 ], function(){
 
+    Route::get('/catalog', [App\Http\Controllers\API\CatalogController::class, 'getCatalog']);
     Route::get('/info', [App\Http\Controllers\API\InfoController::class, 'getInfo']);
     Route::post('/items', [App\Http\Controllers\API\ItemsController::class, 'getItems']);
     Route::post('/item', [App\Http\Controllers\API\ItemsController::class, 'getItem']);

@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\Dashboard\ItemsController\SbisService;
+use App\Services\Sbis\SbisInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -26,9 +26,8 @@ class AddItemsJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(SbisInterface $service): void
     {
-        $sbis = new SbisService();
-        $sbis->addItems($this->page);
+        $service->addItems($this->page);
     }
 }

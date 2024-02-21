@@ -8,6 +8,11 @@ onMounted(() => {
         .then(res => {
             if(res.data) info.addInfo(res.data.data)
         })
+
+    axios.get('/api/v1/catalog/')
+        .then(res => {
+            if(res.data) info.addCatalog(res.data.data)
+        })
 })
 </script>
 

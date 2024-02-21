@@ -10,10 +10,6 @@ import { Bootstrap5Pagination } from 'laravel-vue-pagination'
 import { useRoute } from 'vue-router'
 
 import Item from '@js/components/Item.vue'
-
-import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/antd.css'
-
 import Multiselect from "@vueform/multiselect"
 
 const route = useRoute()
@@ -21,8 +17,6 @@ const breadcrumbs = ref()
 const title = ref()
 const items = ref(null)
 const sections = ref()
-const loading = ref(true)
-const endLoading = ref(false)
 const search = ref()
 
 const filters = ref({
@@ -33,11 +27,7 @@ const filters = ref({
 })
 
 const filterSales = ref(false)
-
 const menuOpen = ref(false)
-
-const value = ref(5200)
-const selected = ref(null)
 
 const getItems = (page = 1) => {
 
@@ -52,13 +42,13 @@ const getItems = (page = 1) => {
     if(search.value) obj.search = search.value
 
     axios.post('/api/v1/items', obj)
-    .then((res) => {
-        res = res.data
-        breadcrumbs.value = res.breadcrumbs
-        title.value = res.title
-        items.value = res.data
-        sections.value = res.sections
-    })
+        .then((res) => {
+            res = res.data
+            breadcrumbs.value = res.breadcrumbs
+            title.value = res.title
+            items.value = res.data
+            sections.value = res.sections
+        })
 }
 
 onMounted(() => getItems())
@@ -67,6 +57,8 @@ watch(() => route.params.section,
     newSection => {
         items.value = null
         title.value = null
+        breadcrumbs.value = null
+        sections.value = null
         getItems()
     }
 )
@@ -86,7 +78,7 @@ watch(() => route.params.section,
             <Breadcrumbs :items="breadcrumbs"/>
         </div>
         <div class="d-flex flex-row justify-content-between w-100 mb-3 filter_screen_text">
-            <div class="contacts_text2 blue_color catalog_text2 m-0" v-html="title" />
+            <div class="contacts_text2 blue_color catalog_text2 m-lg-0" v-html="title" />
         </div>
         <Bootstrap5Pagination
             :data="items"
@@ -101,7 +93,7 @@ watch(() => route.params.section,
                 <div class="catalog_filter_cards" v-if="items && items.data.length > 0">
                     <Item v-for="item in items.data" :item="item" />
                 </div>
-                <div class="about_company_text3 mt-4 me-5" v-if="items && items.data.length === 0">
+                <div class="about_company_text3 mt-0 mt-lg-4 me-lg-5 mx-2 mx-lg-0" v-if="items && items.data.length === 0">
                     <p>Товары с указанным фильтром <span class="pink_color">не найдены</span></p>
                 </div>
                 <Loader v-if="!items" />
@@ -122,7 +114,7 @@ watch(() => route.params.section,
                         <div class="filter_body_center d-flex justify-content-between flex-column">
                             <div class="filter_body_center_elem d-flex flex-column blue_color">
                                 <span class="mb-2">Поиск</span>
-                                <input type="text" class="search bg_white mt-1 blue_color s3_b_blue" placeholder="Введите ключевые слова" v-model="search" />
+                                <input type="text" class="search bg_white mt-1 blue_color s3_b_blue" placeholder="Введите слова для поиска" v-model="search" />
                             </div>
                         </div>
 
@@ -139,7 +131,7 @@ watch(() => route.params.section,
                                 </div>
                             </div>
                         </div> -->
-                        <div class="filter_body_center d-flex justify-content-between flex-column">
+                        <div class="filter_body_center d-flex justify-content-between flex-column" v-if="sections.length > 0">
                             <div class="filter_body_center_elem d-flex flex-column blue_color" v-for="section in sections">
                                 <span class="mb-2" v-html="section['title']" />
 
@@ -151,7 +143,7 @@ watch(() => route.params.section,
                                 />
                             </div>
                         </div>
-                        <div class="filter_body_footer d-flex flex-column justify-content-between pt-4 pb-4">
+                        <div class="filter_body_footer d-flex flex-column justify-content-between pt-4 pb-4" v-if="false">
                             <span class="filter_body_footer_text1 blue_color mb-3">Категория товаров</span>
                             <!-- <div class="d-flex flex-row">
                                 <input class="orange_check" type="checkbox" id="orange_check">

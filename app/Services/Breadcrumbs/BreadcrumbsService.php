@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Breadcrumbs;
 
-class BreadcrumbsService {
+class BreadcrumbsService implements BreadcrumbsInterface {
 
     private array $breadcrumbs;
 
-    public function __construct(array $catalog)
+    public function __construct()
     {
         $this->breadcrumbs = [
             [
@@ -16,8 +16,19 @@ class BreadcrumbsService {
         ];
     }
 
-    public static function get()
+    public function get(array $catalog): array
     {
-        return self::$breadcrumbs;
+        self::build($catalog);
+        return $this->breadcrumbs;
+    }
+
+    private function build(array $catalog): void
+    {
+        foreach($catalog as $k => $v) {
+            array_push($this->breadcrumbs, [
+                'title' => $k,
+                'link' => $v,
+            ]);
+        }
     }
 }

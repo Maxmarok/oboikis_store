@@ -93,7 +93,7 @@ onMounted(() => {
                     </a>
                 </div> 
             </div>
-            <router-link class="btn white_color bg_pink" role="button" to="/catalog">Перейти к каталогу товаров</router-link>
+            <!-- <router-link class="btn white_color bg_pink" role="button" to="/catalog">Перейти к каталогу товаров</router-link> -->
         </div>
     </div>
 </div>

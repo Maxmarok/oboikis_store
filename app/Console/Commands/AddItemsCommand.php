@@ -3,9 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\AddItemsJob;
-use App\Services\Dashboard\ItemsController\SbisService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class AddItemsCommand extends Command
 {

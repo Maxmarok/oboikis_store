@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export const useInfoStore = defineStore('info', {
   state: () => ({
@@ -11,6 +10,7 @@ export const useInfoStore = defineStore('info', {
     whatsapp: null,
     viber: null,
     instagram: null,
+    catalog: null,
   }),
   actions: {
     addInfo(info) {
@@ -18,6 +18,9 @@ export const useInfoStore = defineStore('info', {
         const [key, value] = entry
         this[key] = value
       })
+    },
+    addCatalog(catalog) {
+      this.catalog = catalog
     },
   },
   persist: true,

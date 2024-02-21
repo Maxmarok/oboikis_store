@@ -23,7 +23,7 @@ class GetItemsRequest extends FormRequest
     {
         return [
             'page' => 'required|int',
-            'catalog' => 'required|string',
+            'catalog' => 'required|string|exists:catalogs,url',
             'filters' => 'sometimes|array',
             'sales' => 'required|bool',
             'search' => 'sometimes|string',

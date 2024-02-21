@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter } from "vue-router"
+import { createWebHistory, createRouter, } from "vue-router"
 import Home from '@js/pages/Home.vue'
 import About from '@js/pages/About.vue'
 import Contacts from '@js/pages/Contacts.vue'
@@ -17,10 +17,11 @@ const routes = [
     { path: '/delivery', component: Delivery },
     { path: '/payment', component: Payment },
 
-    { 
-        path: '/catalog', 
-        redirect: { name: 'Catalog', params: {section: 'wallpaper'} },
-    },
+    // { 
+    //     path: '/catalog', 
+    //     component: Items,
+    //    // redirect: { name: 'Catalog', params: {section: info.catalog[0].url} },
+    // },
 
     { 
         path: '/catalog/:section', 
@@ -31,10 +32,11 @@ const routes = [
     { 
         path: '/catalog/:section/:id', 
         component: ItemPage,
+        name: 'Item',
     },
 
-    { path: '/catalog/cart', component: Cart },
-    { path: '/catalog/cart/order', component: Order, name: 'order' },
+    { path: '/cart', component: Cart },
+    { path: '/cart/order', component: Order, name: 'order' },
 ]
 
 const router = createRouter({

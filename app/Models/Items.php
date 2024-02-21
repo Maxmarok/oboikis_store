@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,13 @@ class Items extends Model
     public function catalog()
     {
         return $this->belongsTo(Catalogs::class, 'catalog_id', 'id');
+    }
+
+    public function scopeItemsWithUrl(Builder $query, string $url): Builder
+    {
+        return $query->whereHas('catalog', function($q) use($url) {
+            $q->where('url', $url);
+        });
     }
 
     public function getLinkAttribute()

@@ -1,16 +1,29 @@
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, ref, watch } from 'vue'
 const props = defineProps(['items'])
+const active_items = ref()
+const items = ref()
+
+watch(() => props.items, function() {
+  if(props.items !== null) {
+    active_items.value = props.items ? props.items.filter(x => x.link !== null) : null
+    items.value = props.items ? props.items.filter(x => x.link === null) : null
+  } else {
+    active_items.value = null
+    items.value = null
+  }
+});
+
+console.log(props)
 </script>
 <template>
-<a v-for="item in props.items" 
-    v-if="props.items"
-    :class="{
-        'blue_color c_t1_span1': item.link,
-        'pink_color c_t1_span2': !item.link,
-    }" 
-    :href="item.link"
+<router-link 
+    v-if="active_items"
+    v-for="item in active_items"
+    class="blue_color c_t1_span1"
+    :to="item.link"
 >
     <span v-html="item.title" />
-</a>
+</router-link>
+<span class="pink_color c_t1_span2" v-if="items" v-for="item in items" v-html="item.title" />
 </template>

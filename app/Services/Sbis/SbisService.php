@@ -51,7 +51,7 @@ class SbisService implements SbisInterface
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Товар с именем '.$name.' не найден',
+                'message' => "Товар с именем {$name} не найден",
             ]); 
         }
     }
@@ -64,8 +64,6 @@ class SbisService implements SbisInterface
             self::insertItems($data);
             $page++;
             AddItemsJob::dispatch($page)->delay(now()->addSeconds(10));
-            Cache::delete('slider_popular');
-            Cache::delete('slider_sales');
         }
     }
 
@@ -75,15 +73,21 @@ class SbisService implements SbisInterface
         $catalog = Catalogs::select('id', 'name')->get();
 
         foreach($data as $item) {
-            $arr[] = [
-                'id' => $item['id'],
-                'name' => $item['name'],
-                'description_simple' => $item['description_simple'],
-                'sbis_id' => $item['nomNumber'],
-                'price' => $item['cost'],
-                'catalog_id' => self::getCatalogId($item['name'], $catalog),
-                'stock' => $item['balance'],
-            ];
+            $catalog_id = self::getCatalogId($item['name'], $catalog);
+
+            if($catalog_id) {
+                $items = [
+                    'id' => $item['id'],
+                    'name' => $item['name'],
+                    'description_simple' => $item['description_simple'],
+                    'sbis_id' => $item['nomNumber'],
+                    'price' => $item['cost'],
+                    'stock' => $item['balance'],
+                    'catalog_id' => $catalog_id,
+                ];
+
+                array_push($arr, $items);
+            }
         }
 
         Items::insert($arr);
@@ -115,12 +119,11 @@ class SbisService implements SbisInterface
 
             $data = $response['nomenclatures'];
 
-            Log::debug($response);
-
         } catch (GuzzleException $exception){
-            // return match ($exception->getCode()) {
-            //     default => Log::debug($exception->getMessage())
-            // };
+            if($exception->getCode() === 401) {
+                self::checkToken();
+                self::getItems($page, $search);
+            }
             Log::debug($exception->getMessage());
         }
 
@@ -144,11 +147,10 @@ class SbisService implements SbisInterface
         } catch (GuzzleException $exception){
             if($exception->getCode() === 401) {
                 self::checkToken();
-                self::setPoint();
+                self::setPrice();
             }
 
             Log::error($exception->getMessage());
-            Log::debug($exception->getMessage());
         }
     }
 
@@ -232,18 +234,22 @@ class SbisService implements SbisInterface
         ];
     }
 
-    private function getCatalogId(string $item, Collection $catalog): int
+    private function getCatalogId(string $item, Collection $catalog): int|null
     {
         $data = $catalog->toArray();
-        $id = $data[0]['id'];
+        $id = null;
 
-        $names = $catalog->pluck('name')->toArray();
-        
-        foreach($names as $name) {
-            if(str_contains($item, $name)) {
-                
-                $index = array_search($name, array_column($data, 'name'));
-                if($index !== false) $id = $data[$index]['id'];
+        if(count($data) > 0) {
+            $id = $data[0]['id'];
+
+            $names = $catalog->pluck('name')->toArray();
+            
+            foreach($names as $name) {
+                if(str_contains($item, $name)) {
+                    
+                    $index = array_search($name, array_column($data, 'name'));
+                    if($index !== false) $id = $data[$index]['id'];
+                }
             }
         }
         

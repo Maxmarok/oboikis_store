@@ -7,11 +7,17 @@ import Header from '@js/components/Header.vue'
 import Menu from '@js/components/Menu.vue'
 import Footer from '@js/components/Footer.vue'
 import Breadcrumbs from '@js/components/Breadcrumbs.vue'
-import OrderInput from '@js/components/OrderInput.vue'
+import Loader from '@js/components/Loader.vue'
 import helper from '@js/components/helper.js'
+import OrderInput from '@js/components/OrderInput.vue'
 
 const route = useRoute()
 const store = useCartStore()
+
+const title = ref()
+const breadcrumbs = ref()
+const delivery = 500
+const price = ref()
 
 const form = ref({
     name: '',
@@ -39,9 +45,6 @@ const errors = ref({
     rules: null,
 })
 
-const delivery = 500
-const price = ref(0)
-
 onMounted(() => {
     getOrder()
 })
@@ -50,6 +53,8 @@ const getOrder = () => {
     axios.post('/api/v1/order', {items: store.selectedItems()})
         .then((res) => {
             price.value = res.data.price
+            title.value = res.data.title
+            breadcrumbs.value = res.data.breadcrumbs
         })
 }
 
@@ -87,7 +92,7 @@ const onChange = (val, name) => {
             <Breadcrumbs :items="breadcrumbs"/>
         </div>
     </div>
-    <div class="contacts_text2 blue_color catalog_text2"><span>Оформление</span> заказа</div>
+    <div class="contacts_text2 blue_color catalog_text2" v-html="title" />
     <div class="cart_screen me-auto ms-auto position-relative cart_height">
         <svg width="600" height="462" viewBox="0 0 600 462" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart_img position-absolute z-n1">
             <path d="M2.54534 2.69528C-0.712304 5.94821 -0.712304 6.97058 1.80074 21.7482C3.8484 33.9234 4.87224 36.3398 9.43295 39.0351C12.2252 40.801 14.366 40.894 45.5463 40.894H78.7743L80.7289 51.768C81.8458 57.8092 92.8288 115.247 105.115 179.376C117.401 243.505 128.291 300.199 129.221 305.311C136.574 344.067 144.3 382.916 145.137 384.961C145.696 386.355 147.557 388.4 149.233 389.422C152.211 391.281 153.607 391.281 342.365 391.281C531.122 391.281 532.518 391.281 535.497 389.422C539.406 387.005 540.151 384.775 541.919 371.484C543.874 357.079 543.874 357.171 540.709 354.012L538.01 351.316H363.121H188.231L185.718 337.561C184.322 330.033 183.205 323.62 183.205 323.155C183.205 322.783 264.74 322.505 364.517 322.505C542.291 322.505 545.828 322.505 548.714 320.646C550.296 319.716 552.064 318.043 552.623 317.114C553.181 316.185 554.391 308.471 555.508 300.106C557.276 286.351 570.028 217.853 592.273 103.629C596.647 81.1373 600.091 61.7127 599.998 60.4115C599.812 59.0174 598.509 57.3445 596.554 56.0433C593.576 53.9986 592.552 53.9057 576.543 53.9057C562.023 53.9057 559.138 54.1845 555.787 55.6715L322.291 58.8925V97.5675H548.714C542.105 132.606 509.715 272.781 509.436 273.897L508.97 276.034H341.434C249.289 276.034 173.898 275.755 173.898 275.477C173.898 274.547 135.271 75.0032 128.291 40.0575C122.892 12.547 121.403 6.69174 119.635 4.83292C114.981 -0.092926 116.656 0 58.9492 0H5.24454L2.54534 2.69528Z" fill="#00ADB5" fill-opacity="0.05"/>
@@ -97,8 +102,8 @@ const onChange = (val, name) => {
         <div class="cart_screen_text bread">
             <Breadcrumbs :items="breadcrumbs"/>
         </div>
-        <span class="wallpaper_screen_elem1_text blue_color">Оформление заказа</span>
-        <div class="reciever_block d-flex flex-row mt-5" v-if="store.cart.length > 0">
+        <span class="wallpaper_screen_elem1_text blue_color" v-html="title" />
+        <div class="reciever_block d-flex flex-row mt-5" v-if="store.cart.length > 0 && price">
             <div class="reciever_block_e1 s3_b_blue bg_white me-2">
                 <div class="reciever_block_header d-flex align-items-center justify-content-center bg_blue">
                     <span class="white_color">Сведения о получателе</span>
@@ -210,12 +215,14 @@ const onChange = (val, name) => {
             </div>
         </div>
 
-        <div class="cart_screen_block d-flex flex-column align-items-center justify-content-evenly" v-else>
+        <div class="cart_screen_block d-flex flex-column align-items-center justify-content-evenly" v-if="store.cart.length === 0">
             <span class="blue_color">Благодарим за заказ!</span>
             <div class="cart_screen_elem blue_color">
                 Наш <span class="pink_color border-0">менеджер</span> свяжется с Вами в течение нескольких минут в рабочее время с <span class="pink_color border-0">10:00</span> до <span class="pink_color border-0">22:00 часов</span>
             </div>
         </div>
+
+        <Loader v-if="!price" />
 
     </div>
 </div>

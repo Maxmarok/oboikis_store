@@ -272,7 +272,7 @@ const itemsLength = () => {
                     </div>
                 </div>
                 <div class="goods_elem2_footer d-flex align-items-center justify-content-center">
-                    <router-link to="/catalog/cart/order" class="white_color bg_pink" v-if="itemsLength() > 0">
+                    <router-link to="/cart/order" class="white_color bg_pink" v-if="itemsLength() > 0">
                         <span class="goods_elem2_footer_text1">Заказать выбранные товары</span>
                         <span class="goods_elem2_footer_text2">Оформить заказ</span>
                     </router-link>
@@ -288,7 +288,7 @@ const itemsLength = () => {
         <div v-if="cart && cart.length === 0" class="cart_screen_block d-flex flex-column align-items-center justify-content-evenly">
             <span class="blue_color">Корзина пуста</span>
             <div class="cart_screen_elem blue_color">
-                Добавьте товары из <span class="pink_color"><router-link to="/catalog">каталога</router-link></span>, чтобы оформить заказ
+                Добавьте товары из каталога, чтобы оформить заказ
             </div>
         </div>
 
