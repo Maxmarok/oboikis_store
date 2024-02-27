@@ -2,6 +2,7 @@
 
 namespace App\Services\Items;
 
+use App\Jobs\AddItemsJob;
 use App\Models\Catalogs;
 use App\Models\Items;
 use App\Services\Breadcrumbs\BreadcrumbsInterface;
@@ -98,12 +99,12 @@ class ItemsService implements ItemsInterface {
     public function getItemsForSlider(): JsonResponse
     {
         if(!Cache::has('slider_popular')) {
-            $popular = Items::where('stock', '>', 0)->take(8)->get();
+            $popular = Items::where('stock', '>', 0)->whereNotNull('image')->take(8)->get();
             Cache::put('slider_popular', $popular, 6000);
         }
 
         if(!Cache::has('slider_sales')) {
-            $sales = Items::where('discount', '>', 0)->where('stock', '>', 0)->take(8)->get();
+            $sales = Items::where('discount', '>', 0)->whereNotNull('image')->where('stock', '>', 0)->take(8)->get();
             Cache::put('slider_sales', $sales, 6000);
         }
 
@@ -141,6 +142,8 @@ class ItemsService implements ItemsInterface {
 
     public function addItems(): JsonResponse
     {
+        AddItemsJob::dispatchAfterResponse();
+
         return response()->json([
             'success' => true,
         ]); 

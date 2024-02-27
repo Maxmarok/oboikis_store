@@ -11,10 +11,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class SbisService implements SbisInterface
 {
-    private const PAGE_SIZE = 100;
+    private const PAGE_SIZE = 200;
     private string $date;
     private Client $client;
 
@@ -70,13 +72,21 @@ class SbisService implements SbisInterface
     public function insertItems(array $data): void
     {
         $arr = [];
+        $ids = [];
+
         $catalog = Catalogs::select('id', 'name')->get();
+
+        foreach($data as $item) {
+            $ids[] = $item['id'];
+        }
+
+        $ids = Items::whereIn('id', $ids)->get()->pluck('id')->toArray();
 
         foreach($data as $item) {
             $catalog_id = self::getCatalogId($item['name'], $catalog);
 
             if($catalog_id) {
-                $items = [
+                $value = [
                     'id' => $item['id'],
                     'name' => $item['name'],
                     'description_simple' => $item['description_simple'],
@@ -84,13 +94,48 @@ class SbisService implements SbisInterface
                     'price' => $item['cost'],
                     'stock' => $item['balance'],
                     'catalog_id' => $catalog_id,
+                    'image' => null,
                 ];
 
-                array_push($arr, $items);
+                if($item['images'] && count($item['images']) > 0) {
+                    $value['image'] = self::getImage($item['images'][0], $item['id']);
+                }
+
+                if(in_array($item['id'], $ids)) {
+                    Items::where('id', $item['id'])->update($value);
+                } else {
+                    array_push($arr, $value);
+                }
             }
         }
 
-        Items::insert($arr);
+        if(count($arr) > 0) Items::insert($arr);
+    }
+
+    public function getImage(string $param, string $id): string|null
+    {
+        $data = null;
+
+        $url = config('sbis.url.image') . $param;
+
+        try {
+            $request = $this->client->request('GET', $url, [
+                "headers" => self::getAuthHeader()
+            ]);
+
+            $response = $request->getBody();
+
+            if($response) $data = self::uploadFile($response, $id);
+
+        } catch (GuzzleException $exception){
+            if($exception->getCode() === 401) {
+                self::checkToken();
+                self::getImage($param, $id);
+            }
+            Log::debug($exception->getMessage());
+        }
+
+        return $data;
     }
 
     public function getItems(int $page = 0, string $search = null): array
@@ -98,7 +143,6 @@ class SbisService implements SbisInterface
         $data = [];
 
         $query = [
-            'headers' => self::getAuthHeader(),
             'pointId' => Cache::get('sbis_point'),
             'priceListId' => Cache::get('sbis_price'),
             'page' => $page,
@@ -254,5 +298,37 @@ class SbisService implements SbisInterface
         }
         
         return $id;
+    }
+
+    /**
+    * Upload file in storage
+    */
+    public function uploadFile(string $data, string $id): string
+    {
+        $storage = Storage::disk('images');
+        $fileName = Str::uuid(10).'.'.'jpg';
+
+        $this->deleteFile($id);
+        $storage->put($fileName, $data);
+
+        return $fileName;
+    }
+
+    /**
+     * Delete file from storage
+     */
+    private function deleteFile(string $id): void
+    {
+        $item = Items::where('id', $id)->first();
+
+        if($item) {
+            $path = $item->image;
+            
+            if($path) {
+                if(Storage::disk('images')->exists($path)){
+                    Storage::disk('images')->delete($path);
+                }
+            }
+        }
     }
 }

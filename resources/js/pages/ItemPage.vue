@@ -128,7 +128,7 @@ const changeInput = (e) => {
                         's3_b_pink': item.has_discount,
                         's3_b_blue': !item.has_discount,
                     }">
-                        <img :src="item.image ?? '/svg/vertical_white.svg'" :width="!item.image ? '50%' : '100%'">
+                        <img :src="item.image_url ?? '/svg/vertical_white.svg'" :width="!item.image_url ? '50%' : '100%'">
                     </div>
 
                     <div v-if="item.has_discount" 
@@ -192,7 +192,7 @@ const changeInput = (e) => {
 
                                 <img src="/svg/trash.svg" height="24" @click="removeFromCart" v-if="itemFromStore">
 
-                                <router-link :to="'/catalog/cart'" class="footer_button blue_color" :class="{'pink_color': item.has_discount}" @click="addToCart" v-if="itemFromStore">
+                                <router-link :to="{name: 'cart'}" class="footer_button blue_color" :class="{'pink_color': item.has_discount}" @click="addToCart" v-if="itemFromStore">
                                     <span class="footer_button_text1">Оформить</span>
                                     <span class="footer_button_text2">Оформить заказ</span>
                                     <img class="ms-2" :src="item.has_discount ? '/svg/pinkcart.svg' : '/svg/bluecart.svg'">

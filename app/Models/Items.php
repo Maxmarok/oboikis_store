@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Items extends Model
 {
     use HasFactory;
 
-    protected $appends = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url'];
+    protected $appends = ['title', 'type', 'description', 'has_discount', 'discount_price', 'discount_percent', 'catalog_url', 'image_url'];
 
     const SECTIONS = [
         'country' => 'Страна',
@@ -71,5 +72,10 @@ class Items extends Model
     public function getCatalogUrlAttribute()
     {
         return $this->catalog->url;
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->image ? Storage::disk('images')->url($this->image) : null;
     }
 }

@@ -21,9 +21,24 @@ onMounted(() => {
 });
 
 const getItems = (page = 1) => {
+  items.value = null
   axios.get(`/api/v1/dashboard/items?page=${page}`)
   .then(res => {
     items.value = res.data.data
+  })
+}
+
+const syncItems = () => {
+  axios.get(`/api/v1/dashboard/items/sync`)
+  .then(res => {
+    swal.fire({
+      text: 'Синхронизация товаров запущена',
+      position: 'bottom-end',
+      // toast: true,
+      showConfirmButton: false,
+      icon: 'success',
+      timer: 2000,
+    })
   })
 }
 
@@ -190,7 +205,7 @@ const updateItem = (id, name) => {
 <PageHeader :title="title">
     <template #right>
         <div>
-            <button @click="openCreateModal('Синхронизировать со Сбис')" class="btn btn-sm btn-success">
+            <button @click="syncItems()" class="btn btn-sm btn-success">
                 <i class="mdi mdi-refresh mr-2"></i> Синхронизировать со Сбис
             </button>
         </div>
@@ -228,7 +243,7 @@ const updateItem = (id, name) => {
             <tr v-for="item in items.data">
                 <td class="w-50">
                     <p class="mb-2">
-                        <img :src="item.image ?? '/svg/vertical_white.svg'" width="50" class="lg" />
+                        <img :src="item.image_url ?? '/svg/vertical_white.svg'" width="50" class="lg" />
                         <strong v-html="item.title" />
                     </p>
                 </td>

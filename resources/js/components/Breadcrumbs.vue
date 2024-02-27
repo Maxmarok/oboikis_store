@@ -1,20 +1,21 @@
 <script setup>
-import { defineProps, ref, watch } from 'vue'
+import { defineProps, onMounted, ref, watch } from 'vue'
 const props = defineProps(['items'])
 const active_items = ref()
 const items = ref()
 
+const getItems = (list) => {
+    active_items.value = list.filter(x => x.link !== null)
+    items.value = list.filter(x => x.link === null)
+}
+
 watch(() => props.items, function() {
   if(props.items !== null) {
-    active_items.value = props.items ? props.items.filter(x => x.link !== null) : null
-    items.value = props.items ? props.items.filter(x => x.link === null) : null
-  } else {
-    active_items.value = null
-    items.value = null
+    getItems(props.items)
   }
 });
 
-console.log(props)
+onMounted(() => getItems(props.items))
 </script>
 <template>
 <router-link 

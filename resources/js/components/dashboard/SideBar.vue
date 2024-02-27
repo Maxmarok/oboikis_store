@@ -1,9 +1,29 @@
 <script setup>
 import simplebar from "simplebar-vue"
-import { onMounted, watch, ref } from "vue"
+import { onMounted, watch, ref, inject } from "vue"
 import { MetisMenu } from 'metismenujs'
+import { useRouter } from 'vue-router'
+import { useProfileStore } from '@js/stores/profileStore'
+
+const router = useRouter()
+const profile = useProfileStore()
+
+const swal = inject('$swal')
 
 const hasItems = (item) => item.subItems !== undefined ? item.subItems.length > 0 : false
+
+const logout = () => {
+  profile.logout()
+  swal.fire({
+      text: 'Вы вышли из системы!',
+      position: 'bottom-end',
+      showConfirmButton: false,
+      icon: 'success',
+      backdrop: false,
+      timer: 2000,
+  })
+  router.push({name: 'Login'})
+}
 
 const menu = () => {
     // eslint-disable-next-line no-unused-vars
@@ -65,7 +85,7 @@ const menuItems = ref([
     {
       label: 'Выйти',
       icon: 'ri-logout-box-line',
-      link: '/auth/logout'
+      func: () => logout(),
     }
 ])
 
@@ -112,7 +132,7 @@ onMounted(() => menu())
   
                 <router-link
                   :to="item.link"
-                  v-if="!hasItems(item)"
+                  v-if="!hasItems(item) && item.link"
                   class="side-nav-link-ref"
                   :active-class="'active'"
                 >
@@ -124,6 +144,21 @@ onMounted(() => menu())
                     >{{ item.badge.text }}</span
                   >
                 </router-link>
+
+                <a
+                  href="javascript:void(0);"
+                  class="side-nav-link-ref"
+                  v-if="!hasItems(item) && item.func"
+                  @click="item.func()"
+                >
+                  <i :class="`bx ${item.icon}`" v-if="item.icon"></i>
+                  <span>{{ item.label }}</span>
+                  <span
+                    :class="`badge badge-pill badge-${item.badge.variant} float-right`"
+                    v-if="item.badge"
+                    >{{ item.badge.text }}</span
+                  >
+                </a>
   
                 <ul v-if="hasItems(item)" class="sub-menu" aria-expanded="false">
                   <li v-for="(subitem, index) of item.subItems" :key="index">

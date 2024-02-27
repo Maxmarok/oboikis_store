@@ -51,7 +51,7 @@ a {
 
 .footer_block2 a, .footer_element a {
     text-decoration: none;
-    color: inherit;
+    transition: .3s color;
 }
 
 .footer_element a:hover {
@@ -360,8 +360,8 @@ nav {
 }
 
 .screen3 {
-    width: 1360px;
-    height: 691px;
+    /* width: 1360px; */
+    /* height: 691px; */
     padding-top: 50px;
 }
 
@@ -379,17 +379,20 @@ nav {
 }
 
 .screen3_cards {
-    width: 1243px;
+    max-width: 1243px;
+    width: 100%;
 }
 
 .screen3_block {
     border-color: #000;
     border-radius: 14px;
-    width: 296px;
+    max-width: 296px;
+    width: 100%;
 }
 
 .screen3_blocks {
-    /* width: 1350px; */
+    max-width: 1350px;
+    width: 100%;
 }
 
 .s3_b_img {
@@ -692,6 +695,10 @@ footer {
     font-weight: 400;
     line-height: 16px;
     letter-spacing: 0em;
+}
+
+.footer_text2 >:not(:last-child) {
+    margin-bottom: 10px;
 }
 
 .footer_block1 {
@@ -1288,6 +1295,7 @@ footer {
     width: 100%;
     height: 100%;
     min-height: 700px;
+    overflow: hidden;
 }
 
 .wallpaper_screen_elem1_body_img img {
@@ -2172,6 +2180,7 @@ input[type=number]::-webkit-inner-spin-button {
     height: 150px;
     background-color: #fff;
     z-index: 2;
+    overflow: hidden;
 }
 
 .goods_img img {
@@ -2727,6 +2736,12 @@ select {
     background-color: #00ADB5;
 }
 
+@media (max-width: 1400px) {
+    .screen3_cards {
+        max-width: 900px;
+    }
+}
+
 @media (max-width: 992px) {
 
     .pagination {
@@ -3007,10 +3022,10 @@ select {
         transform: rotate(180deg);
     }
 
-    .block3 {
+    /* .block3 {
         height: 600px;
         margin-bottom: 40px;
-    }
+    } */
 
     .s3_b1_text, .s3_b_text {
         height: 50px;
@@ -3105,8 +3120,8 @@ select {
 
     .screen3 {
         width: 100%;
-        height: 600px;
-        padding: 0 !important;
+        /* height: 600px; */
+        padding: 0;
     }
 
     /* .block4 {
@@ -3151,7 +3166,7 @@ select {
     }
 
     .screen4_text {
-        margin: 30px 0;
+        margin: 0 0 30px;
     }
 
     .screen4 button {
@@ -3244,7 +3259,8 @@ select {
 
     .screen3_cards {
         justify-content: center !important;
-        width: 250px;
+        max-width: 250px;
+        width: 100%;
     }
 
     .prevButton1 {
@@ -3339,9 +3355,9 @@ select {
         height: 36px;
     }
 
-    .contact div {
+    /* .contact div {
         width: 150px !important;
-    }
+    } */
 
     .block2_c {
         display: none !important;
@@ -3354,15 +3370,15 @@ select {
     }
 
     .about_company_text {
-        justify-content: center !important;
-        align-items: center !important;
-        width: 300px;
-        margin-bottom: 10px !important;
+        /* justify-content: center !important;
+        align-items: center !important; */
+        width: 100%;
+        max-width: 300px;
     }
 
-    .contacts_text2 {
+    /* .contacts_text2 {
         margin: 10px 0;
-    }
+    } */
 
     .contacts_text2 {
         display: flex;
@@ -3808,10 +3824,6 @@ select {
     }
 
     .sort {
-        display: none !important;
-    }
-
-    .filter_dots {
         display: none !important;
     }
 
@@ -4722,7 +4734,7 @@ select {
     }
 
     .contacts_screen .contacts_text2 {
-        margin: 0;
+        margin: 20px 0;
     }
 
     .contacts_screen .contacts_text2 span {

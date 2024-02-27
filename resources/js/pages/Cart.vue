@@ -49,7 +49,6 @@ const removeSelectedItems = () => {
    
 
     if(items.length > 0) {
-        console.log(Object.values(items))
         Object.values(items).forEach(id => {
             removeFromCart(id)
         })
@@ -152,7 +151,7 @@ const itemsLength = () => {
             <Breadcrumbs :items="breadcrumbs"/>
         </div>
     </div>
-    <div class="contacts_text2 blue_color catalog_text2 m-0" v-html="title"></div>
+    <div class="contacts_text2 blue_color catalog_text2" v-html="title"></div>
     <div class="cart_screen me-auto ms-auto">
         <div class="cart_screen_text">
             <Breadcrumbs :items="breadcrumbs"/>
@@ -187,7 +186,7 @@ const itemsLength = () => {
                         <div class="position-relative d-none d-md-block">
                             
                             <div class="goods_img z-2 position-relative" :class="{'s3_b_pink': item.has_discount, 's3_b_blue': !item.has_discount}">
-                                <img :src="item.image ?? '/svg/vertical_white.svg'" :width="!item.image ? '50%' : '100%'">
+                                <img :src="item.image_url ?? '/svg/vertical_white.svg'" :width="!item.image_url ? '50%' : '100%'">
                             </div>
                             <img class="goods_sale position-absolute z-1" src="/svg/sale.svg" v-if="item.has_discount">
                             <div class="discount d-flex justify-content-center align-items-center bg_pink z-2" v-if="item.has_discount">
@@ -200,7 +199,13 @@ const itemsLength = () => {
                                     <router-link class="goods_elem1_header_text1 blue_color" 
                                          :class="{'pink_color': item.has_discount}" 
                                          v-html="item.title"
-                                         :to="`/catalog/${item.catalog.url}/${item.id}`"
+                                         :to="{
+                                            name: 'item',
+                                            params: {
+                                                section: item.catalog.url,
+                                                id: item.id,
+                                            }
+                                        }"
                                     />
                                     <span class="goods_elem1_header_text2 blue_color" 
                                          :class="{'pink_color': item.has_discount}" 
@@ -210,7 +215,7 @@ const itemsLength = () => {
                                 <div class="position-relative d-block d-md-none">
                                     
                                     <div class="goods_img" :class="{'s3_b_pink': item.has_discount, 's3_b_blue': !item.has_discount}">
-                                        <img class="z-0" :src="item.image ?? '/svg/vertical_white.svg'" :width="!item.image ? '50%' : '100%'">
+                                        <img class="z-0" :src="item.image_url ?? '/svg/vertical_white.svg'" :width="!item.image_url ? '50%' : '100%'">
                                     </div>
 
                                     <div class="goods_disc position-absolute bg_pink" v-if="item.has_discount" v-html="`-${item.discount_percent}%`" />
@@ -272,7 +277,7 @@ const itemsLength = () => {
                     </div>
                 </div>
                 <div class="goods_elem2_footer d-flex align-items-center justify-content-center">
-                    <router-link to="/cart/order" class="white_color bg_pink" v-if="itemsLength() > 0">
+                    <router-link :to="{name: 'order'}" class="white_color bg_pink" v-if="itemsLength() > 0">
                         <span class="goods_elem2_footer_text1">Заказать выбранные товары</span>
                         <span class="goods_elem2_footer_text2">Оформить заказ</span>
                     </router-link>

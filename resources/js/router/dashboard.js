@@ -3,8 +3,10 @@ import Dashboard from '@js/pages/dashboard/index.vue'
 import DashboardOrders from '@js/pages/dashboard/orders.vue'
 import DashboardItems from '@js/pages/dashboard/items.vue'
 import DashboardInfo from '@js/pages/dashboard/info.vue'
+import Login from '@js/pages/dashboard/login.vue'
 
 import auth from '@js/middleware/auth'
+import middlewarePipeline from "@js/middleware/middleware-pipeline"
 
 const routes = [
     {
@@ -44,7 +46,13 @@ const routes = [
                 // },
             },
         ]
-    }
+    },
+
+    {
+        name: 'Login',
+        path: '/dashboard/login',
+        component: Login,
+    },
 ]
 
 const router = createRouter({
@@ -55,5 +63,29 @@ const router = createRouter({
         return { top: 0 }
     },
 })
+
+router.beforeEach((to, from, next) => {
+
+    if (!to.meta.middleware) {
+        return next()
+    }
+    
+    const middleware = Array.isArray(to.meta.middleware)
+    ? to.meta.middleware
+    : [to.meta.middleware];
+
+    const context = {
+        to,
+        from,
+        next,
+    };
+
+    return middleware[0]({
+        ...context,
+        next: middlewarePipeline(context, middleware, 1),
+    });
+})
+
+
 
 export default router

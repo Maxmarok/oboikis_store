@@ -31,7 +31,7 @@ const toggleMenu = () => menuOpen.value = !menuOpen.value
                 <!-- <div class="city d-flex align-items-center justify-content-between"><img src="/svg/house.svg" class="me-1">г. Пермь</div> -->
             </div> 
             <div class="d-flex align-items-center menu_logo">
-                <router-link to="/">
+                <router-link :to="{name: 'home'}">
                     <img src="/svg/horizontal.svg">
                 </router-link>
             </div>
@@ -42,7 +42,7 @@ const toggleMenu = () => menuOpen.value = !menuOpen.value
                         <button type="submit"><img src="/svg/glass.svg"></button>
                     </form>
                 </div> -->
-                <router-link to="/cart">
+                <router-link :to="{name: 'cart'}">
                     <div class="d-flex flex-row align-items-center cart_header" :class="{active: store.cart.length > 0}">
                         <div class="counter d-flex align-items-center justify-content-center" v-html="store.cart.length" />
                         <div class="menu_cart_block">Корзина<img src="/svg/cart.svg" class="ms-2"></div>
@@ -52,21 +52,27 @@ const toggleMenu = () => menuOpen.value = !menuOpen.value
             <div class="menu2 vw-100 white_color justify-content-between position-absolute flex-column" :class="{'menu2_open': menuOpen}">
                 <div class="menu2_block1 d-flex justify-content-around">
                     <div class="menu2_block1_element d-flex flex-column">
-                        <div class="menu2_block1_element_text1 yellow_color">Главная</div>
-                        <div class="menu2_block1_element_text2">Корзина</div>
+                        <router-link :to="{name: 'home'}" class="menu2_block1_element_text1">Главная</router-link>
+                        <router-link :to="{name: 'cart'}"  class="menu2_block1_element_text2">Корзина</router-link>
                         <!-- <div class="menu2_block1_divider w-100 position-relative">
                             <div class="position-absolute"></div>
                         </div> -->
                         <div class="menu2_block1_element_text1 mt-4">Компания</div>
-                        <div class="menu2_block1_element_text2">О компании</div>
-                        <div class="menu2_block1_element_text2">Контакты</div>
+                        <router-link :to="{name: 'about'}"  class="menu2_block1_element_text2">О компании</router-link>
+                        <router-link :to="{name: 'contacts'}"  class="menu2_block1_element_text2">Контакты</router-link>
+                        <router-link :to="{name: 'docs'}"  class="menu2_block1_element_text2">Реквизиты</router-link>
                     </div>
                     <div class="menu2_block1_element d-flex flex-column">
-                        <router-link to="/catalog" class="menu2_block1_element_text1">Каталог</router-link>
+                        <div class="menu2_block1_element_text1">Каталог</div>
 
                         <router-link 
                             v-for="item in info.catalog" 
-                            :to="`/catalog/${item.url}`" 
+                            :to="{
+                                name: 'catalog',
+                                params: {
+                                    section: item.url,
+                                }
+                            }"
                             class="menu2_block1_element_text2" 
                             v-html="item.name"
                             @click="toggleMenu"

@@ -25,11 +25,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard/{any}', function () { 
     return view('dashboard'); 
-})->whereIn('any', ['orders', 'items', 'info']);
-
-Route::get('/dashboard/orders', function () { 
-    return view('dashboard'); 
-})->name('dashboard.orders');
+})->whereIn('any', ['orders', 'items', 'info', 'login']);
 
 Route::get('/about', function () {
     $title = 'О компании "Обойкис"';
@@ -45,6 +41,36 @@ Route::get('/about', function () {
 Route::get('/contacts', function () {
     $title = 'Контакты "Обойкис"';
     $short_description  = 'Контакты магазина "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
+});
+
+Route::get('/requisites', function () {
+    $title = 'Реквизиты "Обойкис"';
+    $short_description  = 'Реквизиты магазина "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
+});
+
+Route::get('/public_offer', function () {
+    $title = 'Публичная оферта "Обойкис"';
+    $short_description  = 'Публичная оферта магазина "Обойкис"';
+    
+    return view('index', [
+        'title' => $title,
+        'short_description' => $short_description,
+    ]);
+});
+
+Route::get('/privacy_policy', function () {
+    $title = 'Политика конфиденциальности "Обойкис"';
+    $short_description  = 'Политика конфиденциальности магазина "Обойкис"';
     
     return view('index', [
         'title' => $title,

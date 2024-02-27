@@ -8,7 +8,15 @@ const getStock = () => {
 
 </script>
 <template>
-<router-link :to="`/catalog/${props.item.catalog_url}/${props.item.id}`" class="screen3_block d-flex flex-column p-auto position-relative" 
+<router-link
+    class="screen3_block d-flex flex-column p-auto position-relative" 
+    :to="{
+        name: 'item',
+        params: {
+            section: props.item.catalog_url,
+            id: props.item.id,
+        }
+    }"
     :class="{
         's3_b_pink': props.item.has_discount,
         's3_b_blue': !props.item.has_discount
@@ -21,7 +29,7 @@ const getStock = () => {
     </div>
 
     <div class="s3_b_img">
-        <img :src="props.item.image ?? '/svg/vertical_white.svg'" :width="!props.item.image ? '50%' : '100%'">
+        <img :src="props.item.image_url ?? '/svg/vertical_white.svg'" :width="!props.item.image_url ? '50%' : '100%'">
     </div>
 
     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100"
@@ -63,7 +71,15 @@ const getStock = () => {
                 <span class="s3_b_f_text2" v-html="helper.getPrice(props.item.discount_price)" />
             </div>
         </div>
-        <router-link :to="`/catalog/${props.item.catalog_url}/${props.item.id}`" class="d-flex flex-row align-items-center justify-content-evenly"
+        <router-link 
+            class="d-flex flex-row align-items-center justify-content-evenly"
+            :to="{
+                name: 'item',
+                params: {
+                    section: props.item.catalog_url,
+                    id: props.item.id,
+                }
+            }"
             :class="{
                 'pink_color': props.item.has_discount,
                 'blue_color': !props.item.has_discount

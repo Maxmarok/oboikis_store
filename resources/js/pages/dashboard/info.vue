@@ -68,27 +68,25 @@ const updateInfo = (index) => {
     }
 }
 
-const uploadFile = (e, type) => {
-    console.log(e.target.files[0]);
+// const uploadFile = (e, type) => {
+//     const formData = new FormData();
+//     formData.append('file', e.target.files[0]);
+//     formData.append('type', type)
+//     const headers = { 'Content-Type': 'multipart/form-data' };
+//     axios.post('/api/v1/dashboard/info/upload', formData, { headers })
+//     .then((res) => {
+//         data.value[type] = res.data.data[type];
 
-    const formData = new FormData();
-    formData.append('file', e.target.files[0]);
-    formData.append('type', type)
-    const headers = { 'Content-Type': 'multipart/form-data' };
-    axios.post('/api/v1/dashboard/info/upload', formData, { headers })
-    .then((res) => {
-        data.value[type] = res.data.data[type];
-
-        swal.fire({
-            text: 'Файл успешно загружен',
-            //position: 'bottom-end',
-            // toast: true,
-            showConfirmButton: false,
-            icon: 'success',
-            timer: 2000,
-          })
-    });
-}
+//         swal.fire({
+//             text: 'Файл успешно загружен',
+//             //position: 'bottom-end',
+//             // toast: true,
+//             showConfirmButton: false,
+//             icon: 'success',
+//             timer: 2000,
+//           })
+//     });
+// }
 
 onMounted(() => {
     getInfo()
@@ -239,7 +237,7 @@ onMounted(() => {
             </div>
         </div>
 
-        <div class="card">
+        <!-- <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-4">
@@ -267,7 +265,7 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 </template>

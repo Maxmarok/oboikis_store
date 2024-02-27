@@ -1,7 +1,11 @@
-export default function auth({ next, store }) {
-    if (!store.getters.auth) {
-      return next({ name: 'Login' });
-    }
-  
-    return next();
+import { useProfileStore } from '@js/stores/profileStore'
+
+export default async function auth({ next }) {
+  const profile = useProfileStore()
+
+  if (!profile.token) {
+    return next({ name: 'Login' });
+  }
+
+  return next();
 }

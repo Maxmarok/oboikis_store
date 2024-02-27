@@ -126,8 +126,6 @@ watch(() => props.item, function() {
     data.value.key = props.item.key
     data.value.lk_id = props.item.lk_id
     data.value.id = props.item.id
-
-    console.log(data.value)
   } else {
     setDefault()
   }

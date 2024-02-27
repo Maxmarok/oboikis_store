@@ -165,7 +165,7 @@ const onChange = (val, name) => {
                 </div>
                 <div class="reciever_block_footer d-flex align-items-center flex-column justify-content-center w-100">
                     <button class="white_color text-center bg_pink mb-3" @click="sendForm">Оформить заказ</button>
-                    <div class="reciever_block_footer_text blue_color">Наш менеджер свяжется с Вами в течение нескольких минут в рабочее время с <span class="pink_color border_bottom_pink">10:00</span> до <span class="pink_color border_bottom_pink">22:00</span> часов</div>
+                    <div class="reciever_block_footer_text blue_color">Наш менеджер свяжется с Вами в течение нескольких минут в рабочее время с <span class="pink_color border_bottom_pink">10:00</span> до <span class="pink_color border_bottom_pink">20:00</span> часов</div>
                 </div>
             </div>
             <div class="reciever_block_e2_1 bg_white">
@@ -218,7 +218,7 @@ const onChange = (val, name) => {
         <div class="cart_screen_block d-flex flex-column align-items-center justify-content-evenly" v-if="store.cart.length === 0">
             <span class="blue_color">Благодарим за заказ!</span>
             <div class="cart_screen_elem blue_color">
-                Наш <span class="pink_color border-0">менеджер</span> свяжется с Вами в течение нескольких минут в рабочее время с <span class="pink_color border-0">10:00</span> до <span class="pink_color border-0">22:00 часов</span>
+                Наш <span class="pink_color border-0">менеджер</span> свяжется с Вами в течение нескольких минут в рабочее время с <span class="pink_color border-0">10:00</span> до <span class="pink_color border-0">20:00 часов</span>
             </div>
         </div>
 

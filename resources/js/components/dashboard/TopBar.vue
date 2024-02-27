@@ -15,7 +15,7 @@ const onToggleMenu = () => {
         <div class="navbar-brand-box">
           <a href="/" class="logo logo-dark">
             <span class="logo-sm">
-              <img src="@js/assets/images/logo-admin.svg" height="22" />
+              <img src="@js/assets/images/logo-admin-white.svg" height="22" />
             </span>
             <span class="logo-lg">
               <img src="@js/assets/images/icon-admin.svg" height="20" />
@@ -27,7 +27,7 @@ const onToggleMenu = () => {
               <img src="@js/assets/images/icon-admin.svg" height="22" />
             </span>
             <span class="logo-lg">
-              <img src="@js/assets/images/logo-admin.svg" height="20" />
+              <img src="@js/assets/images/logo-admin-white.svg" height="20" />
             </span>
           </a>
         </div>

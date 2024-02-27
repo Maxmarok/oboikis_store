@@ -12,5 +12,6 @@ return [
         'point' => env('SBIS_URL_POINT'),
         'price' => env('SBIS_URL_PRICE'),
         'items' => env('SBIS_URL_ITEMS'),
+        'image' => env('SBIS_URL_IMAGE'),
     ],
 ];

@@ -7,11 +7,16 @@ import Carousel from '@js/components/Carousel.vue'
 import Loader from '@js/components/Loader.vue'
 
 const itemsPopular = ref(null)
-const itemsSales = ref(null)
+const itemsSales = ref([])
 
 const breakpoints = {
-    1000: {
+    992: {
         itemsToShow: 1,
+    },
+
+    1000: {
+        itemsToShow: 3,
+        snapAlign: 'left',
     },
 
     1400: {
@@ -77,31 +82,60 @@ onMounted(() => {
         </div> 
 
         <div class="screen2_blocks d-flex flex-row justify-content-between">
-            <router-link to="/catalog/wallpaper">
+            <router-link :to="{
+                name: 'catalog', 
+                params: {
+                    section: 'wallpaper',
+                }
+            }">
                 <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
                     <div><img src="svg/wallpaper1.svg" class="me-2"><span class="blue_color">Обои</span></div>
                     <div class="blue_color">Перейти в каталог</div>
                 </div>
             </router-link>
-            <router-link to="/catalog/photo">
+
+            <router-link :to="{
+                name: 'catalog', 
+                params: {
+                    section: 'photo',
+                }
+            }">
                 <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
                     <div><img src="svg/wallpaper2.svg" class="me-2"><span class="blue_color">Фотообои</span></div>
                     <div class="blue_color">Перейти в каталог</div>
                 </div>
             </router-link>
-            <router-link to="/catalog/fresk">
+
+            <router-link :to="{
+                name: 'catalog', 
+                params: {
+                    section: 'fresk',
+                }
+            }">
                 <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
                     <div><img src="svg/wallpaper3.svg" class="me-2"><span class="blue_color">Фрески</span></div>
                     <div class="blue_color">Перейти в каталог</div>
                 </div>
             </router-link>
-            <router-link to="/catalog/decor">
+
+            <router-link :to="{
+                name: 'catalog', 
+                params: {
+                    section: 'decor',
+                }
+            }">
                 <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
                     <div class="d-flex flex-row align-items-center justify-content-center"><img src="svg/wallpaper4.svg" class="me-2"><span class="blue_color d-flex flex-column justify-content-center">Лепной<br>декор</span></div>
                     <div class="blue_color">Перейти в каталог</div>
                 </div>
             </router-link>
-            <router-link to="/catalog/glue">
+
+            <router-link :to="{
+                name: 'catalog', 
+                params: {
+                    section: 'glue',
+                }
+            }">
                 <div class="screen2_block d-flex flex-column justify-content-evenly align-items-center">
                     <div><img src="svg/bucket.svg" class="me-2"><span class="blue_color">Клей</span></div>
                     <div class="blue_color">Перейти в каталог</div>
@@ -111,13 +145,13 @@ onMounted(() => {
     </div>
 </div>
         
-<div class="block3 w-auto mg_s3 border_top" v-if="itemsPopular && itemsPopular.length > 0">
+<div class="block3 mg_s3 border_top" v-if="itemsPopular && itemsPopular.length > 0">
     <div class="screen3 d-flex m-auto flex-column align-items-center">
         <div class="screen3_text screen3_text_bg_blue">
             <span class="blue_color">Популярные товары</span>
         </div>
         
-        <div class="screen3_blocks d-flex align-items-center justify-content-between flex-row position-relative">
+        <div class="screen3_blocks d-flex align-items-center justify-content-center flex-row position-relative">
             <Carousel 
                 :items="itemsPopular"
                 :breakpoints="breakpoints"
@@ -128,7 +162,7 @@ onMounted(() => {
 
 <Loader v-if="!itemsPopular" />
 
-<div class="block3 w-auto mg_s3" v-if="itemsSales && itemsSales > 0">
+<div class="block3 mg_s3" v-if="itemsSales && itemsSales > 0">
     <div class="screen3 d-flex m-auto flex-column align-items-center">
         <div class="screen3_text screen3_text_bg_pink">
             <span class="pink_color">Товары по акции</span>

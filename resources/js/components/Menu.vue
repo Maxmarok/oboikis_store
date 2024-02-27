@@ -9,7 +9,12 @@ const info = useInfoStore()
         <div class="screen2_blocks d-flex flex-row justify-content-between align-items-center h-100 s2_c_border">
             <router-link 
                 v-for="item in info.catalog"
-                :to="`/catalog/${item.url}`"
+                :to="{
+                    name: 'catalog',
+                    params: {
+                        section: item.url
+                    }
+                }"
                 class="screen2_block d-flex flex-column justify-content-between align-items-center s2_b_c_height s2_b_c_border"
                 active-class="s2_b_c_active"
             >

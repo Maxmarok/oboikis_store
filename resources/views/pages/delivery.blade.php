@@ -73,7 +73,7 @@
                 </div>
                 <div class="reciever_block_footer d-flex align-items-center flex-column justify-content-center w-100">
                     <button class="white_color text-center bg_pink mb-3">Оформить заказ</button>
-                    <div class="reciever_block_footer_text blue_color">Наш менеджер свяжется с Вами в течение нескольких минут в рабочее время с <span class="pink_color border_bottom_pink">10:00</span> до <span class="pink_color border_bottom_pink">22:00</span> часов</div>
+                    <div class="reciever_block_footer_text blue_color">Наш менеджер свяжется с Вами в течение нескольких минут в рабочее время с <span class="pink_color border_bottom_pink">10:00</span> до <span class="pink_color border_bottom_pink">20:00</span> часов</div>
                 </div>
             </div>
             <div class="reciever_block_e2_1 s3_b_blue bg_white">
