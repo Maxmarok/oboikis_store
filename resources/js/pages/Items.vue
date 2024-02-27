@@ -86,7 +86,7 @@ watch(() => route.params.section,
             :show-disabled="true"
             :limit="5"
             v-if="items && items.data.length > 0"
-            class="d-none d-lg-block"
+            class="d-none d-lg-flex"
         />
 
         <Bootstrap5Pagination
@@ -96,7 +96,7 @@ watch(() => route.params.section,
             :limit="1"
             :size="'small'"
             v-if="items && items.data.length > 0"
-            class="d-block d-lg-none"
+            class="d-flex d-lg-none"
         />
 
         <div class="catalog_filter_bottom d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-between align-items-center align-items-lg-start m-auto m-lg-0 w-100">
@@ -181,7 +181,7 @@ watch(() => route.params.section,
             :show-disabled="true"
             :limit="5"
             v-if="items && items.data.length > 0"
-            class="d-none d-lg-block"
+            class="d-none d-lg-flex"
         />
 
         <Bootstrap5Pagination
@@ -191,7 +191,7 @@ watch(() => route.params.section,
             :limit="1"
             :size="'small'"
             v-if="items && items.data.length > 0"
-            class="d-block d-lg-none"
+            class="d-flex d-lg-none"
         />
     </div>
 </div>
