@@ -20,7 +20,8 @@ const getStock = () => {
     :class="{
         's3_b_pink': props.item.has_discount,
         's3_b_blue': !props.item.has_discount
-    }">
+    }"
+    v-if="props.item">
     <div v-if="props.item.discount_percent > 0" class="discount d-flex justify-content-center align-items-center"
         :class="{
             'bg_pink': props.item.has_discount,

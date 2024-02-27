@@ -206,6 +206,7 @@ const itemsLength = () => {
                                                 id: item.id,
                                             }
                                         }"
+                                        v-if="item.catalog"
                                     />
                                     <span class="goods_elem1_header_text2 blue_color" 
                                          :class="{'pink_color': item.has_discount}" 
