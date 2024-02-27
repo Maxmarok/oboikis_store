@@ -183,7 +183,7 @@ const onChange = (val, name) => {
                         <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Afa9cda4220b075d88c43dd32dad1c4126c729c7d7f94ed1217de3e0e3afbf847&amp;source=constructor" frameborder="0"></iframe>
                     </div>
 
-                    <div class="reciever_block_e2_2_body_block2 d-flex flex-column justify-content-between ms-auto me-auto" v-if="form.delivery === 'ship'">
+                    <div class="reciever_block_e2_2_body_block2 d-flex flex-column justify-content-between" v-if="form.delivery === 'ship'">
 
                         <OrderInput
                             :name="'Город получателя'"

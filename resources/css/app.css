@@ -1932,8 +1932,8 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .reciever_block_e2_body_block2 input, .reciever_block_e2_2_body_block2 input {
-    width: 380px;
-    height: 58px;
+    /* width: 380px;
+    height: 58px; */
     /* border: 1px solid #00ADB5; */
     background-color: #fff;
     border-radius: 14px;
