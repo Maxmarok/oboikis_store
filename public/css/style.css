@@ -2516,9 +2516,9 @@ select {
         padding-bottom: 25px;
     }
 
-    .search {
+    /* .search {
         display: none;
-    }
+    } */
 
     .menu_contacts, .number, .screen2_blocks, .screen2_block, .menu_cart_block {
         display: none !important;
