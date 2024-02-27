@@ -84,7 +84,7 @@ watch(() => route.params.section,
             :data="items"
             @pagination-change-page="getItems"
             :show-disabled="true"
-            :limit="5"
+            :limit="3"
             v-if="items && items.data.length > 0"
         />
         <div class="catalog_filter_bottom d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-between align-items-center align-items-lg-start m-auto m-lg-0 w-100">
@@ -167,7 +167,7 @@ watch(() => route.params.section,
             :data="items"
             @pagination-change-page="getItems"
             :show-disabled="true"
-            :limit="5"
+            :limit="3"
             v-if="items && items.data.length > 0"
         />
     </div>
