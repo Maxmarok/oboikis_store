@@ -24,7 +24,7 @@ class OrderShippedAdmin extends Mailable
     public function __construct(
         public Orders $order,
     ){
-        $this->url = route('dashboard.orders');
+        $this->url = route('api.dashboard.orders.list');
     }
 
     /**

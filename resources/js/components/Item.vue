@@ -3,7 +3,7 @@ import helper from '@js/components/helper.js'
 const props = defineProps(['item'])
 
 const getStock = () => {
-    return helper.getNoun(props.item.stock, 'товар', 'товара', 'товаров')
+    return helper.getNoun(props.item.balance, 'товар', 'товара', 'товаров')
 }
 
 </script>
@@ -42,9 +42,9 @@ const getStock = () => {
             :class="{
                 'pink_color': props.item.has_discount,
                 'blue_color': !props.item.has_discount,
-                'gray_color': props.item.stock === 0
+                'gray_color': props.item.balance === 0
             }">
-                <span v-if="props.item.stock > 0" v-html="getStock()" />
+                <span v-if="props.item.balance > 0" v-html="getStock()" />
                 <span v-else v-html="'На заказ'" />
         </div>
 

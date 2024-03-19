@@ -36,6 +36,6 @@ class OrderItems extends Model
 
     public function getTotalSumAttribute()
     {
-        return $this->total * $this->quantity;
+        return $this->total * $this->count;
     }
 }

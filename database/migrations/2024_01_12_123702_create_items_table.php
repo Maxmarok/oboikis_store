@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('url')->nullable();
             $table->integer('price')->default(0);
             $table->integer('discount')->default(0);
-            $table->integer('stock')->default(0);
+            $table->integer('balance')->default(0);
             $table->text('image')->nullable();
             $table->text('gallery')->nullable();
             $table->text('country')->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('main_material')->nullable();
             $table->text('size')->nullable();
             $table->text('color')->nullable();
-            $table->text('sbis_id')->nullable();
+            $table->text('nomNumber')->nullable();
             $table->text('description_simple')->nullable();
             $table->timestamps();
         });

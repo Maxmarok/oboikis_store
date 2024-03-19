@@ -5,8 +5,10 @@ namespace App\Services\Sbis;
 use App\Jobs\AddItemsJob;
 use App\Models\Catalogs;
 use App\Models\Items;
+use App\Models\Orders;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
@@ -27,6 +29,64 @@ class SbisService implements SbisInterface
         self::checkCache();
     }
 
+    public function createOrder(Orders $order)
+    {
+        $url = config('sbis.url.order');
+
+        $items = [];
+        $pointId = (int)Cache::get('sbis_point');
+        $priceId = (int) Cache::get('sbis_price');
+
+        foreach($order->order_items as $item) {
+            $items[] = (object) [
+                'id' => $item->item->id,
+                'nomNumber' => $item->item->nomNumber,
+                'count' => $item->count,
+                'priceListId' => $priceId,
+            ];
+        }
+
+        $arr = [
+            'product' => 'delivery',
+            'pointId' => $pointId,
+            'customer' => (object) [
+                'name' => $order->name,
+                'phone' => $order->phone,
+                'email' => $order->user->email,
+            ],
+            'datetime' => now()->addHours(6)->format('Y-m-d H:i:s'),
+            'nomenclatures' => $items,
+            'delivery' => (object) [
+                'isPickup' => true,
+                'paymentType' => 'online',
+                'shopURL' => config('sbis.url.shop'),
+                'successURL' => config('sbis.url.success'),
+                'errorURL' => config('sbis.url.error'),
+            ],
+        ];
+
+        Log::debug($arr);
+
+        try {
+            $request = $this->client->request('POST', $url, [
+                'headers' => self::getAuthHeader(),
+                'json' => $arr
+            ]);
+
+            $response = json_decode($request->getBody(), true);
+
+            Log::debug($response->getBody());
+
+        } catch (RequestException $exception) {
+            if($exception->getCode() === 401) {
+                self::checkToken();
+                self::createOrder($order);
+            }
+            Log::error($exception->getResponse()->getBody());
+        }
+        
+    }
+
     public function updateItem(string $name): JsonResponse
     {
         $data = self::getItems(0, $name);
@@ -37,7 +97,7 @@ class SbisService implements SbisInterface
             $arr = [
                 'description_simple' => $item['description_simple'],
                 'price' => $item['cost'],
-                'stock' => $item['balance'],
+                'balance' => $item['balance'],
             ];
 
             $item = Items::where('name', $name);
@@ -90,9 +150,9 @@ class SbisService implements SbisInterface
                     'id' => $item['id'],
                     'name' => $item['name'],
                     'description_simple' => $item['description_simple'],
-                    'sbis_id' => $item['nomNumber'],
+                    'nomNumber' => $item['nomNumber'],
                     'price' => $item['cost'],
-                    'stock' => $item['balance'],
+                    'balance' => $item['balance'],
                     'catalog_id' => $catalog_id,
                     'image' => null,
                 ];

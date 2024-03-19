@@ -2,6 +2,7 @@
 
 namespace App\Services\Sbis;
 
+use App\Models\Orders;
 use Illuminate\Http\JsonResponse;
 
 interface SbisInterface
@@ -13,4 +14,6 @@ interface SbisInterface
     public function insertItems(array $data): void;
 
     public function getItems(int $page = 0, string $search = null): array;
+
+    public function createOrder(Orders $order);
 }

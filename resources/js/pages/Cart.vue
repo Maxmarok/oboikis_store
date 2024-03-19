@@ -221,9 +221,9 @@ const itemsLength = () => {
 
                                     <div class="goods_disc position-absolute bg_pink" v-if="item.has_discount" v-html="`-${item.discount_percent}%`" />
                                 </div>
-                                <div class="goods_elem1_body_block_end_div2 d-flex justify-content-center align-items-center flex-row mt-3" v-if="item.stock > 0">
+                                <div class="goods_elem1_body_block_end_div2 d-flex justify-content-center align-items-center flex-row mt-3" v-if="item.balance > 0">
                                     <span class="end_div2_text1 blue_color me-1">В наличии:</span>
-                                    <span class="end_div2_text2 pink_color" v-html="getStock(item.stock)"></span>
+                                    <span class="end_div2_text2 pink_color" v-html="getStock(item.balance)"></span>
                                 </div>
                                 <div class="goods_elem1_body_block_end_div1 d-flex justify-content-center align-items-center gray_color2 bg_white border_gray" v-else>На заказ</div>
                             </div>

@@ -66,7 +66,7 @@ class ItemsSeeder extends Seeder
                 'url'           => Str::uuid(),
                 'price'         => $price,
                 'discount'      => $discount,
-                'stock'         => $faker->numberBetween(0, 10),
+                'balance'       => $faker->numberBetween(0, 10),
                 'image'         => $faker->randomElement($sources),
                 'gallery'       => implode(',', [$faker->randomElement($sources), $faker->randomElement($sources)]),
                 'country'       => $faker->randomElement($countries),

@@ -99,12 +99,12 @@ class CartService implements CartInterface {
             $arr[] = [
                 'order_id' => $order->id,
                 'item_id' => $item['id'],
-                'quantity' => $item['count'],
+                'count' => $item['count'],
             ];
         }
 
         OrderItems::insert($arr);
-        MakeOrderJob::dispatchAfterResponse($order);
+        MakeOrderJob::dispatchAfterResponse($order, $items);
 
         return response()->json([
             'success' => true,

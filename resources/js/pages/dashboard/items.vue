@@ -286,8 +286,8 @@ const updateItem = (id, name) => {
                     </p>
 
                     <p>
-                        <strong :class="{'text-secondary': item.stock <= 0}" v-html="'Наличие: '" />
-                        <span :class="{'text-secondary': item.stock <= 0}" v-html="item.stock > 0 ? `${item.stock} шт.` : 'нет в наличии'" />
+                        <strong :class="{'text-secondary': item.balance <= 0}" v-html="'Наличие: '" />
+                        <span :class="{'text-secondary': item.balance <= 0}" v-html="item.balance > 0 ? `${item.balance} шт.` : 'нет в наличии'" />
                     </p>
                 </td>
                 <td class="text-center">

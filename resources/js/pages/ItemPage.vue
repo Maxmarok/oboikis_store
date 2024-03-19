@@ -164,9 +164,9 @@ const changeInput = (e) => {
                         <div class="wallpaper_screen_elem1_body_e3">
                             <div class="wallpaper_screen_elem1_body_e_header white_color">Наличие и заказ</div>
                             <ul class="wallpaper_screen_elem1_body_e3_text d-flex justify-content-between flex-column blue_color">
-                                <li v-if="item.stock > 0">В наличии <span class="pink_color" v-html="getStock(item.stock)" /></li>
+                                <li v-if="item.balance > 0">В наличии <span class="pink_color" v-html="getStock(item.balance)" /></li>
                                 <li v-else class="gray_color">В данный момент товара <span class="pink_color">нет в наличии</span> на складе</li>
-                                <li v-if="item.stock > 0">Заказ свыше, чем <span class="pink_color" v-html="getStock(item.stock)" /> – на заказ от 10 дней</li>
+                                <li v-if="item.balance > 0">Заказ свыше, чем <span class="pink_color" v-html="getStock(item.balance)" /> – на заказ от 10 дней</li>
                                 <li v-else>На заказ <span class="pink_color">от 10 дней</span></li>
                                 <li><span class="text-decoration-line-through me-2 gray_color" v-if="item.has_discount">{{ helper.getPrice(item.price, false) }}</span><span :class="{'pink_color': item.has_discount}">{{helper.getPrice(item.has_discount ? item.discount_price : item.price)}}</span>  за 1 рулон</li>
                             </ul>

@@ -9,7 +9,7 @@ Email: {{$order->user->email}}
 
 Данные о заказе:  
 @foreach($order->order_items as $i => $item)
-{{$i + 1}}. [{{$item->item->title}}]({{route('catalog_item', ['section' => $item->item->catalog->url, 'id' => $item->item->id])}}) {{$item->quantity}} шт. x {{number_format($item->total, 0, '', ' ')}} ₽
+{{$i + 1}}. [{{$item->item->title}}]({{route('catalog_item', ['section' => $item->item->catalog->url, 'id' => $item->item->id])}}) {{$item->count}} шт. x {{number_format($item->total, 0, '', ' ')}} ₽
 @endforeach
 
 Итого к оплате: {{number_format($order->order_sum, 0, '', ' ')}} ₽  

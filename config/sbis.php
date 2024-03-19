@@ -13,5 +13,9 @@ return [
         'price' => env('SBIS_URL_PRICE'),
         'items' => env('SBIS_URL_ITEMS'),
         'image' => env('SBIS_URL_IMAGE'),
+        'order' => env('SBIS_URL_ORDER'),
+        'shop' => env('SBIS_URL_SHOP'),
+        'success' => env('SBIS_URL_SUCCESS'),
+        'error' => env('SBIS_URL_ERROR'),
     ],
 ];

@@ -160,7 +160,7 @@ const cancelOrder = (id) => {
 
                 <td>
                   <p v-for="order_item, i in order.order_items" class="table-items">
-                    <span><img :src="order_item.item.image" width="40" class="sm" :class="{'discount': order_item.item.discount > 0}" /> <a :href="order_item.item.link" target="_blank"><strong>{{order_item.item.title}}</strong></a> {{order_item.quantity}} шт. x {{order_item.total.toLocaleString('ru')}} ₽</span>
+                    <span><img :src="order_item.item.image" width="40" class="sm" :class="{'discount': order_item.item.discount > 0}" /> <a :href="order_item.item.link" target="_blank"><strong>{{order_item.item.title}}</strong></a> {{order_item.count}} шт. x {{order_item.total.toLocaleString('ru')}} ₽</span>
                   </p>
                   <p><strong>Итого:</strong> <span>{{ order.order_sum.toLocaleString('ru') }} ₽</span></p>
                 </td>
