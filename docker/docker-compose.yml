@@ -115,6 +115,10 @@ services:
     networks:
       - oboikis-store
 
+volumes:
+  web-root:
+    driver: local
+
 networks:
   oboikis-store:
     driver: bridge
