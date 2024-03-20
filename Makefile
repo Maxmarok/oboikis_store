@@ -1,4 +1,5 @@
 DOCKER_COMPOSE=docker-compose -f docker/docker-compose.yml --project-name=oboikis-store
+DOCKER_COMPOSE_PROD=docker-compose -f docker-compose-prod.yml --project-name=rokki_prod
 
 init:
 	make build
@@ -70,3 +71,21 @@ ziggy:
 	${DOCKER_COMPOSE} exec supervisor php artisan ziggy:generate
 add_items:
 	${DOCKER_COMPOSE} exec app php artisan items:add
+
+prod_build:
+	${DOCKER_COMPOSE_PROD} build app
+prod_up:
+	${DOCKER_COMPOSE_PROD} up -d
+prod_install:
+	${DOCKER_COMPOSE_PROD} exec app composer install
+prod_update:
+	${DOCKER_COMPOSE_PROD} exec app composer update
+prod_down:
+	${DOCKER_COMPOSE_PROD} down --remove-orphans
+prod_migrate_seed:
+	${DOCKER_COMPOSE_PROD} exec app php artisan migrate:fresh --seed
+prod_npm_install:
+	${DOCKER_COMPOSE_PROD} exec node npm install
+	make npm_build
+prod_npm_build:
+	${DOCKER_COMPOSE_PROD} exec node npm run build

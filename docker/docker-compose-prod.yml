@@ -102,7 +102,7 @@ services:
       - "../public:/var/www/public:ro"
       - "../storage/app:/var/www/storage/app:ro"
       - ../:/var/www
-      - ./docker-compose/nginx:/etc/nginx/conf.d/
+      - ./docker-compose-prod/nginx:/etc/nginx/conf.d/
     networks:
       - oboikis-store
 
@@ -110,7 +110,7 @@ services:
     image: certbot/certbot
     container_name: rokki-certbot
     volumes:
-      - ./docker-compose/certbot/conf:/etc/letsencrypt
+      - ./docker-compose-prod/certbot/conf:/etc/letsencrypt
       - ./:/var/www
     networks:
       - oboikis-store
