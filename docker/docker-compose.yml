@@ -106,15 +106,6 @@ services:
     networks:
       - oboikis-store
 
-  certbot:
-    image: certbot/certbot
-    container_name: rokki-certbot
-    volumes:
-      - ./docker-compose/certbot/conf:/etc/letsencrypt
-      - ./:/var/www
-    networks:
-      - oboikis-store
-
 networks:
   oboikis-store:
     driver: bridge
