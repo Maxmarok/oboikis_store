@@ -89,3 +89,8 @@ prod_npm_install:
 	make npm_build
 prod_npm_build:
 	${DOCKER_COMPOSE_PROD} exec node npm run build
+prod_clear:
+	${DOCKER_COMPOSE_PROD} exec app php artisan route:clear
+	${DOCKER_COMPOSE_PROD} exec app php artisan cache:clear
+	${DOCKER_COMPOSE_PROD} exec app php artisan config:clear
+	${DOCKER_COMPOSE_PROD} exec app php artisan queue:restart
