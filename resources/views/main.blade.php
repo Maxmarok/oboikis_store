@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{env('APP_NAME')}}</title>
     @vite('resources/css/app.css')
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/favicon_icon.ico">
+    <link rel="icon" type="image/png" href="/favicon_icon.png" />
+    <link rel="apple-touch-icon" href="/favicon_icon.png"/>
+
     <script charset="utf-8" src="https://floors-widget.api.2gis.ru/loader.js" id="dg-floors-widget-loader"></script>
 
 </head>
