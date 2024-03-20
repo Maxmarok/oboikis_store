@@ -108,7 +108,7 @@ services:
 
   certbot:
     image: certbot/certbot
-    container_name: rokki-certbot
+    container_name: oboikis-store-certbot
     volumes:
       - ./docker-compose-prod/certbot/conf:/etc/letsencrypt
       - ./:/var/www
