@@ -111,7 +111,7 @@ services:
     container_name: oboikis-store-certbot
     volumes:
       - ./docker-compose/certbot/conf:/etc/letsencrypt
-      - ./:/var/www
+      - ../:/var/www
     networks:
       - oboikis-store
 
