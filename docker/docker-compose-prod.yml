@@ -97,12 +97,14 @@ services:
     restart: unless-stopped
     ports:
       - 80:80
+      - 443:443
       - 5173:5173
     volumes:
       - "../public:/var/www/public:ro"
       - "../storage/app:/var/www/storage/app:ro"
       - ../:/var/www
       - ./docker-compose-prod/nginx:/etc/nginx/conf.d/
+      - ./docker-compose-prod/certbot/conf:/etc/letsencrypt
     networks:
       - oboikis-store
 
@@ -111,7 +113,7 @@ services:
     container_name: oboikis-store-certbot
     volumes:
       - ./docker-compose-prod/certbot/conf:/etc/letsencrypt
-      - ./:/var/www
+      - ../:/var/www
     networks:
       - oboikis-store
 
