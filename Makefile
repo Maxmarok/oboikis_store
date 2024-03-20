@@ -1,5 +1,5 @@
 DOCKER_COMPOSE=docker-compose -f docker/docker-compose.yml --project-name=oboikis-store
-DOCKER_COMPOSE_PROD=docker-compose -f docker-compose-prod.yml --project-name=rokki_prod
+DOCKER_COMPOSE_PROD=docker-compose -f docker/docker-compose-prod.yml --project-name=oboikis-store-prod
 
 init:
 	make build
