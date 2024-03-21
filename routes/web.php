@@ -159,3 +159,7 @@ Route::get('/delivery', function () {
         'short_description' => $short_description,
     ]);
 });
+
+Route::get('/link/{link}', function (string $link) {
+    return redirect(config("oboikis.link.{$link}"));
+})->whereIn('link', ['vk', 'telegram', 'whatsapp', 'viber', 'instagram']);
