@@ -100,6 +100,10 @@ class SbisService implements SbisInterface
                 'balance' => $item['balance'],
             ];
 
+            if($item['images'] && count($item['images']) > 0) {
+                $arr['image'] = self::getImage($item['images'][0], $item['id']);
+            }
+
             $item = Items::where('name', $name);
             $item->update($arr);
 
