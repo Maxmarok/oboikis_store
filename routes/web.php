@@ -160,6 +160,6 @@ Route::get('/delivery', function () {
     ]);
 });
 
-Route::get('/link/{link}', function (string $link) {
-    return redirect(config("oboikis.link.{$link}"));
-})->whereIn('link', ['vk', 'telegram', 'whatsapp', 'viber', 'instagram']);
+Route::get('/link/{to}', function (string $to) {
+    return redirect(config("oboikis.link.{$to}"));
+})->whereIn('to', ['vk', 'telegram', 'whatsapp', 'viber', 'instagram']);
