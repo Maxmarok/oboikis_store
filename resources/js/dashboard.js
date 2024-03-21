@@ -27,4 +27,14 @@ axios.interceptors.request.use(function (config) {
     return config;
 })
 
+axios.interceptors.response.use(response => {
+    return response;
+}, error => {
+    if (error.response.status === 401) {
+        router.push({name: 'Login'})
+    }
+
+    return error;
+});
+
 app.mount('#app');
