@@ -69,8 +69,6 @@ class SbisService implements SbisInterface
         if(!$arr->delivery->isPickup) {
             $arr->delivery->addressFull = $order->recieve;
         }
- 
-        Log::debug($arr);
 
         try {
             $request = $this->client->request('POST', $url, [
