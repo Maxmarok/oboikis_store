@@ -46,7 +46,7 @@ class SbisService implements SbisInterface
             ];
         }
 
-        $arr = [
+        $arr = (object) [
             'product' => 'delivery',
             'pointId' => $pointId,
             'customer' => (object) [
@@ -65,10 +65,10 @@ class SbisService implements SbisInterface
         ];
 
         $pickup = $order->delivery === 'pickup';
-        $arr['delivery']['isPickup'] = $pickup;
+        $arr->delivery->isPickup = $pickup;
 
         if(!$pickup) {
-            $arr['delivery']['addressFull'] = $order->recieve;
+            $arr->delivery->addressFull = $order->recieve;
         }
  
         Log::debug($arr);
