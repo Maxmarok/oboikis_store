@@ -116,7 +116,7 @@ const cancelOrder = (id) => {
   <div class="col-12">
     <div class="card" v-if="orders && orders.data.length > 0">
       <div class="table-responsive">
-        <table class="table table-sticky table-centered table-bordered mb-0 text-nowrap">
+        <table class="table table-sticky table-centered table-bordered mb-0">
           <thead class="thead-light">
             <tr>
                 <th>Номер заказа</th>
@@ -167,11 +167,11 @@ const cancelOrder = (id) => {
 
                 <td class="table-number" :class="{'success': order.status !== 2, 'danger': order.status === 2}">
                   <div class="d-flex flex-column" v-if="order.status === 0">
-                    <button class="btn btn-sm btn-success mb-2" @click="confirmOrder(order.id)">Подтвердить заказ</button>
-                    <button class="btn btn-sm btn-danger" @click="cancelOrder(order.id)">Отменить заказ</button>
+                    <button class="btn btn-sm btn-success mb-2" @click="confirmOrder(order.id)">Подтвердить</button>
+                    <button class="btn btn-sm btn-danger" @click="cancelOrder(order.id)">Отменить</button>
                   </div>
                   <p v-if="order.status === 1" class="mb-2">Подтвержден</p>
-                  <button v-if="order.status === 1" class="btn btn-sm btn-primary" @click="completeOrder(order.id)">Завершить заказ</button>
+                  <button v-if="order.status === 1" class="btn btn-sm btn-primary" @click="completeOrder(order.id)">Завершить</button>
                   <p v-if="order.status === 2">Отменен</p>
                   <p v-if="order.status === 3" class="text-primary">Завершен</p>
                 </td>
