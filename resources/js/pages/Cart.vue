@@ -195,7 +195,7 @@ const itemsLength = () => {
                         </div> 
                         <div class="goods_elem1_body_block_end d-flex flex-column justify-content-between">
                             <div class="goods_elem1_body_block_end_header d-flex justify-content-between">
-                                <div class="d-flex flex-column align-items-start justify-content-between">
+                                <div class="goods_elem1_body_block_end_div0 d-flex flex-column align-items-start justify-content-between">
                                     <router-link class="goods_elem1_header_text1 blue_color" 
                                          :class="{'pink_color': item.has_discount}" 
                                          v-html="item.title"
