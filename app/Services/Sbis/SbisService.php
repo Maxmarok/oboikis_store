@@ -64,10 +64,9 @@ class SbisService implements SbisInterface
             ],
         ];
 
-        $pickup = $order->delivery === 'pickup';
-        $arr->delivery->isPickup = $pickup;
+        $arr->delivery->isPickup = $order->delivery === 'pickup';
 
-        if(!$pickup) {
+        if(!$arr->delivery->isPickup) {
             $arr->delivery->addressFull = $order->recieve;
         }
  
