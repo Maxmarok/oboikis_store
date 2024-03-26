@@ -57,7 +57,6 @@ class SbisService implements SbisInterface
             'datetime' => now()->addHours(6)->format('Y-m-d H:i:s'),
             'nomenclatures' => $items,
             'delivery' => (object) [
-                'isPickup' => true,
                 'paymentType' => 'online',
                 'shopURL' => config('sbis.url.shop'),
                 'successURL' => config('sbis.url.success'),
@@ -65,6 +64,13 @@ class SbisService implements SbisInterface
             ],
         ];
 
+        $pickup = $order->delivery === 'pickup';
+        $arr['delivery']['isPickup'] = $pickup;
+
+        if(!$pickup) {
+            $arr['delivery']['addressFull'] = $order->recieve;
+        }
+ 
         Log::debug($arr);
 
         try {
