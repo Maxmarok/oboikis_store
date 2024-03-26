@@ -2091,9 +2091,14 @@ input[type=number]::-webkit-inner-spin-button {
     letter-spacing: 0em;
 }
 
+.goods_elem1_body_block_end_div0 {
+    width: 80%;
+}
+
 .goods_elem1_body_block_end_div1 {
     border-radius: 5px;
-    width: 89px;
+    width: 100%;
+    max-width: 100px;
     height: 26px;
     font-family: 'LatoB';
     font-size: 14px;
@@ -4499,6 +4504,7 @@ select {
         font-weight: 700;
         line-height: 12px;
         letter-spacing: 0em;
+        margin-top: 20px;
     }
 
     .end_div2_text2 {
