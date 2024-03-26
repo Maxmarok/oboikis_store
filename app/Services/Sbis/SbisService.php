@@ -70,6 +70,8 @@ class SbisService implements SbisInterface
             $arr->delivery->addressFull = $order->recieve;
         }
 
+        Log::debug([$arr->delivery->addressFull, $order->recieve]);
+
         try {
             $request = $this->client->request('POST', $url, [
                 'headers' => self::getAuthHeader(),
@@ -78,7 +80,7 @@ class SbisService implements SbisInterface
 
             $response = json_decode($request->getBody(), true);
 
-            Log::debug($response->getBody());
+            Log::debug($response);
 
         } catch (RequestException $exception) {
             if($exception->getCode() === 401) {
