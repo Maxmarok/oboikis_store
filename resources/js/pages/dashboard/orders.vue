@@ -119,7 +119,7 @@ const cancelOrder = (id) => {
         <table class="table table-sticky table-centered table-bordered mb-0">
           <thead class="thead-light">
             <tr>
-                <th>Номер заказа</th>
+                <th>Номер</th>
                 <th>Получатель</th>
                 <th>Заказ</th>
                 <th>Статус</th>

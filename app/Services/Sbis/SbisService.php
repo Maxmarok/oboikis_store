@@ -49,6 +49,7 @@ class SbisService implements SbisInterface
         $arr = (object) [
             'product' => 'delivery',
             'pointId' => $pointId,
+            'comment' => $order->comment,
             'customer' => (object) [
                 'name' => $order->name,
                 'phone' => $order->phone,
