@@ -76,7 +76,6 @@ class SbisService implements SbisInterface
 
         if(!$arr->delivery->isPickup) {
             $arr->delivery->addressJSON = self::getAddressJSON($order->recieve);
-            //Log::debug(json_encode($arr->delivery->addressJSON));
         }
 
         $response = self::makeRequest($url, 'POST', $arr);
@@ -123,9 +122,9 @@ class SbisService implements SbisInterface
     /** 
      * Получить скорректированный адрес для оформления доставки в сбис
      * @param string $address
-     * @return object
+     * @return string
      */
-    private function getAddressJSON(string $address): object
+    private function getAddressJSON(string $address): string
     {
         $query = [
             'enteredAddress' => $address,
@@ -137,7 +136,7 @@ class SbisService implements SbisInterface
         $response = json_decode($response, true);
 
         if(!empty($response['addresses'][0]['addressJSON'])) {
-            return json_decode($response['addresses'][0]['addressJSON']);
+            return $response['addresses'][0]['addressJSON'];
         } 
     }
 
