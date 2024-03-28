@@ -125,7 +125,7 @@ class SbisService implements SbisInterface
      * @param string $address
      * @return string
      */
-    private function getAddressJSON(string $address): string
+    private function getAddressJSON(string $address): object
     {
         $query = [
             'enteredAddress' => $address,
@@ -137,7 +137,7 @@ class SbisService implements SbisInterface
         $response = json_decode($response, true);
 
         if(!empty($response['addresses'][0]['addressJSON'])) {
-            return json_encode($response['addresses'][0]['addressJSON']);
+            return json_decode($response['addresses'][0]['addressJSON']);
         } 
     }
 
