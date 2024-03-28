@@ -135,7 +135,7 @@ class SbisService implements SbisInterface
         $response = self::makeRequest($url, 'GET');
         $response = json_decode($response, true);
 
-        Log::debug([$response]);
+        Log::debug([$response['addresses'], $response['addresses'][0]['addressFull']]);
 
         if(!empty($response['addresses'][0]['addressFull'])) {
             return $response['addresses'][0]['addressFull'];
