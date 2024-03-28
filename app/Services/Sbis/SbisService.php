@@ -75,8 +75,8 @@ class SbisService implements SbisInterface
         $arr->delivery->isPickup = $order->delivery === 'pickup';
 
         if(!$arr->delivery->isPickup) {
-            $arr->delivery->addressFull = self::getAddress($order->recieve);
-            Log::debug($arr->delivery->addressFull);
+            $arr->delivery->addressJSON = self::getAddressJSON($order->recieve);
+            Log::debug($arr->delivery->addressJSON);
         }
 
         $response = self::makeRequest($url, 'POST', $arr);
@@ -125,7 +125,7 @@ class SbisService implements SbisInterface
      * @param string $address
      * @return string
      */
-    private function getAddress(string $address): string
+    private function getAddressJSON(string $address): string
     {
         $query = [
             'enteredAddress' => $address,
@@ -136,8 +136,8 @@ class SbisService implements SbisInterface
         $response = self::makeRequest($url, 'GET');
         $response = json_decode($response, true);
 
-        if(!empty($response['addresses'][0]['addressFull'])) {
-            return $response['addresses'][0]['addressFull'];
+        if(!empty($response['addresses'][0]['getAddressJSON'])) {
+            return json_encode($response['addresses'][0]['getAddressJSON']);
         } 
     }
 
