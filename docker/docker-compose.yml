@@ -106,19 +106,6 @@ services:
     networks:
       - oboikis-store
 
-  certbot:
-    image: certbot/certbot
-    container_name: oboikis-store-certbot
-    volumes:
-      - ./docker-compose/certbot/conf:/etc/letsencrypt
-      - ../:/var/www
-    networks:
-      - oboikis-store
-
-volumes:
-  web-root:
-    driver: local
-
 networks:
   oboikis-store:
     driver: bridge

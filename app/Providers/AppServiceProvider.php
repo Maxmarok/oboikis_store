@@ -19,14 +19,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(AuthInterface::class, AuthService::class);
-        $this->app->bind(BreadcrumbsInterface::class, BreadcrumbsService::class);
-        $this->app->bind(CatalogInterface::class, CatalogService::class);
-        $this->app->bind(CartInterface::class, CartService::class);
-        $this->app->bind(InfoInterface::class, InfoService::class);
-        $this->app->bind(ItemsInterface::class, ItemsService::class);
-        $this->app->bind(OrdersInterface::class, OrdersService::class);
-        $this->app->bind(SbisInterface::class, SbisService::class);
+        $this->app->singleton(AuthInterface::class, AuthService::class);
+        $this->app->singleton(BreadcrumbsInterface::class, BreadcrumbsService::class);
+        $this->app->singleton(CatalogInterface::class, CatalogService::class);
+        $this->app->singleton(CartInterface::class, CartService::class);
+        $this->app->singleton(InfoInterface::class, InfoService::class);
+        $this->app->singleton(ItemsInterface::class, ItemsService::class);
+        $this->app->singleton(OrdersInterface::class, OrdersService::class);
+        $this->app->singleton(SbisInterface::class, SbisService::class);
     }
 
     /**

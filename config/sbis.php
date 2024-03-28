@@ -17,5 +17,14 @@ return [
         'shop' => env('SBIS_URL_SHOP'),
         'success' => env('SBIS_URL_SUCCESS'),
         'error' => env('SBIS_URL_ERROR'),
+        'order' => [
+            'get' => env('SBIS_URL_ORDER_GET'),
+            'create' => env('SBIS_URL_ORDER_CREATE'),
+            'update' => env('SBIS_URL_ORDER_UPDATE'),
+            'cancel' => env('SBIS_URL_ORDER_CANCEL'),
+            'state' => env('SBIS_URL_ORDER_STATE'),
+        ],
+        'address' => env('SBIS_URL_ADDRESS'),
+        'payment' => env('SBIS_URL_PAYMENT'),
     ],
 ];

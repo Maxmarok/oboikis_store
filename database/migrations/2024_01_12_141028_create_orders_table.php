@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,9 @@ return new class extends Migration
             $table->string('delivery')->nullable();
             $table->string('city')->nullable();
             $table->string('address')->nullable();
-            $table->boolean('status')->default(0);
+            $table->enum('status', StatusEnum::all())->default(StatusEnum::NEW);
+            $table->text('saleKey')->nullable();
+            $table->text('paymentRef')->nullable();
             $table->timestamps();
         });
     }

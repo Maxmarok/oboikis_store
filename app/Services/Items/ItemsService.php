@@ -13,14 +13,10 @@ use Illuminate\Support\Facades\Cache;
 
 class ItemsService implements ItemsInterface {
 
-    private SbisInterface $service;
-    private BreadcrumbsInterface $breadcrumbs;
-
-    public function __construct(SbisInterface $service, BreadcrumbsInterface $breadcrumbs)
-    {
-        $this->service = $service;
-        $this->breadcrumbs = $breadcrumbs;
-    }
+    public function __construct(
+        private SbisInterface $service, 
+        private BreadcrumbsInterface $breadcrumbs
+    ){}
 
     public function getItemsForUser(array $data): JsonResponse
     {
@@ -132,7 +128,7 @@ class ItemsService implements ItemsInterface {
 
     public function getItemsForAdmin(): JsonResponse
     {
-        $orders = Items::orderBy('id', 'desc')->paginate(10);
+        $orders = Items::orderBy('id', 'desc')->paginate(20);
 
         return response()->json([
             'success' => true,

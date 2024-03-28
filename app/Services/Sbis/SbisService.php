@@ -29,12 +29,19 @@ class SbisService implements SbisInterface
         self::checkCache();
     }
 
-    public function createOrder(Orders $order)
+    /**
+     * Отправить запрос на создание заказа на доставку в сбис
+     * 
+     * @param Orders $order
+     * 
+     * @return void
+     */
+    public function createOrder(Orders $order): void
     {
-        $url = config('sbis.url.order');
+        $url = config('sbis.url.order.create');
 
         $items = [];
-        $pointId = (int)Cache::get('sbis_point');
+        $pointId = (int) Cache::get('sbis_point');
         $priceId = (int) Cache::get('sbis_price');
 
         foreach($order->order_items as $item) {
@@ -68,31 +75,78 @@ class SbisService implements SbisInterface
         $arr->delivery->isPickup = $order->delivery === 'pickup';
 
         if(!$arr->delivery->isPickup) {
-            $arr->delivery->addressFull = $order->recieve;
+            $arr->delivery->addressFull = self::getAddress($order->recieve);
         }
 
-        Log::debug([$arr->delivery->addressFull, $order->recieve]);
+        $response = self::makeRequest($url, 'POST', $arr);
+        $response = json_decode($response, true);
 
-        try {
-            $request = $this->client->request('POST', $url, [
-                'headers' => self::getAuthHeader(),
-                'json' => $arr
-            ]);
-
-            $response = json_decode($request->getBody(), true);
-
-            Log::debug($response);
-
-        } catch (RequestException $exception) {
-            if($exception->getCode() === 401) {
-                self::checkToken();
-                self::createOrder($order);
-            }
-            Log::error($exception->getResponse()->getBody());
-        }
-        
+        $order->update([
+            'saleKey' => $response['saleKey'],
+            'paymentRef' => $response['paymentRef'],
+        ]);
     }
 
+    public function checkPayment($id): bool
+    {
+        $url = config('sbis.url.order.state');
+        $url = strtr($url, ['{$id}' => $id]);
+
+        $response = self::makeRequest($url, 'GET');
+        $response = json_decode($response, true);
+
+        return boolval($response['payState']);
+    }
+
+    public function getPaymentLink(string $id): string
+    {
+        $query = [
+            'shopURL' => config('sbis.url.shop'),
+            'successURL' => config('sbis.url.success'),
+            'errorURL' => config('sbis.url.error'),
+        ];
+
+        $url = config('sbis.url.payment');
+        $url = strtr($url, ['{$id}' => $id]);
+        $url = $url . chr(077) . http_build_query($query);
+
+        $response = self::makeRequest($url, 'GET');
+
+        $response = json_decode($response, true);
+
+        if(!empty($response['link'])) {
+            return $response['link'];
+        } 
+    }
+
+    /** 
+     * Получить скорректированный адрес для оформления доставки в сбис
+     * @param string $address
+     * @return string
+     */
+    private function getAddress(string $address): string
+    {
+        $query = [
+            'enteredAddress' => $address,
+        ];
+
+        $url = config('sbis.url.address') . chr(077) . http_build_query($query);
+
+        $response = self::makeRequest($url, 'GET');
+
+        $response = json_decode($response, true);
+
+        if(!empty($response['addresses'][0]['addressFull'])) {
+            return $response['addresses'][0]['addressFull'];
+        } 
+    }
+
+    /**
+     * Запросить новую информацию о товаре из каталога сбис
+     * @param string $name
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateItem(string $name): JsonResponse
     {
         $data = self::getItems(0, $name);
@@ -128,6 +182,13 @@ class SbisService implements SbisInterface
         }
     }
 
+    /**
+     * Добавить товары из каталога в сбис  
+     * Цепочка AddItemsJob
+     * 
+     * @param int $page
+     * @return void
+     */
     public function addItems(int $page = 0): void
     {
         $data = self::getItems($page);
@@ -139,7 +200,215 @@ class SbisService implements SbisInterface
         }
     }
 
-    public function insertItems(array $data): void
+    /**
+     * Получить список товаров из каталога сбис
+     * 
+     * @param int $page Номер страницы пагинации
+     * @param string $search Строчка для поиска
+     * 
+     * @return array
+     */
+    public function getItems(int $page = 0, string $search = null): array
+    {
+        $query = [
+            'pointId' => Cache::get('sbis_point'),
+            'priceListId' => Cache::get('sbis_price'),
+            'page' => $page,
+            'pageSize' => self::PAGE_SIZE,
+            'withBalance' => 'true',
+        ];
+
+        if($search) $query['searchString'] = $search;
+
+        $url = config('sbis.url.items') . chr(077) . http_build_query($query);
+
+        $response = self::makeRequest($url, 'GET');
+
+        $response = json_decode($response, true);
+
+        if(!empty($response['nomenclatures'])) {
+            return $response['nomenclatures'];
+        }
+    }
+
+    /**
+     * Запросить изображение товара по ссылке сбис  
+     * И сохранить его в storage
+     * 
+     * @param string $param
+     * @param string $id
+     * 
+     * @return string
+     */
+    private function getImage(string $param, string $id): string
+    {
+        $url = config('sbis.url.image') . $param;
+
+        $response = self::makeRequest($url, 'GET');
+
+        return self::uploadFile($response, $id);
+    }
+
+    /**
+     * Запросить список прайс-листов и установить
+     * в кеш первый прайс-лист
+     * 
+     * @return void
+     */
+    private function setPrice(): void
+    {
+        $arr = http_build_query(['actualDate' => $this->date]);
+        $url = config('sbis.url.price') . chr(077) . $arr;
+
+        $response = self::makeRequest($url, 'GET');
+
+        $response = json_decode($response, true);
+
+        if(!empty($response['priceLists'][0]['id'])) {
+            Cache::put('sbis_price', $response['priceLists'][0]['id']);
+        }
+    }
+
+    /**
+     * Запросить список точен продаж и установить
+     * в кеш первую точку продаж
+     * 
+     * @return void
+     */
+    private function setPoint(): void
+    {
+        $url = config('sbis.url.point');
+
+        $response = self::makeRequest($url, 'GET');
+
+        $response = json_decode($response, true);
+
+        if(!empty($response['salesPoints'][0]['id'])) {
+            Cache::put('sbis_point', $response['salesPoints'][0]['id']);
+        }
+    }
+
+    /** 
+     * Запросить новый токен для аутентификации из сбис  
+     * для последующих запросов
+     * 
+     * @return void
+     */
+    private function setToken(): void
+    {
+        $url = config('sbis.url.token');
+        $data = (object) [
+            'app_client_id' => config('sbis.app_client_id'),
+            'login' => config('sbis.login'),
+            'password' => config('sbis.password'),
+        ];
+
+        $response = self::makeRequest($url, 'POST', $data);
+
+        $response = json_decode($response, true);
+
+        if(!empty($response['access_token'])) {
+            Cache::put('sbis_token', $response['access_token'], 3000);
+        }
+    }
+
+    /** 
+     * Осуществить запрос к сервису сбис
+     * 
+     * @param string $url Адрес запроса к серверу сбис
+     * @param string $method Метод запроса GET, POST
+     * @param object $data Данные для отправки методом POST
+     * @param bool $auth
+     * 
+     * @return string
+     */
+    private function makeRequest(
+        string $url = '', 
+        string $method = 'GET', 
+        ?object $data = null,
+    ): string
+    {
+        try {
+            $arr = [
+                'headers' => self::getAuthHeader(),
+            ];
+
+            if($data) $arr['json'] = $data;
+
+            $request = $this->client->request($method, $url, $arr);
+            return $request->getBody();
+
+        } catch (GuzzleException $exception){
+            if($exception->getCode() === 401) {
+                self::checkToken();
+
+                return self::makeRequest($url, $method, $data);
+            }
+
+            Log::error($exception->getMessage());
+        }
+    }
+
+    private function checkCache(): void
+    {
+        self::checkToken();
+        self::checkPoint();
+        self::checkPrice();
+    }
+
+    /**
+     * Проверить кеш на наличие токена
+     * Если отсутствует, запросить новый
+     * @return void
+     */
+    private function checkToken(): void
+    {
+        if(!Cache::has('sbis_token')) {
+            self::setToken();
+        }
+    }
+
+    /**
+     * Проверить кеш на наличие точки продаж
+     * Если отсутствует, запросить новый
+     * @return void
+     */
+    private function checkPoint(): void
+    {
+        if(!Cache::has('sbis_point')) {
+            self::setPoint();
+        }
+    }
+
+    /**
+     * Проверить кеш на наличие прайс-листа
+     * Если отсутствует, запросить новый
+     * @return void
+     */
+    private function checkPrice(): void
+    {
+        if(!Cache::has('sbis_price')) {
+            self::setPrice();
+        }
+    }
+
+    /**
+     * Сформировать хедер с токеном для запросов сбис
+     * @return array
+     */
+    private function getAuthHeader(): array
+    {
+        return [
+            'X-SBISAccessToken' => Cache::get('sbis_token')   
+        ];
+    }
+
+    /**
+     * Добавить обновленный список товаров, полученный из сбис, в базу
+     * @param array $data
+     * @return void
+     */
+    private function insertItems(array $data): void
     {
         $arr = [];
         $ids = [];
@@ -182,173 +451,16 @@ class SbisService implements SbisInterface
         if(count($arr) > 0) Items::insert($arr);
     }
 
-    public function getImage(string $param, string $id): string|null
-    {
-        $data = null;
-
-        $url = config('sbis.url.image') . $param;
-
-        try {
-            $request = $this->client->request('GET', $url, [
-                "headers" => self::getAuthHeader()
-            ]);
-
-            $response = $request->getBody();
-
-            if($response) $data = self::uploadFile($response, $id);
-
-        } catch (GuzzleException $exception){
-            if($exception->getCode() === 401) {
-                self::checkToken();
-                self::getImage($param, $id);
-            }
-            Log::debug($exception->getMessage());
-        }
-
-        return $data;
-    }
-
-    public function getItems(int $page = 0, string $search = null): array
-    {
-        $data = [];
-
-        $query = [
-            'pointId' => Cache::get('sbis_point'),
-            'priceListId' => Cache::get('sbis_price'),
-            'page' => $page,
-            'pageSize' => self::PAGE_SIZE,
-            'withBalance' => 'true',
-        ];
-
-        if($search) $query['searchString'] = $search;
-
-        $url = config('sbis.url.items') . chr(077) . http_build_query($query);
-
-        try {
-            $request = $this->client->request('GET', $url, [
-                'headers' => self::getAuthHeader(),
-            ]);
-
-            $response = json_decode($request->getBody(), true);
-
-            $data = $response['nomenclatures'];
-
-        } catch (GuzzleException $exception){
-            if($exception->getCode() === 401) {
-                self::checkToken();
-                self::getItems($page, $search);
-            }
-            Log::debug($exception->getMessage());
-        }
-
-        return $data;
-    }
-
-    private function setPrice(): void
-    {
-        $arr = http_build_query(['actualDate' => $this->date]);
-        $url = config('sbis.url.price') . chr(077) . $arr;
-
-        try {
-            $request = $this->client->request('GET', $url, [
-                'headers' => self::getAuthHeader(),
-            ]);
-
-            $response = json_decode($request->getBody(), true);
-
-            Cache::put('sbis_price', $response['priceLists'][0]['id']);
-
-        } catch (GuzzleException $exception){
-            if($exception->getCode() === 401) {
-                self::checkToken();
-                self::setPrice();
-            }
-
-            Log::error($exception->getMessage());
-        }
-    }
-
-    private function setPoint(): void
-    {
-        try {
-            $request = $this->client->request('GET', config('sbis.url.point'), [
-                "headers" => self::getAuthHeader()
-            ]);
-
-            $response = json_decode($request->getBody(), true);
-
-            Cache::put('sbis_point', $response['salesPoints'][0]['id']);
-
-        } catch (GuzzleException $exception){
-            if($exception->getCode() === 401) {
-                self::checkToken();
-                self::setPoint();
-            }
-
-            Log::error($exception->getMessage());
-        }
-    }
-
-    private function setToken(): void
-    {
-        try {
-            $request = $this->client->request('POST', config('sbis.url.token'), [
-                'json' => [
-                    'app_client_id' => config('sbis.app_client_id'),
-                    'login' => config('sbis.login'),
-                    'password' => config('sbis.password'),
-                ]
-            ]);
-
-            $response = json_decode($request->getBody(), true);
-
-            Cache::put('sbis_token', $response['access_token'], 3000);
-
-        } catch (GuzzleException $exception) {
-            // return match ($exception->getCode()) {
-            //     default => Log::debug($exception->getMessage())
-            // };
-            Log::debug($exception->getMessage());
-        }
-
-    }
-
-    private function checkCache(): void
-    {
-        self::checkToken();
-        self::checkPoint();
-        self::checkPrice();
-    }
-
-    private function checkToken(): void
-    {
-        if(!Cache::has('sbis_token')) {
-            self::setToken();
-        }
-    }
-
-    private function checkPoint(): void
-    {
-        if(!Cache::has('sbis_point')) {
-            self::setPoint();
-        }
-    }
-
-    private function checkPrice(): void
-    {
-        if(!Cache::has('sbis_price')) {
-            self::setPrice();
-        }
-    }
-
-    private function getAuthHeader(): array
-    {
-        return [
-            'X-SBISAccessToken' => Cache::get('sbis_token')   
-        ];
-    }
-
-    private function getCatalogId(string $item, Collection $catalog): int|null
+    /**
+     * Получить ID каталога по наличию названия каталога в товаре из сбис  
+     * Например: 0 (если в названии Обои) или 1 (если Фотообои)  
+     * 
+     * @param string $item
+     * @param \Illuminate\Database\Eloquent\Collection $catalog
+     * 
+     * @return int|null
+     */
+    private function getCatalogId(string $item, Collection $catalog): ?int
     {
         $data = $catalog->toArray();
         $id = null;
@@ -371,8 +483,11 @@ class SbisService implements SbisInterface
     }
 
     /**
-    * Upload file in storage
-    */
+     * Upload file in storage
+     * @param string $data
+     * @param string $id
+     * @return string
+     */
     public function uploadFile(string $data, string $id): string
     {
         $storage = Storage::disk('images');
@@ -386,6 +501,8 @@ class SbisService implements SbisInterface
 
     /**
      * Delete file from storage
+     * @param string $id
+     * @return void
      */
     private function deleteFile(string $id): void
     {
