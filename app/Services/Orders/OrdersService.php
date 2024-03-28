@@ -2,8 +2,10 @@
 
 namespace App\Services\Orders;
 
+use App\Mail\SendPaymentMail;
 use App\Models\Orders;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 
 class OrdersService implements OrdersInterface
 {
@@ -50,6 +52,17 @@ class OrdersService implements OrdersInterface
             'success' => true,
             'data' => $order,
         ]); 
+    }
+
+    public function sendPaymentLink(string $id): JsonResponse
+    {
+        $order = Orders::find($id);
+
+        Mail::to($order->user)->send(new SendPaymentMail($order));
+
+        return response()->json([
+            'success' => true,
+        ]);
     }
 
     private function changeStatus($id, $status): Orders

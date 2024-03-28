@@ -124,11 +124,13 @@ const changeInput = (e) => {
             <div class="wallpaper_screen_elem1_body d-flex flex-column flex-lg-row justify-content-between">
                 <div class="wallpaper_screen_elem1_body_block1 position-relative">
                     <div class="wallpaper_screen_elem1_body_img" 
+                    :style="{'background-image': `url(${item.image_url ?? '/svg/vertical_white.svg'})`}"
                     :class="{
                         's3_b_pink': item.has_discount,
                         's3_b_blue': !item.has_discount,
+                        'cover': item.image_url
                     }">
-                        <img :src="item.image_url ?? '/svg/vertical_white.svg'" :width="!item.image_url ? '50%' : '100%'">
+                        <!-- <img :src="item.image_url ?? '/svg/vertical_white.svg'" :width="!item.image_url ? '50%' : '100%'"> -->
                     </div>
 
                     <div v-if="item.has_discount" 

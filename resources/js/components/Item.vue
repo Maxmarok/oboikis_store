@@ -29,8 +29,13 @@ const getStock = () => {
         <span v-html="`-${props.item.discount_percent}%`" />
     </div>
 
-    <div class="s3_b_img">
-        <img :src="props.item.image_url ?? '/svg/vertical_white.svg'" :width="!props.item.image_url ? '50%' : '100%'">
+    <div class="s3_b_img"
+        :style="{'background-image': `url(${props.item.image_url ?? '/svg/vertical_white.svg'})`}"
+        :class="{
+            'cover': props.item.image_url
+        }"
+    >
+        <!-- <img :src="props.item.image_url ?? '/svg/vertical_white.svg'" :width="!props.item.image_url ? '50%' : '100%'"> -->
     </div>
 
     <div class="s3_b1_text d-flex flex-row justify-content-around align-items-center w-100"

@@ -56,7 +56,7 @@ class SbisService implements SbisInterface
         $arr = (object) [
             'product' => 'delivery',
             'pointId' => $pointId,
-            'comment' => $order->comment,
+            'comment' => $order->comment_delivery,
             'customer' => (object) [
                 'name' => $order->name,
                 'phone' => $order->phone,
@@ -65,6 +65,7 @@ class SbisService implements SbisInterface
             'datetime' => now()->addHours(6)->format('Y-m-d H:i:s'),
             'nomenclatures' => $items,
             'delivery' => (object) [
+                'isPickUp' => false,
                 'paymentType' => 'online',
                 'shopURL' => config('sbis.url.shop'),
                 'successURL' => config('sbis.url.success'),
@@ -72,11 +73,11 @@ class SbisService implements SbisInterface
             ],
         ];
 
-        $arr->delivery->isPickup = $order->delivery === 'pickup';
+        // $arr->delivery->isPickup = $order->delivery === 'pickup';
 
-        if(!$arr->delivery->isPickup) {
-            $arr->delivery->addressJSON = self::getAddressJSON($order->recieve);
-        }
+        // if(!$arr->delivery->isPickup) {
+        //     $arr->delivery->addressJSON = self::getAddressJSON($order->recieve);
+        // }
 
         $response = self::makeRequest($url, 'POST', $arr);
         $response = json_decode($response, true);

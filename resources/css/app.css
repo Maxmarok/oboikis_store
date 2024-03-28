@@ -399,6 +399,11 @@ nav {
     display: flex;
     width: 294px;
     height: 258px;
+    background: no-repeat center/50%;
+}
+
+.s3_b_img.cover {
+    background-size: cover;
 }
 
 .s3_b_img img{
@@ -1296,6 +1301,11 @@ footer {
     height: 100%;
     min-height: 700px;
     overflow: hidden;
+    background: no-repeat center/50%;
+}
+
+.wallpaper_screen_elem1_body_img.cover {
+    background-size: cover;
 }
 
 .wallpaper_screen_elem1_body_img img {

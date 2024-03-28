@@ -22,6 +22,11 @@ class Orders extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function isPickup(): bool
+    {
+        return $this->delivery === 'ship';
+    }
+
     public function getOrderSumAttribute()
     {
         return $this->order_items->sum('total_sum');
@@ -29,6 +34,11 @@ class Orders extends Model
 
     public function getRecieveAttribute()
     {
-        return $this->delivery === 'ship' ? ($this->city . ', ' . $this->address) : 'Самовывоз';
+        return $this->isPickup() ? ($this->city . ', ' . $this->address) : 'Самовывоз';
+    }
+
+    public function getCommentDeliveryAttribute()
+    {
+        return $this->isPickup() ? "Доставка: {$this->recieve}, Комментарий: {$this->comment}" : $this->comment;
     }
 }

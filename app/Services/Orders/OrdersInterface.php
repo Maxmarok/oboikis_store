@@ -10,6 +10,13 @@ interface OrdersInterface
      * Get orders list
      */
     public function getOrders(): JsonResponse;
+
+
+    /**
+     * Send payment link to client
+     */
+    public function sendPaymentLink(string $id): JsonResponse;
+
     /**
      * Order confirmation by admin 
      */

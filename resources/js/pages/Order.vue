@@ -208,7 +208,7 @@ const onChange = (val, name) => {
                 </div>
 
                 <div class="reciever_block_e2_footer_2 align-self-end d-flex align-items-center justify-content-evenly flex-column w-100 position-relative" v-if="form.delivery === 'ship'">
-                    <div class="reciever_block_e2_footer_2_text1"><span class="blue_color me-1">Доставка: </span><span class="pink_color">{{ helper.getPrice(delivery) }}</span></div>
+                    <div class="reciever_block_e2_footer_2_text1"><span class="blue_color me-1">Доставка: </span><span class="pink_color">от {{ helper.getPrice(delivery) }}</span></div>
                     <div class="reciever_block_e2_footer_border position-absolute"></div>
                     <div><span class="blue_color">К оплате: </span><span class="pink_color">{{ helper.getPrice(price + delivery) }}</span></div>
                 </div>

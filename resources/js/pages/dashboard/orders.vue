@@ -18,6 +18,23 @@ const getOrders = () => {
   })
 }
 
+const sendPaymentLink = (id) => {
+  axios.get(`/api/v1/dashboard/orders/send_payment/${id}`)
+    .then(res => {
+      // let index = orders.value.data.findIndex(x => x.id === res.data.data.id)
+      // orders.value.data[index].status = res.data.data.status
+
+      swal.fire({
+        text: 'Ссылка отправлена!',
+        //position: 'bottom-end',
+        // toast: true,
+        showConfirmButton: false,
+        icon: 'success',
+        timer: 2000,
+      })
+    });
+}
+
 const confirmOrder = (id) => {
   swal({
     title: `Подтверждение заказа`,
@@ -138,7 +155,7 @@ const cancelOrder = (id) => {
                   </p>
 
                   <p>
-                    <strong v-html="'Emai: '" />
+                    <strong v-html="'Email: '" />
                     <a :href="`mailto:${order.user.email}`" v-html="order.user.email" />
                   </p>
 
@@ -148,7 +165,7 @@ const cancelOrder = (id) => {
                   </p>
 
                   <p>
-                    <strong v-html="'Получение: '" />
+                    <strong v-html="'Доставка: '" />
                     <span v-html="order.recieve" />
                   </p>
 
@@ -165,9 +182,10 @@ const cancelOrder = (id) => {
                   <p><strong>Итого:</strong> <span>{{ order.order_sum.toLocaleString('ru') }} ₽</span></p>
                 </td>
 
-                <td class="table-number" :class="{'success': order.status !== 2, 'danger': order.status === 2}">
-                  <div class="d-flex flex-column" v-if="order.status === 0">
+                <td class="table-number text-nowrap">
+                  <div class="d-flex flex-column" v-if="order.status === '1'">
                     <button class="btn btn-sm btn-success mb-2" @click="confirmOrder(order.id)">Подтвердить</button>
+                    <button class="btn btn-sm btn-success mb-2" @click="sendPaymentLink(order.id)">Отправить ссылку</button>
                     <button class="btn btn-sm btn-danger" @click="cancelOrder(order.id)">Отменить</button>
                   </div>
                   <p v-if="order.status === 1" class="mb-2">Подтвержден</p>
