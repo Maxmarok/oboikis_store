@@ -76,7 +76,7 @@ class SbisService implements SbisInterface
 
         if(!$arr->delivery->isPickup) {
             $arr->delivery->addressJSON = self::getAddressJSON($order->recieve);
-            Log::debug($arr->delivery->addressJSON->city);
+            //Log::debug(json_encode($arr->delivery->addressJSON));
         }
 
         $response = self::makeRequest($url, 'POST', $arr);
