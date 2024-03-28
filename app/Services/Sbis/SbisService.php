@@ -326,7 +326,7 @@ class SbisService implements SbisInterface
         string $url = '', 
         string $method = 'GET', 
         ?object $data = null,
-    ): string
+    ): string|null
     {
         try {
             $arr = [
@@ -338,14 +338,14 @@ class SbisService implements SbisInterface
             $request = $this->client->request($method, $url, $arr);
             return $request->getBody();
 
-        } catch (GuzzleException $exception){
+        } catch (RequestException $exception){
             if($exception->getCode() === 401) {
                 self::checkToken();
 
                 return self::makeRequest($url, $method, $data);
             }
 
-            Log::error($exception->getMessage());
+            Log::error($exception->getResponse()->getBody());
         }
     }
 
