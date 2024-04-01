@@ -41,6 +41,7 @@ Route::group([
                 Route::get('/confirm/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'confirmOrder'])->name('confirm');
                 Route::get('/cancel/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'cancelOrder'])->name('cancel');
                 Route::get('/complete/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'completeOrder'])->name('complete');
+                Route::get('/return/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'returnOrder'])->name('return');
 
                 Route::get('/send_payment/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'sendPaymentLink'])->name('send_payment');
             });

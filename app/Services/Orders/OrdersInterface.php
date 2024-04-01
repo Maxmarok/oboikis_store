@@ -44,6 +44,11 @@ interface OrdersInterface
     public function completeOrder(string $id): JsonResponse;
 
     /**
+     * Return init status
+     */
+    public function returnOrder(string $id): JsonResponse;
+
+    /**
      * @param string $id MD5 Hash
      * @return \Illuminate\Http\RedirectResponse
      */

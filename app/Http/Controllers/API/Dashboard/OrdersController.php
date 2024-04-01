@@ -70,6 +70,14 @@ class OrdersController extends Controller
         return $this->service->completeOrder($id);
     }
 
+    /** 
+     * Init status for order by admin
+     */
+    public function returnOrder(string $id): JsonResponse
+    {
+        return $this->service->returnOrder($id);
+    }
+
     public function successPayment(string $id): RedirectResponse
     {
         return $this->service->successPayment($id);

@@ -119,6 +119,18 @@ class OrdersService implements OrdersInterface
         ]); 
     }
 
+    public function returnOrder(string $id): JsonResponse
+    {
+        $order = Orders::find($id);
+        $order->status = StatusEnum::REGISTERED;
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+            'data' => $order,
+        ]); 
+    }
+
     public function sendPaymentLink(string $id): JsonResponse
     {
         $order = Orders::find($id);

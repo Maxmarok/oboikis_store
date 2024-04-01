@@ -62,6 +62,35 @@ const checkPayment = (id) => {
     });
 }
 
+const returnOrder = (id) => {
+  swal({
+    title: `Подтверждение заказа`,
+    text: `Вы действительно хотите вернуть заказ #${id}?`,
+    icon: "success",
+    showCancelButton: true,
+    confirmButtonColor: "00ADB5",
+    confirmButtonText: "Вернуть заказ",
+    cancelButtonText: "Закрыть",
+  }).then((result) => { // <--
+      if (result.value) { // <-- if confirmed
+        axios.get(`/api/v1/dashboard/orders/return/${id}`)
+        .then(res => {
+          let index = orders.value.data.findIndex(x => x.id === res.data.data.id)
+          orders.value.data[index].status = res.data.data.status
+
+          swal.fire({
+            text: 'Заказ возвращен',
+            position: 'bottom-end',
+            // toast: true,
+            showConfirmButton: false,
+            icon: 'success',
+            timer: 2000,
+          })
+        });
+      } 
+  });
+}
+
 const checkOrder = (id) => {
   axios.get(`/api/v1/dashboard/orders/check/${id}`)
     .then(res => {
@@ -246,13 +275,12 @@ const cancelOrder = (id) => {
                     <button class="btn btn-sm btn-success mb-2" @click="confirmOrder(order.id)" v-if="order.status === '10'">Подтвердить</button>
                     <button class="btn btn-sm btn-success mb-2" @click="checkPayment(order.saleKey)" v-if="order.status === '21'">Проверить оплату</button>
                     <button class="btn btn-sm btn-success mb-2" @click="completeOrder(order.id)" v-if="order.status === '70'">Завершить</button>
-                    <button class="btn btn-sm btn-danger" @click="cancelOrder(order.id)" v-if="order.status !== '200' && order.status !== '220'">Отменить</button>
+                    <button class="btn btn-sm btn-danger mb-2" @click="cancelOrder(order.id)" v-if="order.status !== '200' && order.status !== '220'">Отменить</button>
+                    <button class="btn btn-sm btn-success" @click="returnOrder(order.id)" v-if="order.status === '200' || order.status === '220'">Вернуть в работу</button>
                   </div>
-                  
                 </td>
             </tr>
           </tbody>
-
         </table>
       </div>
     </div>
