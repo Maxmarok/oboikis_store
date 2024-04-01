@@ -40,22 +40,22 @@ const checkPayment = (id) => {
       let index = orders.value.data.findIndex(x => x.id === res.data.data.id)
       orders.value.data[index].status = res.data.data.status
 
-      if(res.data.data.status === '70') {
-        swal.fire({
-          text: 'Заказ оплачен',
-          position: 'bottom-end',
-          toast: true,
-          showConfirmButton: false,
-          icon: 'success',
-          timer: 2000,
-        });
-      } else {
+      if(res.data.data.status !== '70') {
         swal.fire({
           text: 'Заказ не оплачен',
           position: 'bottom-end',
           toast: true,
           showConfirmButton: false,
           icon: 'error',
+          timer: 2000,
+        });
+      } else {
+        swal.fire({
+          text: 'Заказ оплачен',
+          position: 'bottom-end',
+          toast: true,
+          showConfirmButton: false,
+          icon: 'success',
           timer: 2000,
         });
       }
