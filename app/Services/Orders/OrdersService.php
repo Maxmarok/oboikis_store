@@ -79,7 +79,7 @@ class OrdersService implements OrdersInterface
         $order = Orders::find($id);
         $payment = $this->sbis->checkPayment($order->saleKey);
 
-        if(count($payment['payments']) > 0) {
+        if($payment['payState'] > 0) {
             if($order->status === StatusEnum::WAITING->value) {
                 $order->status = StatusEnum::PAYED;
                 $order->save();
