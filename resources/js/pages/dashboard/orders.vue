@@ -91,6 +91,20 @@ const returnOrder = (id) => {
   });
 }
 
+const sendPaymentLink = (id) => {
+  axios.get(`/api/v1/dashboard/orders/send_payment/${id}`)
+    .then(res => {
+      swal.fire({
+        text: 'Ссылка отправлена!',
+        position: 'bottom-end',
+        toast: true,
+        showConfirmButton: false,
+        icon: 'success',
+        timer: 2000,
+      })
+    });
+}
+
 const checkOrder = (id) => {
   axios.get(`/api/v1/dashboard/orders/check/${id}`)
     .then(res => {
@@ -261,8 +275,20 @@ const cancelOrder = (id) => {
                       </p>
                     </div>
                   </div>
-                  <button class="btn btn-sm btn-success mb-2" @click="checkOrder(order.saleKey)" v-if="order.status !== '200' && order.status !== '220'">Синхронизировать товары</button>
+                  
+
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="me-2">
+                      <button class="btn btn-sm btn-success" @click="checkOrder(order.saleKey)" v-if="order.status !== '200' && order.status !== '220'">Синхронизировать товары</button>
+                    </div>
+
+                    <div class="d-flex align-items-center" v-if="order.paymentRef && (order.status === '21' || order.status === '70')">
+                      <button class="btn btn-sm btn-success me-2" @click="sendPaymentLink(order.id)">Отправить повторно ссылку на оплату</button> (<a :href="order.paymentRef">ссылка</a>)
+                    </div>
+                  </div>
+
                   <p><strong>Итого:</strong> <span>{{ order.order_sum.toLocaleString('ru') }} ₽</span></p>
+                  
                 </td>
 
                 <td class="table-number text-nowrap">

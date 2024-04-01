@@ -20,4 +20,6 @@ interface SbisInterface
     public function checkPayment(string $id): array;
 
     public function cancelOrder(string $id): array;
+
+    public function getPaymentLink(string $id): string;
 }

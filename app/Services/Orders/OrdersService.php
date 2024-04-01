@@ -61,6 +61,10 @@ class OrdersService implements OrdersInterface
         $order->order_items()->delete();
         $order->order_items()->insert($data);
 
+        $link = $this->sbis->getPaymentLink($id);
+        $order->paymentRef = $link;
+        $order->save();
+
         $order = Orders::where('salekey', $id)->with(['order_items', 'user'])->first();
         
         return response()->json([
