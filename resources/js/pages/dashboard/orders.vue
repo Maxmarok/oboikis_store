@@ -278,7 +278,7 @@ const cancelOrder = (id) => {
                   
                   <div class="d-flex align-items-center mb-2">
                     <div class="me-2">
-                      <button class="btn btn-sm btn-success" @click="checkOrder(order.saleKey)" v-if="order.status !== '200' && order.status !== '220'">Синхронизировать товары</button>
+                      <button class="btn btn-sm btn-success" @click="checkOrder(order.id)" v-if="order.status !== '200' && order.status !== '220'">Синхронизировать товары</button>
                     </div>
 
                     <div class="d-flex align-items-center" v-if="order.paymentRef && (order.status === '21' || order.status === '70')">

@@ -126,7 +126,7 @@ class SbisService implements SbisInterface
         return $response;
     }
 
-    public function getPaymentLink(string $id): string
+    public function getPaymentLink(string $id): string|null
     {
         $query = [
             'shopURL' => config('sbis.url.shop'),
@@ -144,7 +144,9 @@ class SbisService implements SbisInterface
 
         if(!empty($response['link'])) {
             return $response['link'];
-        } 
+        } else {
+            return null
+        }
     }
 
     /** 

@@ -42,8 +42,9 @@ class OrdersService implements OrdersInterface
 
     public function checkOrder(string $id): JsonResponse
     {
-        $sbisOrder = $this->sbis->checkOrder($id);
-        $order = Orders::where('salekey', $id)->first();
+        $order = Orders::find($id);
+        $sbisOrder = $this->sbis->checkOrder($order->salekey);
+        
         $data = [];
         $items = $order->order_items;
         
@@ -55,18 +56,20 @@ class OrdersService implements OrdersInterface
                 'price' => $item['cost'],
                 'count' => $item['count'],
                 'item_id' => $items[$item['nomNumber']],
-                'order_id' => $order->id,
+                'order_id' => $id,
             ];
         }
 
         $order->order_items()->delete();
         $order->order_items()->insert($data);
 
-        $link = $this->sbis->getPaymentLink($id);
-        $order->paymentRef = $link;
-        $order->save();
+        $link = $this->sbis->getPaymentLink($order->salekey);
+        if($link) {
+            $order->paymentRef = $link;
+            $order->save();
+        }
 
-        $order = Orders::where('salekey', $id)->with(['order_items', 'user'])->first();
+        $order = Orders::where('salekey', $order->salekey)->with(['order_items', 'user'])->first();
         
         return response()->json([
             'success' => true,
