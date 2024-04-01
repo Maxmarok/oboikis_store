@@ -54,8 +54,7 @@ class SbisService implements SbisInterface
             ];
         }
 
-        $successUrl = config('sbis.url.success');
-        $successUrl = strtr($successUrl, ['{$id}' => md5($order->id)]);
+        $successUrl = route('success', ['id' => md5($order->id)]);
 
         $arr = (object) [
             'product' => 'delivery',
