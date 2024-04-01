@@ -363,7 +363,12 @@ class SbisService implements SbisInterface
             if($data) $arr['json'] = $data;
 
             $request = $this->client->request($method, $url, $arr);
-            return $request->getBody();
+            
+            if($request) {
+                return $request->getBody();
+            } else {
+                return null;
+            }
 
         } catch (RequestException $exception){
             if($exception->getCode() === 401) {
