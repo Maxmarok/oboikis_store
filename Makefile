@@ -71,6 +71,8 @@ ziggy:
 	${DOCKER_COMPOSE} exec supervisor php artisan ziggy:generate
 add_items:
 	${DOCKER_COMPOSE} exec app php artisan items:add
+tinker:
+	${DOCKER_COMPOSE} exec app php artisan tinker
 
 prod_build:
 	${DOCKER_COMPOSE_PROD} build app

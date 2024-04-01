@@ -75,7 +75,15 @@ class OrdersService implements OrdersInterface
 
     public function checkPayment(string $id): JsonResponse
     {
-        $order = $this->sbis->checkPayment($id);
+        $payment = $this->sbis->checkPayment($id);
+        $order = Orders::where('salekey', $id)->first();
+
+        if(count($payment['payments']) > 0) {
+            if($order->status === StatusEnum::WAITING) {
+                $order->status = StatusEnum::PAYED;
+                $order->save();
+            }
+        }
         
         return response()->json([
             'success' => true,
