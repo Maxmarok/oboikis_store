@@ -281,7 +281,7 @@ const cancelOrder = (id) => {
                       <button class="btn btn-sm btn-success" @click="checkOrder(order.id)" v-if="order.status !== '200' && order.status !== '220'">Синхронизировать товары</button>
                     </div>
 
-                    <div class="d-flex align-items-center" v-if="order.paymentRef && (order.status === '21' || order.status === '70')">
+                    <div class="d-flex align-items-center" v-if="order.paymentRef && order.status === '21'">
                       <button class="btn btn-sm btn-success me-2" @click="sendPaymentLink(order.id)">Отправить ссылку на оплату</button> <a :href="order.paymentRef" target="_blank">(ссылка)</a>
                     </div>
                   </div>

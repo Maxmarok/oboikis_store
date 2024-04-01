@@ -145,7 +145,7 @@ class SbisService implements SbisInterface
         if(!empty($response['link'])) {
             return $response['link'];
         } else {
-            return null
+            return null;
         }
     }
 

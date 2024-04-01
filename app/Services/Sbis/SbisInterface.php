@@ -21,5 +21,5 @@ interface SbisInterface
 
     public function cancelOrder(string $id): array;
 
-    public function getPaymentLink(string $id): string;
+    public function getPaymentLink(string $id): string|null;
 }
