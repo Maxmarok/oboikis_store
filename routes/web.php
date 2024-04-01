@@ -158,7 +158,7 @@ Route::get('/delivery', function () {
         'title' => $title,
         'short_description' => $short_description,
     ]);
-});
+})->name('delivery');
 
 Route::get('/link/{to}', function (string $to) {
     return redirect(config("oboikis.link.{$to}"));
@@ -166,3 +166,6 @@ Route::get('/link/{to}', function (string $to) {
 
 
 Route::get('/delivery/success/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'successPayment'])->name('success');
+Route::get('/delivery/error/', function() {
+    return redirect()->route('order', ['payment' => 'error']);
+});
