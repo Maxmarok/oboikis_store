@@ -6,7 +6,7 @@ return [
     'login' => env('SBIS_LOGIN'),
 
     'password' => env('SBIS_PASSWORD'),
-
+    'point' => env('SBIS_POINT_NAME'),
     'url' => [
         'token' => env('SBIS_URL_TOKEN'),
         'point' => env('SBIS_URL_POINT'),

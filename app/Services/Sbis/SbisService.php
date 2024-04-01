@@ -310,9 +310,12 @@ class SbisService implements SbisInterface
 
         $response = json_decode($response, true);
 
-        if(!empty($response['salesPoints'][0]['id'])) {
-            Cache::put('sbis_point', $response['salesPoints'][0]['id']);
-        }
+        $index = array_search(config('sbis.point'), array_column($response['salesPoints'], 'name'));
+        Cache::put('sbis_point', $response['salesPoints'][$index]['id']);
+
+        // if(!empty($response['salesPoints'][0]['id'])) {
+        //     Cache::put('sbis_point', $response['salesPoints'][0]['id']);
+        // }
     }
 
     /** 
@@ -363,7 +366,7 @@ class SbisService implements SbisInterface
             if($data) $arr['json'] = $data;
 
             $request = $this->client->request($method, $url, $arr);
-            
+
             if($request) {
                 return $request->getBody();
             } else {
