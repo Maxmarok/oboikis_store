@@ -86,7 +86,7 @@ prod_migrate_seed:
 	${DOCKER_COMPOSE_PROD} exec app php artisan migrate:fresh --seed
 prod_npm_install:
 	${DOCKER_COMPOSE_PROD} exec node npm install
-	make npm_build
+	make prod_npm_build
 prod_npm_build:
 	${DOCKER_COMPOSE_PROD} exec node npm run build
 prod_clear:

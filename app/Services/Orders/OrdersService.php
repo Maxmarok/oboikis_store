@@ -8,6 +8,7 @@ use App\Events\PaymentSuccess;
 use App\Events\TestEvent;
 use App\Jobs\PaymentSuccessJob;
 use App\Mail\SendPaymentMail;
+use App\Mail\SendPaymentSuccessMail;
 use App\Models\Items;
 use App\Models\Managers;
 use App\Models\OrderItems;
@@ -136,10 +137,7 @@ class OrdersService implements OrdersInterface
         $order->status = StatusEnum::PAYED;
         $order->save();
 
-        //PaymentSuccessJob::dispatchAfterResponse($order);
-
-        event(new PaymentSuccess($order));
-        //event(new TestEvent());
+        PaymentSuccessJob::dispatchAfterResponse($order);
 
         return redirect()->route('order', ['payment' => 'success']);
     }
