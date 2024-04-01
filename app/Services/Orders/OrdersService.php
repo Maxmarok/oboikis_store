@@ -64,6 +64,7 @@ class OrdersService implements OrdersInterface
         $order->order_items()->insert($data);
 
         $link = $this->sbis->getPaymentLink($order->saleKey);
+        
         if($link) {
             $order->paymentRef = $link;
             $order->save();

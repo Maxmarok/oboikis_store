@@ -128,19 +128,21 @@ class SbisService implements SbisInterface
 
     public function getPaymentLink(string $id): string|null
     {
-        $query = [
-            'shopURL' => config('sbis.url.shop'),
-            'successURL' => config('sbis.url.success'),
-            'errorURL' => config('sbis.url.error'),
-        ];
+        // $query = [
+        //     'shopURL' => config('sbis.url.shop'),
+        //     'successURL' => config('sbis.url.success'),
+        //     'errorURL' => config('sbis.url.error'),
+        // ];
 
         $url = config('sbis.url.payment');
         $url = strtr($url, ['{$id}' => $id]);
-        $url = $url . chr(077) . http_build_query($query);
+        //$url = $url . chr(077) . http_build_query($query);
 
         $response = self::makeRequest($url, 'GET');
 
         $response = json_decode($response, true);
+
+        Log::debug($response);
 
         if(!empty($response['link'])) {
             return $response['link'];
