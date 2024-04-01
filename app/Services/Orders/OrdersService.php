@@ -43,6 +43,7 @@ class OrdersService implements OrdersInterface
     public function checkOrder(string $id): JsonResponse
     {
         $order = Orders::find($id);
+        Log::debug([$id, $order]);
         $sbisOrder = $this->sbis->checkOrder($order->salekey);
         
         $data = [];
@@ -162,7 +163,7 @@ class OrdersService implements OrdersInterface
     {
         $order = Orders::whereRaw('md5(id) = "' . $id . '"')->first();
 
-        if($order->status === StatusEnum::WAITING) {
+        if($order && $order->status === StatusEnum::WAITING) {
             $order->status = StatusEnum::PAYED;
             $order->save();
 
