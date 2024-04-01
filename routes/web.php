@@ -166,6 +166,11 @@ Route::get('/link/{to}', function (string $to) {
 
 
 Route::get('/delivery/success/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'successPayment'])->name('success');
+
+Route::get('/delivery/success/', function() {
+    return redirect()->route('order', ['payment' => 'success']);
+});
+
 Route::get('/delivery/error/', function() {
     return redirect()->route('order', ['payment' => 'error']);
 });
