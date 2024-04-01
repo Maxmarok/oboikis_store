@@ -56,6 +56,8 @@ class SbisService implements SbisInterface
 
         $successUrl = route('success', ['id' => md5($order->id)]);
 
+        Log::debug($successUrl);
+
         $arr = (object) [
             'product' => 'delivery',
             'pointId' => $pointId,
@@ -84,6 +86,8 @@ class SbisService implements SbisInterface
 
         $response = self::makeRequest($url, 'POST', $arr);
         $response = json_decode($response, true);
+
+        Log::debug($response);
 
         $order->update([
             'saleKey' => $response['saleKey'],
