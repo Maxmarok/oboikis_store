@@ -268,8 +268,8 @@ const cancelOrder = (id) => {
                 <td class="table-number text-nowrap">
                   <p v-if="order.status === '21'" class="mb-2 text-danger">Не оплачено</p>
                   <p v-if="order.status === '70'" class="mb-2 text-success">Оплачено</p>
-                  <p v-if="order.status === '220'" class="text-danger">Отменен</p>
-                  <p v-if="order.status === '200'" class="text-success">Завершен</p>
+                  <p v-if="order.status === '220'" class="mb-2 text-danger">Отменен</p>
+                  <p v-if="order.status === '200'" class="mb-2 text-success">Завершен</p>
 
                   <div class="d-flex flex-column">
                     <button class="btn btn-sm btn-success mb-2" @click="confirmOrder(order.id)" v-if="order.status === '10'">Подтвердить</button>
