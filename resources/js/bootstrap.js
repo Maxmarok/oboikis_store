@@ -22,5 +22,6 @@ window.io = io;
 
 window.Echo = new Echo({
     broadcaster: 'socket.io',
-    host: window.location.hostname === 'oboikis.ru' ? 'http://oboikis.ru:6001' : window.location.hostname + ':6001'
+    host: window.location.hostname === 'oboikis.ru' ? 'http://oboikis.ru:6001' : window.location.hostname + ':6001',
+    transports: ['websocket', 'polling', 'flashsocket'],
 });
