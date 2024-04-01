@@ -1,5 +1,5 @@
 <x-mail::message>
-# Оформлен заказ #{{$order->id}}
+# Оформлен заказ #{{$order->orderNumber ?: $order->id}}
 
 Имя: {{$order->name}}  
 Email: {{$order->user->email}}  

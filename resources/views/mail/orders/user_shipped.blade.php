@@ -1,7 +1,7 @@
 <x-mail::message>
 # Здравствуйте, {{$order->name}}!
 
-Вы оформили заказ #{{$order->id}}:  
+Вы оформили заказ #{{$order->orderNumber ?: $order->id}}:  
 @foreach($order->order_items as $i => $item)
 {{$i + 1}}. [{{$item->item->title}}]({{route('catalog_item', ['section' => $item->item->catalog->url, 'id' => $item->item->id])}}) {{$item->count}} шт. x {{number_format($item->total, 0, '', ' ')}} ₽
 @endforeach

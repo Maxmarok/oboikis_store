@@ -1,7 +1,7 @@
 <x-mail::message>
 # Здравствуйте, {{$order->name}}!
 
-Заказ #{{$order->id}} подтвержден!  
+Заказ #{{$order->orderNumber ?: $order->id}} подтвержден!  
 
 Итого к оплате: {{number_format($order->order_sum, 0, '', ' ')}} ₽  
 
