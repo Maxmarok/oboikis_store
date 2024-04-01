@@ -297,7 +297,7 @@ const cancelOrder = (id) => {
 
                   <div class="d-flex flex-column">
                     <button class="btn btn-sm btn-success mb-2" @click="confirmOrder(order.id)" v-if="order.status === '10'">Подтвердить</button>
-                    <button class="btn btn-sm btn-success mb-2" @click="checkPayment(order.saleKey)" v-if="order.status === '21'">Проверить оплату</button>
+                    <button class="btn btn-sm btn-success mb-2" @click="checkPayment(order.id)" v-if="order.status === '21'">Проверить оплату</button>
                     <button class="btn btn-sm btn-success mb-2" @click="completeOrder(order.id)" v-if="order.status === '70'">Завершить</button>
                     <button class="btn btn-sm btn-danger mb-2" @click="cancelOrder(order.id)" v-if="order.status !== '200' && order.status !== '220'">Отменить</button>
                     <button class="btn btn-sm btn-success" @click="returnOrder(order.id)" v-if="order.status === '200' || order.status === '220'">Вернуть в работу</button>

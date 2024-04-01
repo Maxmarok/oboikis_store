@@ -76,10 +76,10 @@ class OrdersService implements OrdersInterface
 
     public function checkPayment(string $id): JsonResponse
     {
-        $payment = $this->sbis->checkPayment($id);
         $order = Orders::where('salekey', $id)->first();
-
-        Log::debub($payment['payments']);
+        $payment = $this->sbis->checkPayment($order->saleKey);
+        
+        Log::debub([$payment['payments'], $order->status]);
 
         if(count($payment['payments']) > 0) {
             if($order->status === StatusEnum::WAITING) {
