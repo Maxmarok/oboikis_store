@@ -378,10 +378,13 @@ class SbisService implements SbisInterface
                 self::checkToken();
 
                 return self::makeRequest($url, $method, $data);
+            } else {
+                if($exception->getResponse()) Log::error($exception->getResponse()->getBody());
+
+                return null;
             }
 
-            if($exception->getResponse())
-            Log::error($exception->getResponse()->getBody());
+            
         }
     }
 
