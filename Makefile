@@ -94,3 +94,5 @@ prod_clear:
 	${DOCKER_COMPOSE_PROD} exec app php artisan cache:clear
 	${DOCKER_COMPOSE_PROD} exec app php artisan config:clear
 	${DOCKER_COMPOSE_PROD} exec app php artisan queue:restart
+prod_tinker:
+	${DOCKER_COMPOSE_PROD} exec app php artisan tinker

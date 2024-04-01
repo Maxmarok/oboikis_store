@@ -380,6 +380,7 @@ class SbisService implements SbisInterface
                 return self::makeRequest($url, $method, $data);
             }
 
+            if($exception->getResponse())
             Log::error($exception->getResponse()->getBody());
         }
     }
