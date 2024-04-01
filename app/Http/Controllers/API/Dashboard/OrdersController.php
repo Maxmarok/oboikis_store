@@ -45,7 +45,6 @@ class OrdersController extends Controller
         return $this->service->checkPayment($id);
     }
 
-
     /**
      * Order confirmation by admin 
      */
