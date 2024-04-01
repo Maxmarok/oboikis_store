@@ -15,7 +15,7 @@ class TrustHosts extends Middleware
     {
         return [
             $this->allSubdomainsOfApplicationUrl(),
-            'http://oboikis.ru*',
+            'ws://oboikis.ru*',
         ];
     }
 }
