@@ -129,15 +129,17 @@ class OrdersService implements OrdersInterface
             'success' => true,
         ]);
     }
-
     
     public function successPayment(string $id): RedirectResponse
     {
         $order = Orders::whereRaw('md5(id) = "' . $id . '"')->first();
-        $order->status = StatusEnum::PAYED;
-        $order->save();
 
-        PaymentSuccessJob::dispatchAfterResponse($order);
+        if($order->status === StatusEnum::WAITING) {
+            $order->status = StatusEnum::PAYED;
+            $order->save();
+
+            PaymentSuccessJob::dispatchAfterResponse($order);
+        }
 
         return redirect()->route('order', ['payment' => 'success']);
     }
