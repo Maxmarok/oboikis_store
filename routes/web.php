@@ -136,7 +136,7 @@ Route::get('/cart/order', function () {
         'title' => $title,
         'short_description' => $short_description,
     ]);
-});
+})->name('order');
 
 
 Route::get('/payment', function () {
@@ -163,3 +163,6 @@ Route::get('/delivery', function () {
 Route::get('/link/{to}', function (string $to) {
     return redirect(config("oboikis.link.{$to}"));
 })->whereIn('to', ['vk', 'telegram', 'whatsapp', 'viber', 'instagram']);
+
+
+Route::get('/delivery/success/{id}', [App\Http\Controllers\API\Dashboard\OrdersController::class, 'successPayment'])->name('success');

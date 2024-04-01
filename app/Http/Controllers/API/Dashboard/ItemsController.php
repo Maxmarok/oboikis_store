@@ -9,18 +9,22 @@ use Illuminate\Http\JsonResponse;
 
 class ItemsController extends Controller
 {
-    public function updateItem(ItemsInterface $service, string $id): JsonResponse
+    public function __construct(
+        private ItemsInterface $service
+    ){}
+
+    public function updateItem(string $id): JsonResponse
     {
-        return $service->updateItem($id);
+        return $this->service->updateItem($id);
     }
 
-    public function getItems(ItemsInterface $service): JsonResponse
+    public function getItems(): JsonResponse
     {
-        return $service->getItemsForAdmin();
+        return $this->service->getItemsForAdmin();
     }
 
-    public function addItems(ItemsInterface $service): JsonResponse
+    public function addItems(): JsonResponse
     {
-        return $service->addItems();
+        return $this->service->addItems();
     }
 }

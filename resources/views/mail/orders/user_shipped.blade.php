@@ -6,7 +6,7 @@
 {{$i + 1}}. [{{$item->item->title}}]({{route('catalog_item', ['section' => $item->item->catalog->url, 'id' => $item->item->id])}}) {{$item->count}} шт. x {{number_format($item->total, 0, '', ' ')}} ₽
 @endforeach
 
-Итого к оплате: {{number_format($order->order_sum, 0, '', ' ')}} ₽  {{$order->isPickup ? '(без учета доставки)' : null}}  
+Итого к оплате: {{number_format($order->order_sum, 0, '', ' ')}} ₽  {{$order->isPickup() ? '(без учета доставки)' : null}}  
 
 Доставка: {{$order->recieve}}  
 

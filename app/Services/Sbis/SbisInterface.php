@@ -14,4 +14,10 @@ interface SbisInterface
     public function getItems(int $page = 0, string $search = null): array;
 
     public function createOrder(Orders $order): void;
+
+    public function checkOrder(string $id): array;
+
+    public function checkPayment(string $id): array;
+
+    public function cancelOrder(string $id): array;
 }

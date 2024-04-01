@@ -9,11 +9,15 @@ use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
+    public function __construct(
+        private AuthInterface $service
+    ){}
+
     /**
      * Login attempt by user
      */
-    public function login(AuthInterface $service, UserLoginRequest $request): JsonResponse
+    public function login(UserLoginRequest $request): JsonResponse
     {
-        return $service->login($request->validated());
+        return $this->service->login($request->validated());
     }
 }

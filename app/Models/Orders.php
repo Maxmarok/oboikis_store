@@ -39,6 +39,7 @@ class Orders extends Model
 
     public function getCommentDeliveryAttribute()
     {
-        return $this->isPickup() ? "Доставка: {$this->recieve}, Комментарий: {$this->comment}" : $this->comment;
+        $comment = $this->comment ? ", Комментарий: {$this->comment}" : null;
+        return $this->isPickup() ? "Доставка: {$this->recieve}{$comment}" : $this->comment;
     }
 }

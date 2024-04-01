@@ -18,7 +18,7 @@ return [
         'success' => env('SBIS_URL_SUCCESS'),
         'error' => env('SBIS_URL_ERROR'),
         'order' => [
-            'get' => env('SBIS_URL_ORDER_GET'),
+            'check' => env('SBIS_URL_ORDER_CHECK'),
             'create' => env('SBIS_URL_ORDER_CREATE'),
             'update' => env('SBIS_URL_ORDER_UPDATE'),
             'cancel' => env('SBIS_URL_ORDER_CANCEL'),

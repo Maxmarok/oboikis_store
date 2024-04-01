@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Services\Orders\OrdersInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class OrdersController extends Controller
 {
@@ -29,6 +30,23 @@ class OrdersController extends Controller
     }
 
     /**
+     * Check order
+     */
+    public function checkOrder(string $id): JsonResponse
+    {
+        return $this->service->checkOrder($id);
+    }
+
+    /**
+     * Check payment
+     */
+    public function checkPayment(string $id): JsonResponse
+    {
+        return $this->service->checkPayment($id);
+    }
+
+
+    /**
      * Order confirmation by admin 
      */
     public function confirmOrder(string $id): JsonResponse
@@ -50,5 +68,10 @@ class OrdersController extends Controller
     public function completeOrder(string $id): JsonResponse
     {
         return $this->service->completeOrder($id);
+    }
+
+    public function successPayment(string $id): RedirectResponse
+    {
+        return $this->service->successPayment($id);
     }
 }

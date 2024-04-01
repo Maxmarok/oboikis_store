@@ -3,6 +3,7 @@
 namespace App\Services\Orders;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 interface OrdersInterface
 {
@@ -18,6 +19,16 @@ interface OrdersInterface
     public function sendPaymentLink(string $id): JsonResponse;
 
     /**
+     * Check order
+     */
+    public function checkOrder(string $id): JsonResponse;
+
+    /**
+     * Check payment
+     */
+    public function checkPayment(string $id): JsonResponse;
+    
+    /**
      * Order confirmation by admin 
      */
     public function confirmOrder(string $id): JsonResponse;
@@ -31,4 +42,10 @@ interface OrdersInterface
      * Order compliting by admin
      */
     public function completeOrder(string $id): JsonResponse;
+
+    /**
+     * @param string $id MD5 Hash
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function successPayment(string $id): RedirectResponse;
 }

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('order_id')->references('id')->on('orders');
             $table->foreignId('item_id')->references('id')->on('items');
             $table->integer('count')->default(0);
+            $table->integer('price')->default(0);
+            $table->integer('discount')->default(0);
         });
     }
 

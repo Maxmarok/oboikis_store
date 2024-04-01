@@ -10,18 +10,22 @@ use Illuminate\Http\JsonResponse;
 
 class ItemsController extends Controller
 {
-    public function getItems(ItemsInterface $service, GetItemsRequest $request): JsonResponse
+    public function __construct(
+        private ItemsInterface $service
+    ){}
+
+    public function getItems(GetItemsRequest $request): JsonResponse
     {
-        return $service->getItemsForUser($request->validated());
+        return $this->service->getItemsForUser($request->validated());
     }
 
-    public function getItem(ItemsInterface $service, GetItemRequest $request): JsonResponse
+    public function getItem(GetItemRequest $request): JsonResponse
     {
-        return $service->getItem($request->validated());
+        return $this->service->getItem($request->validated());
     }
 
-    public function getItemsForSlider(ItemsInterface $service): JsonResponse
+    public function getItemsForSlider(): JsonResponse
     {
-        return $service->getItemsForSlider();
+        return $this->service->getItemsForSlider();
     }
 }

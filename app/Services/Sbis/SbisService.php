@@ -2,6 +2,7 @@
 
 namespace App\Services\Sbis;
 
+use App\Enums\StatusEnum;
 use App\Jobs\AddItemsJob;
 use App\Models\Catalogs;
 use App\Models\Items;
@@ -20,12 +21,12 @@ class SbisService implements SbisInterface
 {
     private const PAGE_SIZE = 200;
     private string $date;
-    private Client $client;
 
-    public function __construct(Client $client)
+    public function __construct(
+        private Client $client
+    )
     {
         $this->date = now()->format('Y.M.D');
-        $this->client = $client;
         self::checkCache();
     }
 
@@ -53,6 +54,9 @@ class SbisService implements SbisInterface
             ];
         }
 
+        $successUrl = config('sbis.url.success');
+        $successUrl = strtr($successUrl, ['{$id}' => md5($order->id)]);
+
         $arr = (object) [
             'product' => 'delivery',
             'pointId' => $pointId,
@@ -68,7 +72,7 @@ class SbisService implements SbisInterface
                 'isPickUp' => false,
                 'paymentType' => 'online',
                 'shopURL' => config('sbis.url.shop'),
-                'successURL' => config('sbis.url.success'),
+                'successURL' => $successUrl,
                 'errorURL' => config('sbis.url.error'),
             ],
         ];
@@ -85,10 +89,23 @@ class SbisService implements SbisInterface
         $order->update([
             'saleKey' => $response['saleKey'],
             'paymentRef' => $response['paymentRef'],
+            'status' => StatusEnum::REGISTERED,
+            'orderNumber' => $response['orderNumber'],
         ]);
     }
 
-    public function checkPayment($id): bool
+    public function checkOrder(string $id): array
+    {
+        $url = config('sbis.url.order.check');
+        $url = strtr($url, ['{$id}' => $id]);
+
+        $response = self::makeRequest($url, 'GET');
+        $response = json_decode($response, true);
+
+        return $response;
+    }
+
+    public function checkPayment(string $id): array
     {
         $url = config('sbis.url.order.state');
         $url = strtr($url, ['{$id}' => $id]);
@@ -96,7 +113,18 @@ class SbisService implements SbisInterface
         $response = self::makeRequest($url, 'GET');
         $response = json_decode($response, true);
 
-        return boolval($response['payState']);
+        return $response;
+    }
+
+    public function cancelOrder(string $id): array
+    {
+        $url = config('sbis.url.order.cancel');
+        $url = strtr($url, ['{$id}' => $id]);
+
+        $response = self::makeRequest($url, 'PUT');
+        $response = json_decode($response, true);
+
+        return $response;
     }
 
     public function getPaymentLink(string $id): string

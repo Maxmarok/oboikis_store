@@ -10,18 +10,22 @@ use Illuminate\Http\JsonResponse;
 
 class InfoController extends Controller
 {
-    public function getInfo(InfoInterface $service): JsonResponse
+    public function __construct(
+        private InfoInterface $service
+    ){}
+
+    public function getInfo(): JsonResponse
     {
-        return $service->getInfo();
+        return $this->service->getInfo();
     }
 
-    public function updateInfo(InfoInterface $service, InfoUpdateRequest $request): JsonResponse
+    public function updateInfo(InfoUpdateRequest $request): JsonResponse
     {
-        return $service->updateInfo($request->validated());
+        return $this->service->updateInfo($request->validated());
     }
 
-    public function uploadFile(InfoInterface $service, FileUploadRequest $request): JsonResponse
+    public function uploadFile(FileUploadRequest $request): JsonResponse
     {
-        return $service->uploadFile($request->validated());
+        return $this->service->uploadFile($request->validated());
     }
 }

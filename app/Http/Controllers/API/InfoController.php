@@ -8,8 +8,12 @@ use Illuminate\Http\JsonResponse;
 
 class InfoController extends Controller
 {
-    public function getInfo(InfoInterface $service): JsonResponse
+    public function __construct(
+        private InfoInterface $service
+    ){}
+
+    public function getInfo(): JsonResponse
     {
-        return $service->getInfo();
+        return $this->service->getInfo();
     }
 }

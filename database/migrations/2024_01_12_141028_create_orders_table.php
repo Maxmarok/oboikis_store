@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('status', StatusEnum::all())->default(StatusEnum::NEW);
             $table->text('saleKey')->nullable();
             $table->text('paymentRef')->nullable();
+            $table->text('orderNumber')->nullable();
             $table->timestamps();
         });
     }
