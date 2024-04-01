@@ -261,7 +261,7 @@ const cancelOrder = (id) => {
                       </p>
                     </div>
                   </div>
-                  <button class="btn btn-sm btn-success mb-2" @click="checkOrder(order.saleKey)" v-if="order.status === '21' || order.status === '70'">Синхронизировать товары</button>
+                  <button class="btn btn-sm btn-success mb-2" @click="checkOrder(order.saleKey)" v-if="order.status !== '200' && order.status !== '220'">Синхронизировать товары</button>
                   <p><strong>Итого:</strong> <span>{{ order.order_sum.toLocaleString('ru') }} ₽</span></p>
                 </td>
 
