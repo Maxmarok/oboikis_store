@@ -4686,6 +4686,8 @@ select {
 
     .cart_screen_block {
         margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 50px 20px;
     }
 
     .cart_screen_block span.blue_color {
@@ -4700,8 +4702,9 @@ select {
         font-family: 'Lato';
         font-size: 14px;
         font-weight: 500;
-        line-height: 14px;
+        line-height: 20px;
         letter-spacing: 0em;
+        line-height: 20px;
     }
 
     .cart_screen_elem span {
