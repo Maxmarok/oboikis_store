@@ -78,7 +78,19 @@ onMounted(() => {
             <div class="screen2_text d-flex flex-row justify-content-evenly text-uppercase white_color"><b><span class="pink_color">Обойкис</span> — идеальное</b></div>
             <div class="screen2_text d-flex flex-row justify-content-evenly text-uppercase white_color"><b>место для <span class="blue_color">оформления</span></b></div>
             <div class="screen2_text d-flex flex-row justify-content-evenly text-uppercase white_color"><b>уюта вашего <span class="yellow_color">дома</span></b></div>
-            <button class="d-flex justify-content-center align-items-center white_color">Каталог товаров</button>
+            <div class="d-flex justify-content-center align-items-center">
+                <router-link :to="{
+                    name: 'catalog', 
+                    params: {
+                        section: 'wallpaper',
+                    },
+                }"
+                class="d-flex justify-content-center align-items-center s4_e_h_button bg_pink"
+                >
+                    <span>Каталог товаров</span>
+                    <!-- <button class="d-flex justify-content-center align-items-center white_color">Каталог товаров</button> -->
+                </router-link>
+            </div>
         </div> 
 
         <div class="screen2_blocks d-flex flex-row justify-content-between">

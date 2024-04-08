@@ -11,7 +11,7 @@ interface SbisInterface
 
     public function addItems(int $page = 0): void;
 
-    public function getItems(int $page = 0, string $search = null): array;
+    public function getItems(int $page = 0, string $search = null): array|null;
 
     public function createOrder(Orders $order): void;
 

@@ -3665,6 +3665,18 @@ select {
         border-top-right-radius: 3px;
     }
 
+    .s4_e_h_button {
+        font-family: "LatoB";
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0em;
+        padding: 10px 15px;
+        width: initial;
+        height: initial;
+        border-radius: 5px;
+        margin-top: 20px;
+    }    
+
     .catalog_screen {
         flex-direction: column !important;
         align-items: center !important;

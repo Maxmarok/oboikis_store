@@ -89,12 +89,14 @@ class SbisService implements SbisInterface
 
         Log::debug($response);
 
-        $order->update([
-            'saleKey' => $response['saleKey'],
-            'paymentRef' => $response['paymentRef'],
-            'status' => StatusEnum::REGISTERED,
-            'orderNumber' => $response['orderNumber'],
-        ]);
+        if($response) {
+            $order->update([
+                'saleKey' => $response['saleKey'],
+                'paymentRef' => $response['paymentRef'],
+                'status' => StatusEnum::REGISTERED,
+                'orderNumber' => $response['orderNumber'],
+            ]);
+        }
     }
 
     public function checkOrder(string $id): array
@@ -241,9 +243,9 @@ class SbisService implements SbisInterface
      * @param int $page Номер страницы пагинации
      * @param string $search Строчка для поиска
      * 
-     * @return array
+     * @return array|null
      */
-    public function getItems(int $page = 0, string $search = null): array
+    public function getItems(int $page = 0, string $search = null): array|null
     {
         $query = [
             'pointId' => Cache::get('sbis_point'),
@@ -263,6 +265,8 @@ class SbisService implements SbisInterface
 
         if(!empty($response['nomenclatures'])) {
             return $response['nomenclatures'];
+        } else {
+            return null;
         }
     }
 
