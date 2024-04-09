@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
 
 class SbisService implements SbisInterface
 {
-    private const PAGE_SIZE = 200;
+    private const PAGE_SIZE = 100;
     private string $date;
 
     public function __construct(
