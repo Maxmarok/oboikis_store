@@ -5,6 +5,7 @@ namespace App\Services\Sbis;
 use App\Enums\StatusEnum;
 use App\Jobs\AddItemsJob;
 use App\Models\Catalogs;
+use App\Models\Info;
 use App\Models\Items;
 use App\Models\Orders;
 use GuzzleHttp\Client;
@@ -230,7 +231,7 @@ class SbisService implements SbisInterface
     {
         $data = self::getItems($page);
         
-        if(count($data) > 0) {
+        if($data && count($data) > 0) {
             self::insertItems($data);
             $page++;
             AddItemsJob::dispatch($page)->delay(now()->addSeconds(10));
