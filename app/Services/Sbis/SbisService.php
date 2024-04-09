@@ -263,6 +263,8 @@ class SbisService implements SbisInterface
 
         $response = json_decode($response, true);
 
+        Log::debug($response);
+
         if(!empty($response['nomenclatures'])) {
             return $response['nomenclatures'];
         } else {
