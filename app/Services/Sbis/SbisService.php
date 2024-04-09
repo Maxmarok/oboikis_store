@@ -231,10 +231,10 @@ class SbisService implements SbisInterface
     {
         $data = self::getItems($page);
         
-        if($data && count($data) > 0) {
+        if($data && (gettype($data) === 'array') && count($data) > 0) {
             self::insertItems($data);
             $page++;
-            AddItemsJob::dispatch($page)->delay(now()->addSeconds(10));
+            AddItemsJob::dispatch($page)->delay(now()->addSeconds(30));
         }
     }
 
@@ -263,8 +263,6 @@ class SbisService implements SbisInterface
         $response = self::makeRequest($url, 'GET');
 
         $response = json_decode($response, true);
-
-        Log::debug($response);
 
         if(!empty($response['nomenclatures'])) {
             return $response['nomenclatures'];
