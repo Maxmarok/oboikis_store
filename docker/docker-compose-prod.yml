@@ -119,6 +119,7 @@ services:
       - oboikis-store
     depends_on:
       - nginx
+    entrypoint: ""
     environment:
       - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
       - APP_DOMAIN=${APP_DOMAIN}
