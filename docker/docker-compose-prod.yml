@@ -119,6 +119,9 @@ services:
       - oboikis-store
     depends_on:
       - nginx
+    environment:
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
+      - APP_DOMAIN=${APP_DOMAIN}
     command: certonly --webroot --webroot-path=/var/www --email ${MAIL_FROM_ADDRESS} --agree-tos --no-eff-email --staging -d ${APP_DOMAIN}
 
 networks:
