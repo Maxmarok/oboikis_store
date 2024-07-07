@@ -117,6 +117,9 @@ services:
       - ../:/var/www
     networks:
       - oboikis-store
+    depends_on:
+      - nginx
+    command: certonly --webroot --webroot-path=/var/www --email ${MAIL_FROM_ADDRESS} --agree-tos --no-eff-email --staging -d ${APP_DOMAIN}
 
 networks:
   oboikis-store:
