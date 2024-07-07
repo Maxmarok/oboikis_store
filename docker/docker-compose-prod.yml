@@ -111,6 +111,7 @@ services:
   certbot:
     image: certbot/certbot
     container_name: oboikis-store-certbot
+    entrypoint: '/bin/sh'
     volumes:
       - ./docker-compose-prod/certbot/conf:/etc/letsencrypt
       - ../:/var/www
