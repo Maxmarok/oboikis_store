@@ -111,7 +111,7 @@ services:
   certbot:
     image: certbot/certbot
     container_name: oboikis-store-certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --force-renewal; sleep 24h & wait $${!}; done;'"
     restart: unless-stopped
     volumes:
       - ./docker-compose-prod/certbot/conf:/etc/letsencrypt
